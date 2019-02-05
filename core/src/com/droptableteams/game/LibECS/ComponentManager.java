@@ -1,6 +1,6 @@
-package LibECS;
+package com.droptableteams.game.LibECS;
 
-import LibECS.Interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.IComponent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +42,23 @@ public class ComponentManager {
     }
     public ArrayList<IComponent> getComponents(String type) {
         return _componentPools.get(type);
+    }
+
+    /**
+     *
+     * @param id
+     * @param type
+     * @return
+     */
+    public IComponent getComponent(int id, String type) {
+        IComponent comp = null;
+        for (IComponent c : _components.get(id)) {
+            if(c.getType() == type) {
+                comp = c;
+                break;
+            }
+        }
+        return comp;
     }
 
     /**

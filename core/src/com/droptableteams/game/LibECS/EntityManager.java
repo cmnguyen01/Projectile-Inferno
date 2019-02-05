@@ -1,6 +1,6 @@
-package LibECS;
+package com.droptableteams.game.LibECS;
 
-import LibECS.Interfaces.IEntity;
+import com.droptableteams.game.LibECS.interfaces.IEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +48,7 @@ public class EntityManager {
      *
      * @return  an available entity id.
      */
-    public int aquireEntityId() {
+    public int acquireEntityId() {
         return nextId++;
     }
 

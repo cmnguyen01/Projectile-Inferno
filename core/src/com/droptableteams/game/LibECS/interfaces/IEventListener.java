@@ -1,4 +1,4 @@
-package LibECS.Interfaces;
+package com.droptableteams.game.LibECS.interfaces;
 
 import java.util.HashMap;
 
@@ -8,10 +8,6 @@ import java.util.HashMap;
  * EventListeners contain a callback to be processed when triggered by an event.
  */
 public interface IEventListener {
-    int _listenToId = 0;
-    String _eventType = null;
-    void _eventHanlder(HashMap<String, String> args);
-
     int getId();
     String getType();
     boolean canHandle(Integer id, String type);

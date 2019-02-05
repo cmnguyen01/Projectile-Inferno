@@ -1,7 +1,7 @@
-package LibECS;
+package com.droptableteams.game.LibECS;
 
-import LibECS.Interfaces.IEvent;
-import LibECS.Interfaces.IEventListener;
+import com.droptableteams.game.LibECS.interfaces.IEvent;
+import com.droptableteams.game.LibECS.interfaces.IEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
