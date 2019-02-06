@@ -7,6 +7,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * TODO: EventManager class can currently only accept a single event listener
+ * which listens to the same event from the same entity. While this may be acceptable
+ * in most use cases, there may be situations where multiple entities might wish to
+ * subscribe to a single event from a single other entity.
+ *
+ * This behavior is not currently supported.
+ */
 public class EventManager {
     private static EventManager _evm;
 
@@ -50,7 +58,7 @@ public class EventManager {
      * Add an event listener.
      *
      * @param el  an event listener to add.
-     * @return    the added event listener.
+     * @return  the added event listener.
      */
     public IEventListener addEventListener(IEventListener el) {
         Integer id = el.getId();
@@ -144,7 +152,7 @@ public class EventManager {
     }
 
     /**
-     * Remove all event listeners with a matching id and type.
+     * Remove an event listener with a matching id and type.
      *
      * @param id  the entity id to be matched for listener removal.
      * @param type  the event type to be matched for listener removal.

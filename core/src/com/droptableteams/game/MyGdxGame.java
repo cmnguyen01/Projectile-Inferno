@@ -17,7 +17,6 @@ import java.util.Map;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture img;
 
 	com.droptableteams.game.LibECS.ECSEngine ecsEngine;
 	ArrayList<String> systemTypes;
@@ -25,7 +24,6 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
 		systemTypes = new ArrayList<String>();
 		ecsEngine = ECSEngine.getInstance(OrderedSystemTypes.get());
         PlayerFactory.createPlayer();
@@ -41,13 +39,11 @@ public class MyGdxGame extends ApplicationAdapter {
         for(Map.Entry<Integer, ISystem> e : SystemManager.getInstance().getSystemEntries("DrawSystem")) {
             ((DrawSystem)e.getValue()).draw(batch);
         }
-		//batch.draw(img, 0, 0);
 		batch.end();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 }
