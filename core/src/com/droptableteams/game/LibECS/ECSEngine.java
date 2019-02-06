@@ -104,8 +104,10 @@ public class ECSEngine {
     public void update() {
         for (String sType : _orderedSystemTypes) {
             Set<Map.Entry<Integer, ISystem>> systems = _sm.getSystemEntries(sType);
-            for (Map.Entry<Integer, ISystem> e : systems) {
-                e.getValue().update();
+            if(null != systems) {
+                for (Map.Entry<Integer, ISystem> e : systems) {
+                    e.getValue().update();
+                }
             }
         }
         _evm.dispatchEvents();
