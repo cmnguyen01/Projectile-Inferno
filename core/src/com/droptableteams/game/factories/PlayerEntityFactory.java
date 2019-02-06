@@ -13,7 +13,7 @@ import com.droptableteams.game.components.SizeComponent;
 import com.droptableteams.game.components.SpriteComponent;
 import com.droptableteams.game.components.VelocityComponent;
 import com.droptableteams.game.entities.PlayerEntity;
-import com.droptableteams.game.statics.OrderedSystemTypes;
+import com.droptableteams.game.statics.SystemUpdateOrder;
 import com.droptableteams.game.systems.HandleInputSystem;
 import com.droptableteams.game.systems.UpdateLocationSystem;
 import com.droptableteams.game.systems.UpdateSpriteSystem;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
  */
 public class PlayerEntityFactory {
 
-    private static ECSEngine _engine = ECSEngine.getInstance(OrderedSystemTypes.get());
+    private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
     private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
 

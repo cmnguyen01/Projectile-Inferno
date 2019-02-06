@@ -16,15 +16,15 @@ public class ECSEngine {
     private EventManager _evm;
     private SystemManager _sm;
 
-    private String[] _orderedSystemTypes;
+    private String[] _systemUpdateOrder;
 
     /**
      * A private constructor for the singleton pattern.
      *
-     * @param orderedSystemTypes  an array of system types in the order in which they should be processed.
+     * @param systemUpdateOrder  an array of system types in the order in which they should be processed.
      */
-    private ECSEngine(String[] orderedSystemTypes) {
-        _orderedSystemTypes = orderedSystemTypes;
+    private ECSEngine(String[] systemUpdateOrder) {
+        _systemUpdateOrder = systemUpdateOrder;
         _cm = ComponentManager.getInstance();
         _em = EntityManager.getInstance();
         _evm = EventManager.getInstance();
@@ -53,10 +53,10 @@ public class ECSEngine {
     public SystemManager getSystemManager() { return _sm; }
 
     /**
-     * Getter and setter for _orderedSystemTypes list.
+     * Getter and setter for _systemUpdateOrder list.
      */
-    public String[] getOrderedSystemTypes() { return _orderedSystemTypes; }
-    public void setOrderedSystemTypes(String[] types) { _orderedSystemTypes = types; }
+    public String[] getOrderedSystemTypes() { return _systemUpdateOrder; }
+    public void setOrderedSystemTypes(String[] types) { _systemUpdateOrder = types; }
 
     /**
      * Get an available entity id from the entity manager.
@@ -102,7 +102,7 @@ public class ECSEngine {
      * then dispatches all events created during this tick cycle.
      */
     public void update() {
-        for (String sType : _orderedSystemTypes) {
+        for (String sType : _systemUpdateOrder) {
             Set<Map.Entry<Integer, ISystem>> systems = _sm.getSystemEntries(sType);
             if(null != systems) {
                 for (Map.Entry<Integer, ISystem> e : systems) {
