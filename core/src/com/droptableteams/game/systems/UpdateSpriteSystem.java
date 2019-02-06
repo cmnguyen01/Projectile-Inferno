@@ -33,7 +33,7 @@ public class UpdateSpriteSystem implements ISystem {
         LocationComponent loc = (LocationComponent)_cm.getComponent(_id, "LocationComponent");
         SizeComponent sz = (SizeComponent)_cm.getComponent(_id, "SizeComponent");
 
-        sp.getSprite().setPosition(loc.getX(), loc.getY());
+        sp.getSprite().setCenter(loc.getX(), loc.getY());
         sp.getSprite().setSize(sz.getWidth(), sz.getHeight());
     }
 }
