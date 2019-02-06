@@ -42,10 +42,11 @@ public class ComponentManager {
     public HashMap<Integer, IComponent> getComponents(String type) { return _componentTypePools.get(type); }
 
     /**
+     * Get a component of specified id and type.
      *
-     * @param id
-     * @param type
-     * @return
+     * @param id  the id of the component to be retrieved.
+     * @param type  the type of the component to be retrieved.
+     * @return  the requested component.
      */
     public IComponent getComponent(int id, String type) {
         return _componentIdPools.get(id).get(type);
@@ -94,6 +95,22 @@ public class ComponentManager {
             _componentTypePools.get(type).remove(id);
         }
         return true;
+    }
+
+    /**
+     * Remove a given component.
+     *
+     * @param id  the id of the component to remove.
+     * @param type  the type of the component to remove.
+     * @return  returns true if the component was successfully removed.
+     */
+    public boolean removeComponent(int id, String type) {
+        IComponent c1 = _componentIdPools.get(id).remove(type);
+        IComponent c2 = _componentTypePools.get(type).remove(id);
+        if(null != c1 || null != c2) {
+            return true;
+        }
+        return false;
     }
 
     /**

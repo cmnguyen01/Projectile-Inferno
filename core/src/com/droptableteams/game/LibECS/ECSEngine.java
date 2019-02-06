@@ -19,7 +19,7 @@ public class ECSEngine {
     private String[] _orderedSystemTypes;
 
     /**
-     * Engine constructor.
+     * A private constructor for the singleton pattern.
      *
      * @param orderedSystemTypes  an array of system types in the order in which they should be processed.
      */
@@ -31,6 +31,12 @@ public class ECSEngine {
         _sm = SystemManager.getInstance();
     }
 
+    /**
+     * Singleton getter: Creates the ComponentManager if none exists, then returns it.
+     *
+     * @param orderedSystemTypes  an array of system types in the order in which they should be processed.
+     * @return  the singleton ECSEngine.
+     */
     public static ECSEngine getInstance(String[] orderedSystemTypes) {
         if(null == _engine) {
             _engine = new ECSEngine(orderedSystemTypes);
