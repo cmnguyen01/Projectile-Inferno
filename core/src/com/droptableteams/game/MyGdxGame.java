@@ -30,7 +30,7 @@ public class MyGdxGame extends ApplicationAdapter {
         batch = new SpriteBatch();
         systemTypes = new ArrayList<String>();
         ecsEngine = ECSEngine.getInstance(OrderedSystemTypes.get());
-        PlayerFactory.createPlayer(assetManager);
+        PlayerFactory.createPlayer(assetManager, batch);
 	}
 
 	@Override
@@ -38,11 +38,8 @@ public class MyGdxGame extends ApplicationAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        ecsEngine.update();
         batch.begin();
-        for(Map.Entry<Integer, ISystem> e : SystemManager.getInstance().getSystemEntries("DrawSystem")) {
-            ((DrawSystem)e.getValue()).draw(batch);
-        }
+        ecsEngine.update();
         batch.end();
 	}
 	
