@@ -6,7 +6,7 @@ import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.OrderedSystemTypes;
+import com.droptableteams.game.systems.OrderedSystemTypes;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.SizeComponent;
 import com.droptableteams.game.components.SpriteComponent;
@@ -24,20 +24,27 @@ public class PlayerFactory {
 
     public static void createPlayer() {
         int id = _engine.acquireEntityId();
-
         IEntity entity = new PlayerEntity(id);
+        generateComponentList(id);
+        generateSystemList(id);
+        _engine.addEntity(entity, cl, sl);
+    }
+
+    private static void generateComponentList(int id) {
+        cl.clear();
         IComponent c1 = new SpriteComponent(id, new Sprite(new Texture("vvrv.png")));
         cl.add(c1);
         IComponent c2 = new LocationComponent(id, 10,10);
         cl.add(c2);
         IComponent c3 = new SizeComponent(id, 64,64);
         cl.add(c3);
+    }
 
+    private static void generateSystemList(int id) {
+        sl.clear();
         ISystem s1 = new DrawSystem(id);
         sl.add(s1);
         ISystem s2 = new UpdateSpriteSystem(id);
         sl.add(s2);
-
-        _engine.addEntity(entity, cl, sl);
     }
 }
