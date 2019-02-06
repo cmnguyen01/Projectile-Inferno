@@ -4,8 +4,8 @@ package com.droptableteams.game.statics;
  * Contains a static array of system type strings,
  * in the order in which the systems should be updated.
  */
-public class OrderedSystemTypes {
-    private static String[] _orderedSystemTypes = {
+public class SystemUpdateOrder {
+    private static String[] _systemUpdateOrder = {
             "HandleInputSystem",
             "UpdateLocationSystem",
             "UpdateSpriteSystem",
@@ -13,5 +13,5 @@ public class OrderedSystemTypes {
             "DrawSystem",
     };
 
-    public static String[] get() { return _orderedSystemTypes; }
+    public static String[] get() { return _systemUpdateOrder; }
 }
