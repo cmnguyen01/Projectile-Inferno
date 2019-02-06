@@ -5,6 +5,7 @@ import com.droptableteams.game.LibECS.interfaces.ISystem;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class SystemManager {
     private static SystemManager _sm;
@@ -54,9 +55,13 @@ public class SystemManager {
         return _systemTypePools.get(type);
     }
 
+    public Set<Map.Entry<Integer, ISystem>> getSystemEntries(String type) {
+        return _systemTypePools.get(type).entrySet();
+    }
+
     /**
      * Get the system with the specified id and type.
-     * 
+     * e
      * @param id  the id of the system to get.
      * @param type  the type of the system to get.
      * @return  the system requested.

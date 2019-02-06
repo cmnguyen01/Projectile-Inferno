@@ -1,6 +1,7 @@
 package com.droptableteams.game.components;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 
 public class SpriteComponent implements IComponent {
@@ -8,9 +9,9 @@ public class SpriteComponent implements IComponent {
     private int _id;
     private String _type;
 
-    private Texture _sprite;
+    private Sprite _sprite;
 
-    public SpriteComponent(int id, Texture sprite) {
+    public SpriteComponent(int id, Sprite sprite) {
         _id = id;
         _sprite = sprite;
         _type = "SpriteComponent";
@@ -26,7 +27,7 @@ public class SpriteComponent implements IComponent {
         return _type;
     }
 
-    public Texture getSprite() {
+    public Sprite getSprite() {
         return _sprite;
     }
 }

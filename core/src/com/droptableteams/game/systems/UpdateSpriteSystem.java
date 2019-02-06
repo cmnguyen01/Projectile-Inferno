@@ -1,26 +1,19 @@
 package com.droptableteams.game.systems;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.ComponentManager;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.SizeComponent;
 import com.droptableteams.game.components.SpriteComponent;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class DrawSystem implements ISystem {
+public class UpdateSpriteSystem implements ISystem {
     private int _id;
     private String _type;
     private ComponentManager _cm;
 
-    public DrawSystem(int id) {
+    public UpdateSpriteSystem(int id) {
         _id = id;
-        _type = "DrawSystem";
+        _type = "UpdateSpriteSystem";
         _cm = ComponentManager.getInstance();
     }
 
@@ -36,9 +29,11 @@ public class DrawSystem implements ISystem {
 
     @Override
     public void update() {
-    }
+        SpriteComponent sp = (SpriteComponent)_cm.getComponent(_id, "SpriteComponent");
+        LocationComponent loc = (LocationComponent)_cm.getComponent(_id, "LocationComponent");
+        SizeComponent sz = (SizeComponent)_cm.getComponent(_id, "SizeComponent");
 
-    public void draw(SpriteBatch batch) {
-        ((SpriteComponent)_cm.getComponent(_id, "SpriteComponent")).getSprite().draw(batch);
+        sp.getSprite().setPosition(loc.getX(), loc.getY());
+        sp.getSprite().setSize(sz.getWidth(), sz.getHeight());
     }
 }

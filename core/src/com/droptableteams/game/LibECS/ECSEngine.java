@@ -5,6 +5,8 @@ import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 public class ECSEngine {
     private static ECSEngine _engine;
@@ -82,9 +84,9 @@ public class ECSEngine {
      */
     public void update() {
         for (String sType : _orderedSystemTypes) {
-            ArrayList<ISystem> systems = _sm.getSystems(sType);
-            for (ISystem s : systems) {
-                s.update();
+            Set<Map.Entry<Integer, ISystem>> systems = _sm.getSystemEntries(sType);
+            for (Map.Entry<Integer, ISystem> e : systems) {
+                e.getValue().update();
             }
         }
         _evm.dispatchEvents();

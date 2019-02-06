@@ -1,6 +1,7 @@
 package com.droptableteams.game.factories;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
@@ -10,6 +11,8 @@ import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.SizeComponent;
 import com.droptableteams.game.components.SpriteComponent;
 import com.droptableteams.game.entities.PlayerEntity;
+import com.droptableteams.game.systems.DrawSystem;
+import com.droptableteams.game.systems.UpdateSpriteSystem;
 
 import java.util.ArrayList;
 
@@ -23,12 +26,18 @@ public class PlayerFactory {
         int id = _engine.acquireEntityId();
 
         IEntity entity = new PlayerEntity(id);
-        IComponent c1 = new SpriteComponent(id, new Texture("vvrv.png"));
+        IComponent c1 = new SpriteComponent(id, new Sprite(new Texture("vvrv.png")));
         cl.add(c1);
         IComponent c2 = new LocationComponent(id, 10,10);
         cl.add(c2);
         IComponent c3 = new SizeComponent(id, 64,64);
         cl.add(c3);
+
+        ISystem s1 = new DrawSystem(id);
+        sl.add(s1);
+        ISystem s2 = new UpdateSpriteSystem(id);
+        sl.add(s2);
+
         _engine.addEntity(entity, cl, sl);
     }
 }
