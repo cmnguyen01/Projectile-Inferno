@@ -41,6 +41,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private void loadAssets() {
 	    assetManager.load("vvrv.png", Texture.class);
+		assetManager.load("vvrv.png", Texture.class);
         while(!assetManager.update());
     }
 }
