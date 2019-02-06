@@ -55,6 +55,17 @@ public class SystemManager {
     }
 
     /**
+     * Get the system with the specified id and type.
+     * 
+     * @param id  the id of the system to get.
+     * @param type  the type of the system to get.
+     * @return  the system requested.
+     */
+    public ISystem getSystem(int id, String type) {
+        return _systemIdPools.get(id).get(type);
+    }
+
+    /**
      * Add a system to the manager.
      *
      * @param s  the system to add.
