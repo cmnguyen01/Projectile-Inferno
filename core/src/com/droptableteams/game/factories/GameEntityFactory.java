@@ -8,7 +8,7 @@ import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.RenderComponent;
 import com.droptableteams.game.entities.GameEntity;
 import com.droptableteams.game.statics.EntityRenderOrder;
-import com.droptableteams.game.statics.OrderedSystemTypes;
+import com.droptableteams.game.statics.SystemUpdateOrder;
 import com.droptableteams.game.systems.RenderSystem;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 public class GameEntityFactory {
 
-    private static ECSEngine _engine = ECSEngine.getInstance(OrderedSystemTypes.get());
+    private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
     private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
 

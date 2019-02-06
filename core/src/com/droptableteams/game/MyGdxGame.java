@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.factories.GameEntityFactory;
 import com.droptableteams.game.factories.PlayerEntityFactory;
-import com.droptableteams.game.statics.OrderedSystemTypes;
+import com.droptableteams.game.statics.SystemUpdateOrder;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class MyGdxGame extends ApplicationAdapter {
         loadAssets();
         batch = new SpriteBatch();
         systemTypes = new ArrayList<String>();
-        ecsEngine = ECSEngine.getInstance(OrderedSystemTypes.get());
+        ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
 		GameEntityFactory.create(batch);
         PlayerEntityFactory.create(assetManager);
 	}
