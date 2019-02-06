@@ -2,7 +2,9 @@ package com.droptableteams.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.SystemManager;
@@ -16,16 +18,19 @@ import java.util.Map;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
+	AssetManager assetManager;
 
 	com.droptableteams.game.LibECS.ECSEngine ecsEngine;
 	ArrayList<String> systemTypes;
 	
 	@Override
 	public void create () {
+        assetManager = new AssetManager();
+        loadAssets();
         batch = new SpriteBatch();
         systemTypes = new ArrayList<String>();
         ecsEngine = ECSEngine.getInstance(OrderedSystemTypes.get());
-        PlayerFactory.createPlayer();
+        PlayerFactory.createPlayer(assetManager);
 	}
 
 	@Override
@@ -45,4 +50,9 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void dispose () {
         batch.dispose();
 	}
+
+	private void loadAssets() {
+	    assetManager.load("vvrv.png", Texture.class);
+        while(!assetManager.update());
+    }
 }
