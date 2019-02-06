@@ -7,14 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.ECSEngine;
-import com.droptableteams.game.LibECS.SystemManager;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.factories.PlayerFactory;
-import com.droptableteams.game.systems.DrawSystem;
-import com.droptableteams.game.systems.OrderedSystemTypes;
+import com.droptableteams.game.factories.GameEntityFactory;
+import com.droptableteams.game.factories.PlayerEntityFactory;
+import com.droptableteams.game.statics.OrderedSystemTypes;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -30,7 +27,8 @@ public class MyGdxGame extends ApplicationAdapter {
         batch = new SpriteBatch();
         systemTypes = new ArrayList<String>();
         ecsEngine = ECSEngine.getInstance(OrderedSystemTypes.get());
-        PlayerFactory.createPlayer(assetManager, batch);
+		GameEntityFactory.create(batch);
+        PlayerEntityFactory.create(assetManager);
 	}
 
 	@Override
