@@ -8,7 +8,7 @@ import java.util.HashMap;
  * EventListeners contain a callback to be processed when triggered by an event.
  */
 public interface IEventListener {
-    int getId();
+    Integer getId();
     String getType();
     boolean canHandle(Integer id, String type);
     void handleEvent(HashMap<String, String> args);

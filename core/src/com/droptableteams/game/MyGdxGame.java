@@ -5,16 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.SystemManager;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.components.LocationComponent;
-import com.droptableteams.game.components.SizeComponent;
-import com.droptableteams.game.components.SpriteComponent;
 import com.droptableteams.game.factories.PlayerFactory;
 import com.droptableteams.game.systems.DrawSystem;
+import com.droptableteams.game.systems.OrderedSystemTypes;
 
 import java.util.ArrayList;
 import java.util.Map;
