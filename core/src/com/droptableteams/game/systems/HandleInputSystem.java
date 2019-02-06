@@ -34,6 +34,14 @@ public class HandleInputSystem implements ISystem {
         boolean right = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
         boolean up = Gdx.input.isKeyPressed(Input.Keys.UP);
         boolean dn = Gdx.input.isKeyPressed(Input.Keys.DOWN);
+        boolean speedButton = Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT);
+
+
+
+        if(speedButton){
+            VelocityComponent velocity = (VelocityComponent)_cm.getComponent(_id, "VelocityComponent");
+            velocity.set_speedMultiplier();
+        }
 
         if(left && right) {
             left = false;
