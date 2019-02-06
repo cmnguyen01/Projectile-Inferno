@@ -3,8 +3,8 @@ package com.droptableteams.game.systems;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.LocationComponent;
-import com.droptableteams.game.components.SizeComponent;
 import com.droptableteams.game.components.SpriteComponent;
+import com.droptableteams.game.components.SizeComponent;
 
 public class UpdateSpriteSystem implements ISystem {
     private int _id;

@@ -1,4 +1,4 @@
-package com.droptableteams.game.systems;
+package com.droptableteams.game.statics;
 
 /**
  * Contains a static array of system type strings,
@@ -9,6 +9,7 @@ public class OrderedSystemTypes {
             "HandleInputSystem",
             "UpdateLocationSystem",
             "UpdateSpriteSystem",
+            "RenderSystem",
             "DrawSystem",
     };
 
