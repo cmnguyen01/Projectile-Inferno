@@ -56,7 +56,11 @@ public class SystemManager {
     }
 
     public Set<Map.Entry<Integer, ISystem>> getSystemEntries(String type) {
-        return _systemTypePools.get(type).entrySet();
+        HashMap<Integer, ISystem> pool = _systemTypePools.get(type);
+        if(null != pool) {
+            return pool.entrySet();
+        }
+        return null;
     }
 
     /**

@@ -3,8 +3,8 @@ package com.droptableteams.game.systems;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.LocationComponent;
-import com.droptableteams.game.components.SizeComponent;
 import com.droptableteams.game.components.SpriteComponent;
+import com.droptableteams.game.components.SizeComponent;
 
 public class UpdateSpriteSystem implements ISystem {
     private int _id;
@@ -33,7 +33,7 @@ public class UpdateSpriteSystem implements ISystem {
         LocationComponent loc = (LocationComponent)_cm.getComponent(_id, "LocationComponent");
         SizeComponent sz = (SizeComponent)_cm.getComponent(_id, "SizeComponent");
 
-        sp.getSprite().setPosition(loc.getX(), loc.getY());
+        sp.getSprite().setCenter(loc.getX(), loc.getY());
         sp.getSprite().setSize(sz.getWidth(), sz.getHeight());
     }
 }
