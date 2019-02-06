@@ -1,4 +1,4 @@
-package com.droptableteams.game.ecs;
+package com.droptableteams.game.entities;
 
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 

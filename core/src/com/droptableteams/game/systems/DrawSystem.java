@@ -1,11 +1,10 @@
-package com.droptableteams.game.ecs;
+package com.droptableteams.game.systems;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.droptableteams.game.LibECS.ComponentManager;
-import com.droptableteams.game.LibECS.ECSEngine;
-import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.OrderedSystemTypes;
+import com.droptableteams.game.components.LocationComponent;
+import com.droptableteams.game.components.SpriteComponent;
 
 public class DrawSystem implements ISystem {
     private int _id;

@@ -1,4 +1,4 @@
-package com.droptableteams.game.ecs;
+package com.droptableteams.game.components;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.droptableteams.game.LibECS.interfaces.IComponent;

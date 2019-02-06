@@ -1,4 +1,4 @@
-package com.droptableteams.game.ecs;
+package com.droptableteams.game.factories;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
@@ -6,6 +6,10 @@ import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.OrderedSystemTypes;
+import com.droptableteams.game.components.LocationComponent;
+import com.droptableteams.game.components.SizeComponent;
+import com.droptableteams.game.components.SpriteComponent;
+import com.droptableteams.game.entities.PlayerEntity;
 
 import java.util.ArrayList;
 
