@@ -85,6 +85,19 @@ public class ECSEngine {
     }
 
     /**
+     * Remove an entity, and all of its components and systems.
+     *
+     * @param id  the id of the entity to remove.
+     * @return  true if successfully removed.
+     */
+    public boolean removeEntity(int id) {
+        boolean removed = _em.removeEntity(id);
+        _cm.removeComponents(id);
+        _sm.removeSystems(id);
+        return removed;
+    }
+
+    /**
      * Called each tick. This calls the update method for each syst_em in the order defined,
      * then dispatches all events created during this tick cycle.
      */
