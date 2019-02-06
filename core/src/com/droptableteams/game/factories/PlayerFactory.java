@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
@@ -23,11 +24,11 @@ public class PlayerFactory {
     private static ArrayList<IComponent> cl = new ArrayList<IComponent>();
     private static ArrayList<ISystem> sl = new ArrayList<ISystem>();
 
-    public static void createPlayer(AssetManager assetManager) {
+    public static void createPlayer(AssetManager assetManager, SpriteBatch batch) {
         int id = _engine.acquireEntityId();
         IEntity entity = new PlayerEntity(id);
         generateComponentList(id, assetManager);
-        generateSystemList(id);
+        generateSystemList(id, batch);
         _engine.addEntity(entity, cl, sl);
     }
 
@@ -50,9 +51,9 @@ public class PlayerFactory {
         cl.add(c4);
     }
 
-    private static void generateSystemList(int id) {
+    private static void generateSystemList(int id, SpriteBatch batch) {
         sl.clear();
-        ISystem s1 = new DrawSystem(id);
+        ISystem s1 = new DrawSystem(id, batch);
         sl.add(s1);
         ISystem s2 = new UpdateSpriteSystem(id);
         sl.add(s2);
