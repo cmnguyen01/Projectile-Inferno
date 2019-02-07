@@ -11,10 +11,10 @@ public class VelocityComponent implements IComponent {
     private float _dx;
     private float _dy;
 
-    public VelocityComponent(int id, float baseSpeed, float slowMultiplier) {
+    public VelocityComponent(int id, float baseSpeed) {
         _id = id;
         _baseSpeed = baseSpeed;
-        _slowMultiplier = slowMultiplier;
+        _slowMultiplier = 0.5f;
         _speedMultiplier = 1;
         _type = "VelocityComponent";
     }

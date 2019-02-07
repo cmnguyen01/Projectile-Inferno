@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.ECSEngine;
+import com.droptableteams.game.factories.EnemyEntityFactory;
 import com.droptableteams.game.factories.GameEntityFactory;
 import com.droptableteams.game.factories.PlayerEntityFactory;
 import com.droptableteams.game.statics.SystemUpdateOrder;
@@ -25,6 +26,7 @@ public class MyGdxGame extends ApplicationAdapter {
         _ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
 		GameEntityFactory.create(_batch);
         PlayerEntityFactory.create(_assetManager);
+        EnemyEntityFactory.create(_assetManager);
 	}
 
 	@Override
