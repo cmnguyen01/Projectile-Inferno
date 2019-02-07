@@ -73,7 +73,7 @@ public class PlayerBulletEntityFactory {
         _cl.add(new SpriteComponent(id, sp));
         _cl.add(new LocationComponent(id, x,y));
         _cl.add(new SizeComponent(id, width,height));
-        _cl.add(new VelocityComponent(id, 256));
+        _cl.add(new VelocityComponent(id, 400));
         _cl.add(new HasBeenInboundsComponent(id, false));
         _cl.add(new MoveDirectionComponent(id, direction));
     }

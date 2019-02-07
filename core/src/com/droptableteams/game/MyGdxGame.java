@@ -42,8 +42,10 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	private void loadAssets() {
-	    _am.load("sprites/vvrv.png", Texture.class);
+	    _am.load("sprites/player.png", Texture.class);
 	    _am.load("sprites/playerbullet.png", Texture.class);
+	    _am.load("sprites/enemyA.png", Texture.class);
         while(!_am.update());
+
     }
 }

@@ -40,14 +40,16 @@ public class PlayerEntityFactory {
         float y = Gdx.graphics.getHeight()/4;
         float width = 64;
         float height = 64;
-        Sprite sp = new Sprite(am.get("sprites/vvrv.png", Texture.class));
+
+        Sprite sp = new Sprite(am.get("sprites/player.png", Texture.class));
+
         sp.setSize(width,height);
         sp.setCenter(x,y);
         _cl.clear();
         _cl.add(new SpriteComponent(id, sp));
         _cl.add(new LocationComponent(id, x,y));
         _cl.add(new SizeComponent(id, width,height));
-        _cl.add(new VelocityComponent(id, 256));
+        _cl.add(new VelocityComponent(id, 512));
         _cl.add(new MoveDirectionComponent(id, null));
         _cl.add(new FireControlComponent(id, 0.125f,false));
     }
