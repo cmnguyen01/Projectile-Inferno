@@ -11,6 +11,7 @@ public class SystemUpdateOrder {
             "UpdateLocationSystem",
             "StopAtBoundarySystem",
             "UpdateSpriteSystem",
+            "DespawnOutOfBoundsSystem",
             "RenderSystem",
     };
 

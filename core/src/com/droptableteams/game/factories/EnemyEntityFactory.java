@@ -8,17 +8,11 @@ import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.components.LocationComponent;
-import com.droptableteams.game.components.SizeComponent;
-import com.droptableteams.game.components.SpriteComponent;
-import com.droptableteams.game.components.VelocityComponent;
+import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.EnemyEntity;
 import com.droptableteams.game.entities.PlayerEntity;
 import com.droptableteams.game.statics.SystemUpdateOrder;
-import com.droptableteams.game.systems.EnemyMovementSystem;
-import com.droptableteams.game.systems.HandleInputSystem;
-import com.droptableteams.game.systems.UpdateLocationSystem;
-import com.droptableteams.game.systems.UpdateSpriteSystem;
+import com.droptableteams.game.systems.*;
 
 import java.util.ArrayList;
 
@@ -36,7 +30,7 @@ public class EnemyEntityFactory {
     }
 
     private static void generateComponentList(int id, AssetManager am) {
-        float x = Gdx.graphics.getWidth()/2;
+        float x = -64;
         float y = Gdx.graphics.getHeight()/2;
         float width = 32;
         float height = 32;
@@ -44,27 +38,19 @@ public class EnemyEntityFactory {
         sp.setSize(width,height);
         sp.setCenter(x,y);
         _cl.clear();
-        IComponent c1 = new SpriteComponent(id, sp);
-        _cl.add(c1);
-        IComponent c2 = new LocationComponent(id, x,y);
-        _cl.add(c2);
-        IComponent c3 = new SizeComponent(id, width,height);
-        _cl.add(c3);
-        IComponent c4 = new VelocityComponent(id, 64);
-        _cl.add(c4);
+        _cl.add(new SpriteComponent(id, sp));
+        _cl.add(new LocationComponent(id, x,y));
+        _cl.add(new SizeComponent(id, width,height));
+        _cl.add(new VelocityComponent(id, 64));
+        _cl.add(new HasBeenInboundsComponent(id, false));
     }
 
     private static void generateSystemList(int id) {
         _sl.clear();
-        ISystem s1 = new UpdateSpriteSystem(id);
-        _sl.add(s1);
-        ISystem s2 = new UpdateLocationSystem(id);
-        _sl.add(s2);
-        //ISystem s4 = new HandleInputSystem(id);
-        //_sl.add(s4);
-
-        ISystem s3 = new EnemyMovementSystem(id);
-        _sl.add(s3);
+        _sl.add(new UpdateSpriteSystem(id));
+        _sl.add(new UpdateLocationSystem(id));
+        _sl.add(new EnemyMovementSystem(id));
+        _sl.add(new DespawnOutOfBoundsSystem(id));
     }
 
 }
