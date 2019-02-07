@@ -25,4 +25,29 @@ public class FireControlComponent implements IComponent {
     public String getType() {
         return _type;
     }
+
+
+    public float getRateOfFire() {
+        return _rateOfFire;
+    }
+
+    public void setRateOfFire(float rateOfFire) {
+        _rateOfFire = rateOfFire;
+    }
+
+    public long getLastFired() {
+        return _lastFired;
+    }
+
+    public void setLastFired(long lastFired) {
+        _lastFired = lastFired;
+    }
+
+    public boolean isFiring() {
+        return _firing;
+    }
+
+    public void setFiring(boolean firing) {
+        _firing = firing;
+    }
 }

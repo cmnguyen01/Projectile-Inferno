@@ -7,6 +7,7 @@ package com.droptableteams.game.statics;
 public class SystemUpdateOrder {
     private static String[] _systemUpdateOrder = {
             "HandleInputSystem",
+            "FireControlSystem",
             "EnemyMovementSystem",
             "DirectionalMovementSystem",
             "UpdateLocationSystem",

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.AssetManagerComponent;
+import com.droptableteams.game.components.FireControlComponent;
 import com.droptableteams.game.components.MoveDirectionComponent;
 import com.droptableteams.game.components.VelocityComponent;
 import com.droptableteams.game.factories.PlayerBulletEntityFactory;
@@ -34,19 +35,22 @@ public class HandleInputSystem implements ISystem {
     public void update() {
         VelocityComponent vc = (VelocityComponent)_cm.getComponent(_id, "VelocityComponent");
         MoveDirectionComponent mdc = (MoveDirectionComponent)_cm.getComponent(_id, "MoveDirectionComponent");
-        AssetManagerComponent amc = (AssetManagerComponent)_cm.getComponent(-1, "AssetManagerComponent");
+        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
         boolean left = Gdx.input.isKeyPressed(Input.Keys.LEFT);
         boolean right = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
         boolean up = Gdx.input.isKeyPressed(Input.Keys.UP);
         boolean dn = Gdx.input.isKeyPressed(Input.Keys.DOWN);
         boolean speedButton = Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT);
-        boolean fireButton = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
+        boolean fireButton = Gdx.input.isKeyPressed(Input.Keys.SPACE);
 
         if(speedButton){
             vc.toggleSpeedMultiplier();
         }
         if(fireButton) {
-             PlayerBulletEntityFactory.create(amc.getAssetManager());
+             fcc.setFiring(true);
+        }
+        else {
+            fcc.setFiring(false);
         }
 
         if(left && right) {
