@@ -6,6 +6,8 @@ import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.VelocityComponent;
 
+import java.io.Console;
+
 public class UpdateLocationSystem implements ISystem {
     private int _id;
     private String _type;
@@ -37,9 +39,12 @@ public class UpdateLocationSystem implements ISystem {
         float dy = vc.getDy();
         float x = lc.getX();
         float y = lc.getY();
-        float multiplier = vc.getSpeedMultiplier();
-        float newX = x+dx*dt*multiplier;
-        float newY = y+dy*dt*multiplier;
+        float newX = x+dx*dt;
+        float newY = y+dy*dt;
+
+        if(newY > Gdx.graphics.getHeight()) {
+            newX = newX;
+        }
 
         lc.setX(newX);
         lc.setY(newY);

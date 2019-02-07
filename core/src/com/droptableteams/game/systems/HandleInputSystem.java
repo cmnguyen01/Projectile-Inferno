@@ -4,7 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.components.AssetManagerComponent;
+import com.droptableteams.game.components.MoveDirectionComponent;
 import com.droptableteams.game.components.VelocityComponent;
+import com.droptableteams.game.factories.PlayerBulletEntityFactory;
 
 public class HandleInputSystem implements ISystem {
     private int _id;
@@ -30,14 +33,20 @@ public class HandleInputSystem implements ISystem {
     @Override
     public void update() {
         VelocityComponent vc = (VelocityComponent)_cm.getComponent(_id, "VelocityComponent");
+        MoveDirectionComponent mdc = (MoveDirectionComponent)_cm.getComponent(_id, "MoveDirectionComponent");
+        AssetManagerComponent amc = (AssetManagerComponent)_cm.getComponent(-1, "AssetManagerComponent");
         boolean left = Gdx.input.isKeyPressed(Input.Keys.LEFT);
         boolean right = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
         boolean up = Gdx.input.isKeyPressed(Input.Keys.UP);
         boolean dn = Gdx.input.isKeyPressed(Input.Keys.DOWN);
         boolean speedButton = Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT);
+        boolean fireButton = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
 
         if(speedButton){
             vc.toggleSpeedMultiplier();
+        }
+        if(fireButton) {
+             PlayerBulletEntityFactory.create(amc.getAssetManager());
         }
 
         if(left && right) {
@@ -50,48 +59,38 @@ public class HandleInputSystem implements ISystem {
         }
 
         if(!left && !right) {
-            vc.setDx(0);
             if(up) {
-                vc.setDy(vc.getBaseSpeed());
+                mdc.setRadians((float)(Math.PI/2));
             }
             else if(dn) {
-                vc.setDy(vc.getBaseSpeed()*-1);
+                mdc.setRadians((float)(3*Math.PI/2));
             }
             else {
-                vc.setDy(0);
+                mdc.setRadians(null);
             }
         }
         else if(!up && !dn) {
-            vc.setDy(0);
             if(right) {
-                vc.setDx(vc.getBaseSpeed());
+                mdc.setRadians(0f);
             }
             else if(left) {
-                vc.setDx(vc.getBaseSpeed()*-1);
+                mdc.setRadians((float)Math.PI);
             }
             else {
-                vc.setDx(0);
+                mdc.setRadians(null);
             }
         }
         else if(up && right) {
-            float axisSpeed = vc.getBaseSpeed()/(float)Math.sqrt(2.0f);
-            vc.setDx(axisSpeed);
-            vc.setDy(axisSpeed);
+            mdc.setRadians((float)(Math.PI/4));
         }
         else if(up && left) {
-            float axisSpeed = vc.getBaseSpeed()/(float)Math.sqrt(2.0f);
-            vc.setDx(axisSpeed*-1);
-            vc.setDy(axisSpeed);
+            mdc.setRadians((float)(3*Math.PI/4));
         }
         else if(dn && right) {
-            float axisSpeed = vc.getBaseSpeed()/(float)Math.sqrt(2.0f);
-            vc.setDx(axisSpeed);
-            vc.setDy(axisSpeed*-1);
+            mdc.setRadians((float)(7*Math.PI/4));
         }
         else if(dn && left) {
-            float axisSpeed = vc.getBaseSpeed()/(float)Math.sqrt(2.0f);
-            vc.setDx(axisSpeed*-1);
-            vc.setDy(axisSpeed*-1);
+            mdc.setRadians((float)(5*Math.PI/4));
         }
     }
 }

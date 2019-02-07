@@ -10,23 +10,21 @@ import com.droptableteams.game.factories.GameEntityFactory;
 import com.droptableteams.game.factories.PlayerEntityFactory;
 import com.droptableteams.game.statics.SystemUpdateOrder;
 
-import java.util.ArrayList;
-
 public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch _batch;
-	private AssetManager _assetManager;
+	private AssetManager _am;
 
 	private ECSEngine _ecsEngine;
 	
 	@Override
 	public void create () {
 		_batch = new SpriteBatch();
-        _assetManager = new AssetManager();
+        _am = new AssetManager();
         loadAssets();
         _ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
-		GameEntityFactory.create(_batch);
-        PlayerEntityFactory.create(_assetManager);
-        EnemyEntityFactory.create(_assetManager);
+		GameEntityFactory.create(_batch, _am);
+        PlayerEntityFactory.create(_am);
+        EnemyEntityFactory.create(_am);
 	}
 
 	@Override
@@ -40,7 +38,8 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	private void loadAssets() {
-	    _assetManager.load("vvrv.png", Texture.class);
-        while(!_assetManager.update());
+	    _am.load("vvrv.png", Texture.class);
+	    _am.load("sprites/playerbullet.png", Texture.class);
+        while(!_am.update());
     }
 }
