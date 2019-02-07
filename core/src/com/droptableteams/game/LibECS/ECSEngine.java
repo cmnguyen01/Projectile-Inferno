@@ -17,6 +17,7 @@ public class ECSEngine {
     private SystemManager _sm;
 
     private String[] _systemUpdateOrder;
+    private ArrayList<Integer> _flaggedForRemoval;
 
     /**
      * A private constructor for the singleton pattern.
@@ -29,17 +30,18 @@ public class ECSEngine {
         _em = EntityManager.getInstance();
         _evm = EventManager.getInstance();
         _sm = SystemManager.getInstance();
+        _flaggedForRemoval = new ArrayList<Integer>();
     }
 
     /**
      * Singleton getter: Creates the ComponentManager if none exists, then returns it.
      *
-     * @param orderedSystemTypes  an array of system types in the order in which they should be processed.
+     * @param systemUpdateOrder  an array of system types in the order in which they should be processed.
      * @return  the singleton ECSEngine.
      */
-    public static ECSEngine getInstance(String[] orderedSystemTypes) {
+    public static ECSEngine getInstance(String[] systemUpdateOrder) {
         if(null == _engine) {
-            _engine = new ECSEngine(orderedSystemTypes);
+            _engine = new ECSEngine(systemUpdateOrder);
         }
         return _engine;
     }
@@ -97,6 +99,17 @@ public class ECSEngine {
         return removed;
     }
 
+    public void flagEntityForRemoval(int id) {
+        _flaggedForRemoval.add(id);
+    }
+
+    private void removeFlagged() {
+        for(Integer id : _flaggedForRemoval) {
+            removeEntity(id);
+        }
+        _flaggedForRemoval.clear();
+    }
+
     /**
      * Called each tick. This calls the update method for each syst_em in the order defined,
      * then dispatches all events created during this tick cycle.
@@ -111,5 +124,6 @@ public class ECSEngine {
             }
         }
         _evm.dispatchEvents();
+        removeFlagged();
     }
 }

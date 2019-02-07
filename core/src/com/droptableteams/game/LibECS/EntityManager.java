@@ -97,7 +97,7 @@ public class EntityManager {
     public boolean removeEntity(int id) {
         if(_entities.containsKey(id)) {
             IEntity e = _entities.remove(id);
-            _entityTypePools.get(e.getType()).remove(e);
+            _entityTypePools.get(e.getType()).remove(id);
             return true;
         }
         return false;

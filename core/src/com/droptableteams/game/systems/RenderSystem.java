@@ -10,6 +10,7 @@ import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.RenderComponent;
 import com.droptableteams.game.components.SpriteComponent;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,11 +45,14 @@ public class RenderSystem implements ISystem {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         for(String type : rc.getEntityRenderOrder()) {
-            Set<Map.Entry<Integer,IEntity>> entities = _em.getEntities(type).entrySet();
-            for(Map.Entry<Integer,IEntity> e : entities) {
-                int id = e.getValue().getId();
-                SpriteComponent sp = (SpriteComponent)_cm.getComponent(id, "SpriteComponent");
-                sp.getSprite().draw(batch);
+            HashMap<Integer, IEntity> entityMap = _em.getEntities(type);
+            if(null != entityMap) {
+                Set<Map.Entry<Integer,IEntity>> entities = entityMap.entrySet();
+                for(Map.Entry<Integer,IEntity> e : entities) {
+                    int id = e.getValue().getId();
+                    SpriteComponent sp = (SpriteComponent)_cm.getComponent(id, "SpriteComponent");
+                    sp.getSprite().draw(batch);
+                }
             }
         }
         batch.end();

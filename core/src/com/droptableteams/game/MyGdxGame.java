@@ -10,40 +10,38 @@ import com.droptableteams.game.factories.GameEntityFactory;
 import com.droptableteams.game.factories.PlayerEntityFactory;
 import com.droptableteams.game.statics.SystemUpdateOrder;
 
-import java.util.ArrayList;
-
 public class MyGdxGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	AssetManager assetManager;
+	private SpriteBatch _batch;
+	private AssetManager _am;
 
-	com.droptableteams.game.LibECS.ECSEngine ecsEngine;
-	ArrayList<String> systemTypes;
+	private ECSEngine _ecsEngine;
 	
 	@Override
 	public void create () {
-        assetManager = new AssetManager();
+		_batch = new SpriteBatch();
+        _am = new AssetManager();
         loadAssets();
-        batch = new SpriteBatch();
-        systemTypes = new ArrayList<String>();
-        ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
-		GameEntityFactory.create(batch);
-        PlayerEntityFactory.create(assetManager);
-		EnemyEntityFactory.create(assetManager);
+        _ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
+		GameEntityFactory.create(_batch, _am);
+        PlayerEntityFactory.create(_am);
+        EnemyEntityFactory.create(_am);
 	}
 
 	@Override
 	public void render () {
-        ecsEngine.update();
+        _ecsEngine.update();
 	}
 	
 	@Override
 	public void dispose () {
-        batch.dispose();
+        _batch.dispose();
 	}
 
 	private void loadAssets() {
-	    assetManager.load("vvrv.png", Texture.class);
-		assetManager.load("vvr.png", Texture.class);
-        while(!assetManager.update());
+	    _am.load("vvrv.png", Texture.class);
+	    _am.load("sprites/playerbullet.png", Texture.class);
+	    _am.load("vvr.png", Texture.class);
+        while(!_am.update());
+
     }
 }

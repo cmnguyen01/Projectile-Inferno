@@ -1,0 +1,8 @@
+{
+  "level1": {
+    "waves": [
+      {"time":1.0,"enemyType":"enemyA","locations": [[0.25,1.0],[0.5,1.0],[0.75,1.0]]}
+      {"time":1.0,"enemyType":"enemyB","locations": [[0.375,1.0],[0.625,1.0]]}
+    ]
+  }
+}
