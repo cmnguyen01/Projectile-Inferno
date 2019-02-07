@@ -1,6 +1,5 @@
 package com.droptableteams.game.factories;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,14 +10,16 @@ import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.PlayerBulletEntity;
-import com.droptableteams.game.entities.PlayerEntity;
 import com.droptableteams.game.statics.CustomEntityIds;
+import com.droptableteams.game.statics.Directions;
 import com.droptableteams.game.statics.SystemUpdateOrder;
-import com.droptableteams.game.systems.*;
+import com.droptableteams.game.systems.DespawnOutOfBoundsSystem;
+import com.droptableteams.game.systems.DirectionalMovementSystem;
+import com.droptableteams.game.systems.UpdateLocationSystem;
+import com.droptableteams.game.systems.UpdateSpriteSystem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Factory is not currently very extensible or adaptable
@@ -31,6 +32,23 @@ public class PlayerBulletEntityFactory {
     private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
     private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
+
+    public static String texturePath = "sprites/playerbullet.png";
+    public static float direction = (float)Math.PI/2;
+
+    public static void setArgs(HashMap<String, Object> args) {
+        if(args.containsKey("texturePath")) {
+            texturePath = (String)args.get("texturePath");
+        }
+        if(args.containsKey("direction")) {
+            direction = (Float)args.get("direction");
+        }
+    }
+
+    public static void resetDefaults() {
+        texturePath = "sprites/playerbullet.png";
+        direction = Directions.UP;
+    }
 
     public static void create(AssetManager assetManager) {
         int id = _engine.acquireEntityId();
@@ -48,7 +66,7 @@ public class PlayerBulletEntityFactory {
         float y = lc.getY();
         float width = 16;
         float height = 16;
-        Sprite sp = new Sprite(am.get("sprites/playerbullet.png", Texture.class));
+        Sprite sp = new Sprite(am.get(texturePath, Texture.class));
         sp.setSize(width,height);
         sp.setCenter(x,y);
         _cl.clear();
@@ -57,7 +75,7 @@ public class PlayerBulletEntityFactory {
         _cl.add(new SizeComponent(id, width,height));
         _cl.add(new VelocityComponent(id, 256));
         _cl.add(new HasBeenInboundsComponent(id, false));
-        _cl.add(new MoveDirectionComponent(id, (float)Math.PI/2));
+        _cl.add(new MoveDirectionComponent(id, direction));
     }
 
     private static void generateSystemList(int id) {

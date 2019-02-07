@@ -49,7 +49,7 @@ public class PlayerEntityFactory {
         _cl.add(new SizeComponent(id, width,height));
         _cl.add(new VelocityComponent(id, 256));
         _cl.add(new MoveDirectionComponent(id, null));
-        _cl.add(new FireControlComponent(id, 0.1f,false));
+        _cl.add(new FireControlComponent(id, 0.125f,false));
     }
 
     private static void generateSystemList(int id) {
