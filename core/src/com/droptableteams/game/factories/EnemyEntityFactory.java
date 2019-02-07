@@ -32,9 +32,11 @@ public class EnemyEntityFactory {
     private static void generateComponentList(int id, AssetManager am) {
         float x = -64;
         float y = Gdx.graphics.getHeight()/2;
-        float width = 32;
-        float height = 32;
-        Sprite sp = new Sprite(am.get("sprites/vvrv.png", Texture.class));
+
+        float width = 48;
+        float height = 48;
+        Sprite sp = new Sprite(am.get("sprites/enemyA.png", Texture.class));
+
         sp.setSize(width,height);
         sp.setCenter(x,y);
         _cl.clear();
