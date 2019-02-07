@@ -10,13 +10,10 @@ import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.PlayerBulletEntity;
-import com.droptableteams.game.statics.CustomEntityIds;
+import com.droptableteams.game.statics.SpecialEntityIds;
 import com.droptableteams.game.statics.Directions;
 import com.droptableteams.game.statics.SystemUpdateOrder;
-import com.droptableteams.game.systems.DespawnOutOfBoundsSystem;
-import com.droptableteams.game.systems.DirectionalMovementSystem;
-import com.droptableteams.game.systems.UpdateLocationSystem;
-import com.droptableteams.game.systems.UpdateSpriteSystem;
+import com.droptableteams.game.systems.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +56,7 @@ public class PlayerBulletEntityFactory {
     }
 
     private static void generateComponentList(int id, AssetManager am) {
-        int playerId = CustomEntityIds.getPlayerEntityId();
+        int playerId = SpecialEntityIds.getPlayerEntityId();
         LocationComponent lc = (LocationComponent)ComponentManager.getInstance().getComponent(playerId, "LocationComponent");
 
         float x = lc.getX();
@@ -84,5 +81,6 @@ public class PlayerBulletEntityFactory {
         _sl.add(new UpdateLocationSystem(id));
         _sl.add(new DespawnOutOfBoundsSystem(id));
         _sl.add(new DirectionalMovementSystem(id));
+        _sl.add(new SpeedModifierSystem(id));
     }
 }

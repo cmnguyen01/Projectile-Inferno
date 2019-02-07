@@ -35,7 +35,7 @@ public class DirectionalMovementSystem implements ISystem {
         float newDy = 0;
         Float angle = mdc.getRadians();
         if(null != angle) {
-            float hyp = vc.getModifiedSpeed();
+            float hyp = vc.getBaseSpeed();
             newDx = (float)Math.cos(angle)*hyp;
             newDy = (float)Math.sin(angle)*hyp;
         }

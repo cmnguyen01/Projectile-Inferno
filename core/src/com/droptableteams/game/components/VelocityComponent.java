@@ -6,16 +6,12 @@ public class VelocityComponent implements IComponent {
     private int _id;
     private String _type;
     private float _baseSpeed;
-    private float _speedMultiplier;
-    private float _slowMultiplier;
     private float _dx;
     private float _dy;
 
     public VelocityComponent(int id, float baseSpeed) {
         _id = id;
         _baseSpeed = baseSpeed;
-        _slowMultiplier = 0.5f;
-        _speedMultiplier = 1;
         _type = "VelocityComponent";
     }
 
@@ -29,23 +25,12 @@ public class VelocityComponent implements IComponent {
         return _type;
     }
 
-
     public float getBaseSpeed() {
         return _baseSpeed;
     }
 
     public void setBaseSpeed(float baseSpeed) {
         _baseSpeed = baseSpeed;
-    }
-
-    public float getModifiedSpeed() { return _baseSpeed * _speedMultiplier; }
-
-    public void toggleSpeedMultiplier(){
-        if(_speedMultiplier == _slowMultiplier){
-            _speedMultiplier = 1;
-        }else {
-            _speedMultiplier = _slowMultiplier;
-        }
     }
 
     public float getDx() {

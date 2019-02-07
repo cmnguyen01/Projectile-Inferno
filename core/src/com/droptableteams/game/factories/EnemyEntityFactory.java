@@ -54,6 +54,7 @@ public class EnemyEntityFactory {
         _sl.add(new UpdateLocationSystem(id));
         _sl.add(new DirectionalMovementSystem(id));
         _sl.add(new DespawnOutOfBoundsSystem(id));
+        _sl.add(new SpeedModifierSystem(id));
     }
 
 }
