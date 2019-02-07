@@ -10,7 +10,7 @@ import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.PlayerEntity;
-import com.droptableteams.game.statics.CustomEntityIds;
+import com.droptableteams.game.statics.SpecialEntityIds;
 import com.droptableteams.game.statics.SystemUpdateOrder;
 import com.droptableteams.game.systems.*;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class PlayerEntityFactory {
     private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
 
     public static void create(AssetManager assetManager) {
-        int id = CustomEntityIds.getPlayerEntityId();
+        int id = SpecialEntityIds.getPlayerEntityId();
         IEntity entity = new PlayerEntity(id);
         generateComponentList(id, assetManager);
         generateSystemList(id);
@@ -62,5 +62,6 @@ public class PlayerEntityFactory {
         _sl.add(new StopAtBoundarySystem(id));
         _sl.add(new DirectionalMovementSystem(id));
         _sl.add(new FireControlSystem(id));
+        _sl.add(new SpeedModifierSystem(id));
     }
 }

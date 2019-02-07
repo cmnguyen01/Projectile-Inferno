@@ -23,12 +23,12 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 		_batch = new SpriteBatch();
-        _am = new AssetManager();
-        loadAssets();
-        _ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
+		_am = new AssetManager();
+		loadAssets();
+		_ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
 		GameEntityFactory.create(_batch, _am);
-        PlayerEntityFactory.create(_am);
-        EnemyEntityFactory.create(_am);
+		PlayerEntityFactory.create(_am);
+		EnemyEntityFactory.create(_am);
 	}
 
 	@Override

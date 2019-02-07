@@ -4,11 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.components.AssetManagerComponent;
 import com.droptableteams.game.components.FireControlComponent;
+import com.droptableteams.game.components.GameCheatsComponent;
 import com.droptableteams.game.components.MoveDirectionComponent;
-import com.droptableteams.game.components.VelocityComponent;
-import com.droptableteams.game.factories.PlayerBulletEntityFactory;
+import com.droptableteams.game.statics.SpecialEntityIds;
 import com.droptableteams.game.statics.Directions;
 
 public class HandleInputSystem implements ISystem {
@@ -34,9 +33,10 @@ public class HandleInputSystem implements ISystem {
 
     @Override
     public void update() {
-        VelocityComponent vc = (VelocityComponent)_cm.getComponent(_id, "VelocityComponent");
         MoveDirectionComponent mdc = (MoveDirectionComponent)_cm.getComponent(_id, "MoveDirectionComponent");
         FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
+        GameCheatsComponent gcc = (GameCheatsComponent)
+                _cm.getComponent(SpecialEntityIds.getGameEntityId(), "GameCheatsComponent");
         boolean left = Gdx.input.isKeyPressed(Input.Keys.LEFT);
         boolean right = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
         boolean up = Gdx.input.isKeyPressed(Input.Keys.UP);
@@ -45,7 +45,7 @@ public class HandleInputSystem implements ISystem {
         boolean fireButton = Gdx.input.isKeyPressed(Input.Keys.SPACE);
 
         if(speedButton){
-            vc.toggleSpeedMultiplier();
+            gcc.toggleSpeedMultiplier();
         }
         if(fireButton) {
              fcc.setFiring(true);

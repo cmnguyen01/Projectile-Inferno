@@ -10,6 +10,7 @@ public class SystemUpdateOrder {
             "FireControlSystem",
             "EnemyMovementSystem",
             "DirectionalMovementSystem",
+            "SpeedModifierSystem",
             "UpdateLocationSystem",
             "StopAtBoundarySystem",
             "UpdateSpriteSystem",
