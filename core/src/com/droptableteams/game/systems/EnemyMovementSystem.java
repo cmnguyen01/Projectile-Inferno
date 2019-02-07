@@ -29,7 +29,6 @@ public class EnemyMovementSystem implements ISystem {
     @Override
     public void update() {
         VelocityComponent vc = (VelocityComponent)_cm.getComponent(_id, "VelocityComponent");
-        LocationComponent lc = (LocationComponent)_cm.getComponent(_id, "LocationComponent");
-        vc.setDx(256f);
+        vc.setDx(vc.getBaseSpeed());
     }
 }
