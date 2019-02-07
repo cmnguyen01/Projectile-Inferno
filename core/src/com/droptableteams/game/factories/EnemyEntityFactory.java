@@ -34,7 +34,7 @@ public class EnemyEntityFactory {
         float y = Gdx.graphics.getHeight()/2;
         float width = 64;
         float height = 64;
-        Sprite sp = new Sprite(am.get("vvr.png", Texture.class));
+        Sprite sp = new Sprite(am.get("sprites/enemyA.png", Texture.class));
         sp.setSize(width,height);
         sp.setCenter(x,y);
         _cl.clear();
