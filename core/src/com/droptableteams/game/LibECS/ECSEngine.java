@@ -36,12 +36,12 @@ public class ECSEngine {
     /**
      * Singleton getter: Creates the ComponentManager if none exists, then returns it.
      *
-     * @param orderedSystemTypes  an array of system types in the order in which they should be processed.
+     * @param systemUpdateOrder  an array of system types in the order in which they should be processed.
      * @return  the singleton ECSEngine.
      */
-    public static ECSEngine getInstance(String[] orderedSystemTypes) {
+    public static ECSEngine getInstance(String[] systemUpdateOrder) {
         if(null == _engine) {
-            _engine = new ECSEngine(orderedSystemTypes);
+            _engine = new ECSEngine(systemUpdateOrder);
         }
         return _engine;
     }
