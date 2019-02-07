@@ -2,8 +2,9 @@ package com.droptableteams.game.statics;
 
 public class EntityRenderOrder {
     private static String[] _entityRenderOrder = {
-            "PlayerEntity",
             "EnemyEntity",
+            "PlayerBulletEntity",
+            "PlayerEntity",
     };
 
     public static String[] get() {

@@ -1,10 +1,12 @@
 package com.droptableteams.game.factories;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.components.AssetManagerComponent;
 import com.droptableteams.game.components.RenderComponent;
 import com.droptableteams.game.entities.GameEntity;
 import com.droptableteams.game.statics.EntityRenderOrder;
@@ -25,21 +27,21 @@ public class GameEntityFactory {
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
     private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
 
-    public static void create(SpriteBatch batch) {
-        int id = _engine.acquireEntityId();
+    public static void create(SpriteBatch batch, AssetManager am) {
+        int id = -1;
         IEntity entity = new GameEntity(id);
-        generateComponentList(id, batch);
-        generateSystemList(id, batch);
+        generateComponentList(id, batch, am);
+        generateSystemList(id);
         _engine.addEntity(entity, _cl, _sl);
     }
 
-    private static void generateComponentList(int id, SpriteBatch batch) {
+    private static void generateComponentList(int id, SpriteBatch batch, AssetManager am) {
         _cl.clear();
-        IComponent c1 = new RenderComponent(id, batch, EntityRenderOrder.get());
-        _cl.add(c1);
+        _cl.add(new RenderComponent(id, batch, EntityRenderOrder.get()));
+        _cl.add(new AssetManagerComponent(id, am));
     }
 
-    private static void generateSystemList(int id, SpriteBatch batch) {
+    private static void generateSystemList(int id) {
         _sl.clear();
         ISystem s1 = new RenderSystem(id);
         _sl.add(s1);

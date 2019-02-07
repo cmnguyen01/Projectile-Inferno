@@ -38,7 +38,7 @@ public class VelocityComponent implements IComponent {
         _baseSpeed = baseSpeed;
     }
 
-    public float getSpeedMultiplier(){ return _speedMultiplier; }
+    public float getModifiedSpeed() { return _baseSpeed * _speedMultiplier; }
 
     public void toggleSpeedMultiplier(){
         if(_speedMultiplier == _slowMultiplier){

@@ -8,16 +8,10 @@ import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.components.LocationComponent;
-import com.droptableteams.game.components.SizeComponent;
-import com.droptableteams.game.components.SpriteComponent;
-import com.droptableteams.game.components.VelocityComponent;
+import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.PlayerEntity;
 import com.droptableteams.game.statics.SystemUpdateOrder;
-import com.droptableteams.game.systems.HandleInputSystem;
-import com.droptableteams.game.systems.StopAtBoundarySystem;
-import com.droptableteams.game.systems.UpdateLocationSystem;
-import com.droptableteams.game.systems.UpdateSpriteSystem;
+import com.droptableteams.game.systems.*;
 
 import java.util.ArrayList;
 
@@ -41,7 +35,7 @@ public class PlayerEntityFactory {
         _engine.addEntity(entity, _cl, _sl);
     }
 
-    private static void generateComponentList(int id, AssetManager am /*, SpriteBatch batch*/) {
+    private static void generateComponentList(int id, AssetManager am) {
         float x = Gdx.graphics.getWidth()/2;
         float y = Gdx.graphics.getHeight()/4;
         float width = 64;
@@ -54,13 +48,15 @@ public class PlayerEntityFactory {
         _cl.add(new LocationComponent(id, x,y));
         _cl.add(new SizeComponent(id, width,height));
         _cl.add(new VelocityComponent(id, 256));
+        _cl.add(new MoveDirectionComponent(id, null));
     }
 
-    private static void generateSystemList(int id/*, SpriteBatch batch*/) {
+    private static void generateSystemList(int id) {
         _sl.clear();
         _sl.add(new UpdateSpriteSystem(id));
         _sl.add(new UpdateLocationSystem(id));
         _sl.add(new HandleInputSystem(id));
         _sl.add(new StopAtBoundarySystem(id));
+        _sl.add(new DirectionalMovementSystem(id));
     }
 }
