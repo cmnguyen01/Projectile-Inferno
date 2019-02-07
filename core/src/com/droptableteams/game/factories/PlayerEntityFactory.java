@@ -40,7 +40,7 @@ public class PlayerEntityFactory {
         float y = Gdx.graphics.getHeight()/4;
         float width = 64;
         float height = 64;
-        Sprite sp = new Sprite(am.get("vvrv.png", Texture.class));
+        Sprite sp = new Sprite(am.get("sprites/vvrv.png", Texture.class));
         sp.setSize(width,height);
         sp.setCenter(x,y);
         _cl.clear();

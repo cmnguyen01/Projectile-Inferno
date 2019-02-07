@@ -34,6 +34,17 @@ public class ECSEngine {
     }
 
     /**
+     * Removes all entities that have been flagged for removal,
+     * as well as their associated components and systems.
+     */
+    private void removeFlagged() {
+        for(Integer id : _flaggedForRemoval) {
+            removeEntity(id);
+        }
+        _flaggedForRemoval.clear();
+    }
+
+    /**
      * Singleton getter: Creates the ComponentManager if none exists, then returns it.
      *
      * @param systemUpdateOrder  an array of system types in the order in which they should be processed.
@@ -99,15 +110,12 @@ public class ECSEngine {
         return removed;
     }
 
+    /**
+     * flag an entity for removal at the end of the current update cycle.
+     * @param id  the id of the entity to remove.
+     */
     public void flagEntityForRemoval(int id) {
         _flaggedForRemoval.add(id);
-    }
-
-    private void removeFlagged() {
-        for(Integer id : _flaggedForRemoval) {
-            removeEntity(id);
-        }
-        _flaggedForRemoval.clear();
     }
 
     /**
