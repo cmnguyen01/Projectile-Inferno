@@ -37,7 +37,7 @@ public class UpdateLocationSystem implements ISystem {
         float dy = vc.getDy();
         float x = lc.getX();
         float y = lc.getY();
-        float multiplier = vc.get_speedMultiplier();
+        float multiplier = vc.getSpeedMultiplier();
         float newX = x+dx*dt*multiplier;
         float newY = y+dy*dt*multiplier;
         if(newX < 0 || newX >= Gdx.graphics.getWidth()){
