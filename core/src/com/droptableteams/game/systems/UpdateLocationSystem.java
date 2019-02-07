@@ -37,23 +37,26 @@ public class UpdateLocationSystem implements ISystem {
         float dy = vc.getDy();
         float x = lc.getX();
         float y = lc.getY();
-        if(x+dx*dt < 0 || x+dx*dt >= Gdx.graphics.getWidth()){
-            if(x+dx*dt >= Gdx.graphics.getWidth()){
+        float multiplier = vc.getSpeedMultiplier();
+        float newX = x+dx*dt*multiplier;
+        float newY = y+dy*dt*multiplier;
+        if(newX < 0 || newX >= Gdx.graphics.getWidth()){
+            if(newX >= Gdx.graphics.getWidth()){
                 lc.setX(Gdx.graphics.getWidth());
             }else if(x+dx*dt < 0){
                 lc.setX(0);
             }
         }else{
-            lc.setX(x+dx*dt);
+            lc.setX(newX);
         }
-        if(y+dy*dt < 0 || y+dy*dt >= Gdx.graphics.getHeight()){
-            if(y+dy*dt > Gdx.graphics.getHeight()){
+        if(newY < 0 || newY >= Gdx.graphics.getHeight()){
+            if(newY > Gdx.graphics.getHeight()){
                 lc.setY(Gdx.graphics.getHeight());
-            }else if(y+dy*dt < 0){
+            }else if(newY < 0){
                 lc.setY(0);
             }
         }else{
-            lc.setY(y+dy*dt);
+            lc.setY(newY);
         }
     }
 }

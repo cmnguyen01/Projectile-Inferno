@@ -12,35 +12,33 @@ import com.droptableteams.game.statics.SystemUpdateOrder;
 import java.util.ArrayList;
 
 public class MyGdxGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	AssetManager assetManager;
+	private SpriteBatch _batch;
+	private AssetManager _assetManager;
 
-	com.droptableteams.game.LibECS.ECSEngine ecsEngine;
-	ArrayList<String> systemTypes;
+	private ECSEngine _ecsEngine;
 	
 	@Override
 	public void create () {
-        assetManager = new AssetManager();
+		_batch = new SpriteBatch();
+        _assetManager = new AssetManager();
         loadAssets();
-        batch = new SpriteBatch();
-        systemTypes = new ArrayList<String>();
-        ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
-		GameEntityFactory.create(batch);
-        PlayerEntityFactory.create(assetManager);
+        _ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
+		GameEntityFactory.create(_batch);
+        PlayerEntityFactory.create(_assetManager);
 	}
 
 	@Override
 	public void render () {
-        ecsEngine.update();
+        _ecsEngine.update();
 	}
 	
 	@Override
 	public void dispose () {
-        batch.dispose();
+        _batch.dispose();
 	}
 
 	private void loadAssets() {
-	    assetManager.load("vvrv.png", Texture.class);
-        while(!assetManager.update());
+	    _assetManager.load("vvrv.png", Texture.class);
+        while(!_assetManager.update());
     }
 }

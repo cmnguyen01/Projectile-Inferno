@@ -55,7 +55,7 @@ public class PlayerEntityFactory {
         _cl.add(c2);
         IComponent c3 = new SizeComponent(id, width,height);
         _cl.add(c3);
-        IComponent c4 = new VelocityComponent(id, 256);
+        IComponent c4 = new VelocityComponent(id, 256, 0.5f);
         _cl.add(c4);
     }
 
