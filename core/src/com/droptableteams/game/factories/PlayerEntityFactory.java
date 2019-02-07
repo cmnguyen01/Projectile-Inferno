@@ -10,9 +10,9 @@ import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.PlayerEntity;
+import com.droptableteams.game.statics.CustomEntityIds;
 import com.droptableteams.game.statics.SystemUpdateOrder;
 import com.droptableteams.game.systems.*;
-
 import java.util.ArrayList;
 
 /**
@@ -27,8 +27,8 @@ public class PlayerEntityFactory {
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
     private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
 
-    public static void create(AssetManager assetManager /*, SpriteBatch batch*/) {
-        int id = _engine.acquireEntityId();
+    public static void create(AssetManager assetManager) {
+        int id = CustomEntityIds.getPlayerEntityId();
         IEntity entity = new PlayerEntity(id);
         generateComponentList(id, assetManager);
         generateSystemList(id);
@@ -40,7 +40,9 @@ public class PlayerEntityFactory {
         float y = Gdx.graphics.getHeight()/4;
         float width = 64;
         float height = 64;
+
         Sprite sp = new Sprite(am.get("sprites/player.png", Texture.class));
+
         sp.setSize(width,height);
         sp.setCenter(x,y);
         _cl.clear();
@@ -49,7 +51,7 @@ public class PlayerEntityFactory {
         _cl.add(new SizeComponent(id, width,height));
         _cl.add(new VelocityComponent(id, 512));
         _cl.add(new MoveDirectionComponent(id, null));
-        _cl.add(new FireControlComponent(id, 0.1f,false));
+        _cl.add(new FireControlComponent(id, 0.125f,false));
     }
 
     private static void generateSystemList(int id) {

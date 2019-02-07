@@ -9,6 +9,7 @@ import com.droptableteams.game.components.FireControlComponent;
 import com.droptableteams.game.components.MoveDirectionComponent;
 import com.droptableteams.game.components.VelocityComponent;
 import com.droptableteams.game.factories.PlayerBulletEntityFactory;
+import com.droptableteams.game.statics.Directions;
 
 public class HandleInputSystem implements ISystem {
     private int _id;
@@ -64,10 +65,10 @@ public class HandleInputSystem implements ISystem {
 
         if(!left && !right) {
             if(up) {
-                mdc.setRadians((float)(Math.PI/2));
+                mdc.setRadians(Directions.UP);
             }
             else if(dn) {
-                mdc.setRadians((float)(3*Math.PI/2));
+                mdc.setRadians(Directions.DOWN);
             }
             else {
                 mdc.setRadians(null);
@@ -75,26 +76,26 @@ public class HandleInputSystem implements ISystem {
         }
         else if(!up && !dn) {
             if(right) {
-                mdc.setRadians(0f);
+                mdc.setRadians(Directions.RIGHT);
             }
             else if(left) {
-                mdc.setRadians((float)Math.PI);
+                mdc.setRadians(Directions.LEFT);
             }
             else {
                 mdc.setRadians(null);
             }
         }
         else if(up && right) {
-            mdc.setRadians((float)(Math.PI/4));
+            mdc.setRadians(Directions.UP_RIGHT);
         }
         else if(up && left) {
-            mdc.setRadians((float)(3*Math.PI/4));
+            mdc.setRadians(Directions.UP_LEFT);
         }
         else if(dn && right) {
-            mdc.setRadians((float)(7*Math.PI/4));
+            mdc.setRadians(Directions.DOWN_RIGHT);
         }
         else if(dn && left) {
-            mdc.setRadians((float)(5*Math.PI/4));
+            mdc.setRadians(Directions.DOWN_LEFT);
         }
     }
 }
