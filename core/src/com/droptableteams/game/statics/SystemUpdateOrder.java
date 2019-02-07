@@ -11,6 +11,7 @@ public class SystemUpdateOrder {
             "UpdateSpriteSystem",
             "RenderSystem",
             "DrawSystem",
+            "EnemyMovementSystem",
     };
 
     public static String[] get() { return _systemUpdateOrder; }
