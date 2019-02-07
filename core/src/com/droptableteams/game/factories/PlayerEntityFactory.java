@@ -49,6 +49,7 @@ public class PlayerEntityFactory {
         _cl.add(new SizeComponent(id, width,height));
         _cl.add(new VelocityComponent(id, 256));
         _cl.add(new MoveDirectionComponent(id, null));
+        _cl.add(new FireControlComponent(id, 0.1f,false));
     }
 
     private static void generateSystemList(int id) {
@@ -58,5 +59,6 @@ public class PlayerEntityFactory {
         _sl.add(new HandleInputSystem(id));
         _sl.add(new StopAtBoundarySystem(id));
         _sl.add(new DirectionalMovementSystem(id));
+        _sl.add(new FireControlSystem(id));
     }
 }
