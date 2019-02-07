@@ -9,6 +9,7 @@ import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.AssetManagerComponent;
 import com.droptableteams.game.components.RenderComponent;
 import com.droptableteams.game.entities.GameEntity;
+import com.droptableteams.game.statics.CustomEntityIds;
 import com.droptableteams.game.statics.EntityRenderOrder;
 import com.droptableteams.game.statics.SystemUpdateOrder;
 import com.droptableteams.game.systems.RenderSystem;
@@ -28,7 +29,7 @@ public class GameEntityFactory {
     private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
 
     public static void create(SpriteBatch batch, AssetManager am) {
-        int id = -1;
+        int id = CustomEntityIds.getGameEntityId();
         IEntity entity = new GameEntity(id);
         generateComponentList(id, batch, am);
         generateSystemList(id);
@@ -43,7 +44,6 @@ public class GameEntityFactory {
 
     private static void generateSystemList(int id) {
         _sl.clear();
-        ISystem s1 = new RenderSystem(id);
-        _sl.add(s1);
+        _sl.add(new RenderSystem(id));
     }
 }

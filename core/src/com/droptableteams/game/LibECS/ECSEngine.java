@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Description goes here...
+ * @author Ian McLerran
+ */
 public class ECSEngine {
     private static ECSEngine _engine;
 
@@ -31,6 +35,17 @@ public class ECSEngine {
         _evm = EventManager.getInstance();
         _sm = SystemManager.getInstance();
         _flaggedForRemoval = new ArrayList<Integer>();
+    }
+
+    /**
+     * Removes all entities that have been flagged for removal,
+     * as well as their associated components and systems.
+     */
+    private void removeFlagged() {
+        for(Integer id : _flaggedForRemoval) {
+            removeEntity(id);
+        }
+        _flaggedForRemoval.clear();
     }
 
     /**
@@ -99,15 +114,12 @@ public class ECSEngine {
         return removed;
     }
 
+    /**
+     * flag an entity for removal at the end of the current update cycle.
+     * @param id  the id of the entity to remove.
+     */
     public void flagEntityForRemoval(int id) {
         _flaggedForRemoval.add(id);
-    }
-
-    private void removeFlagged() {
-        for(Integer id : _flaggedForRemoval) {
-            removeEntity(id);
-        }
-        _flaggedForRemoval.clear();
     }
 
     /**

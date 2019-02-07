@@ -21,7 +21,7 @@ public class EnemyEntityFactory {
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
     private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
 
-    public static void create(AssetManager assetManager /*, SpriteBatch batch*/) {
+    public static void create(AssetManager assetManager) {
         int id = _engine.acquireEntityId();
         IEntity entity = new EnemyEntity(id);
         generateComponentList(id, assetManager);
@@ -34,7 +34,7 @@ public class EnemyEntityFactory {
         float y = Gdx.graphics.getHeight()/2;
         float width = 32;
         float height = 32;
-        Sprite sp = new Sprite(am.get("vvrv.png", Texture.class));
+        Sprite sp = new Sprite(am.get("sprites/vvrv.png", Texture.class));
         sp.setSize(width,height);
         sp.setCenter(x,y);
         _cl.clear();

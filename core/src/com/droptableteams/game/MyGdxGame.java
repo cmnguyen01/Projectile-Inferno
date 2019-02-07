@@ -10,11 +10,15 @@ import com.droptableteams.game.factories.GameEntityFactory;
 import com.droptableteams.game.factories.PlayerEntityFactory;
 import com.droptableteams.game.statics.SystemUpdateOrder;
 
+import java.util.Dictionary;
+import java.util.HashMap;
+
 public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch _batch;
 	private AssetManager _am;
 
 	private ECSEngine _ecsEngine;
+
 	
 	@Override
 	public void create () {
@@ -38,7 +42,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	private void loadAssets() {
-	    _am.load("vvrv.png", Texture.class);
+	    _am.load("sprites/vvrv.png", Texture.class);
 	    _am.load("sprites/playerbullet.png", Texture.class);
         while(!_am.update());
     }
