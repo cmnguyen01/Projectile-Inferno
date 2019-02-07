@@ -12,6 +12,7 @@ import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.PlayerBulletEntity;
 import com.droptableteams.game.entities.PlayerEntity;
+import com.droptableteams.game.statics.CustomEntityIds;
 import com.droptableteams.game.statics.SystemUpdateOrder;
 import com.droptableteams.game.systems.*;
 
@@ -40,12 +41,7 @@ public class PlayerBulletEntityFactory {
     }
 
     private static void generateComponentList(int id, AssetManager am) {
-        HashMap<Integer, IEntity> entities = _engine.getEntityManager().getEntities("PlayerEntity");
-        Map.Entry<Integer, IEntity> entry = entities.entrySet().iterator().next();
-        if(null == entry) {
-            return;
-        }
-        int playerId = entry.getValue().getId();
+        int playerId = CustomEntityIds.getPlayerEntityId();
         LocationComponent lc = (LocationComponent)ComponentManager.getInstance().getComponent(playerId, "LocationComponent");
 
         float x = lc.getX();

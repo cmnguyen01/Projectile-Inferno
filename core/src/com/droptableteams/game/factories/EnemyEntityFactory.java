@@ -21,7 +21,7 @@ public class EnemyEntityFactory {
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
     private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
 
-    public static void create(AssetManager assetManager /*, SpriteBatch batch*/) {
+    public static void create(AssetManager assetManager) {
         int id = _engine.acquireEntityId();
         IEntity entity = new EnemyEntity(id);
         generateComponentList(id, assetManager);

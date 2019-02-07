@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Description goes here...
+ * @author Ian McLerran
+ */
 public class ECSEngine {
     private static ECSEngine _engine;
 
