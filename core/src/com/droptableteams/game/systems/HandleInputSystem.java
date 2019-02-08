@@ -59,6 +59,9 @@ public class HandleInputSystem implements ISystem {
         else if(fpc.getNumberOfBullets() == 3) {
             fpc.setNumberOfBullets(5);
         }
+        else if(fpc.getNumberOfBullets() == 5) {
+            fpc.setNumberOfBullets(24);
+        }
         else {
             fpc.setNumberOfBullets(1);
         }
@@ -66,16 +69,20 @@ public class HandleInputSystem implements ISystem {
 
     private byte setDirectionBitMask() {
         byte input = 0;
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.UP)
+                || Gdx.input.isKeyPressed(Input.Keys.W)) {
             input |= DirectionBitMask.UP;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)
+                || Gdx.input.isKeyPressed(Input.Keys.S)) {
             input |= DirectionBitMask.DOWN;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)
+                || Gdx.input.isKeyPressed(Input.Keys.A)) {
             input |= DirectionBitMask.LEFT;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)
+                || Gdx.input.isKeyPressed(Input.Keys.D)) {
             input |= DirectionBitMask.RIGHT;
         }
         return input;

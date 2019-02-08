@@ -50,7 +50,7 @@ public class PlayerEntityFactory {
         _cl.add(new SpriteComponent(id, sp));
         _cl.add(new LocationComponent(id, x,y));
         _cl.add(new SizeComponent(id, width,height));
-        _cl.add(new VelocityComponent(id, 512));
+        _cl.add(new VelocityComponent(id, 360));
         _cl.add(new MoveDirectionComponent(id, null));
         _cl.add(new FireControlComponent(id, 0.125f,true));
         _cl.add(new FirePatternComponent(id, Directions.UP, 1, (float)Math.PI/12, 0, "PlayerBullet"));

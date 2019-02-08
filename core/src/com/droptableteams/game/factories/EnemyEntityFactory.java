@@ -41,8 +41,8 @@ public class EnemyEntityFactory {
         float x = -64;
         float y = Gdx.graphics.getHeight()/2;
 
-        float width = 48;
-        float height = 48;
+        float width = 52;
+        float height = 52;
         Sprite sp = new Sprite(am.get("sprites/enemyA.png", Texture.class));
 
         sp.setSize(width,height);

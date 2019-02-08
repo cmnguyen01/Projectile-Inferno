@@ -13,9 +13,9 @@ public class BulletTypeFactory {
     }
 
     private static BulletType makePlayerBullet() {
-        float speed = 512;
-        float width = 20;
-        float height = 20;
+        float speed = 430;
+        float width = 25;
+        float height = 25;
         int damage = 0;
         String texture = "sprites/playerBullet.png";
         return new BulletType(speed, width, height, damage, texture);
@@ -23,8 +23,8 @@ public class BulletTypeFactory {
 
     private static BulletType makeEnemyBulletA() {
         float speed = 180;
-        float width = 20;
-        float height = 20;
+        float width = 30;
+        float height = 35;
         int damage = 0;
         String texture = "sprites/enemyBulletA.png";
         return new BulletType(speed, width, height, damage, texture);
