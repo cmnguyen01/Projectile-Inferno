@@ -11,6 +11,7 @@ import com.droptableteams.game.components.MoveDirectionComponent;
 import com.droptableteams.game.util.constants.DirectionBitMask;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.Directions;
+import com.sun.javafx.scene.traversal.Direction;
 
 public class HandleInputSystem implements ISystem {
     private int _id;
@@ -39,13 +40,48 @@ public class HandleInputSystem implements ISystem {
                 _cm.getComponent(SpecialEntityIds.getGameEntityId(), "GameCheatsComponent");
         boolean speedButton = Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT);
         boolean fireModeButton = Gdx.input.isKeyJustPressed(Input.Keys.F);
+        boolean ultimateButton = Gdx.input.isKeyJustPressed(Input.Keys.Q);
+        boolean teeButton = Gdx.input.isKeyJustPressed(Input.Keys.T);
 
         setDirection();
+        if(ultimateButton) {
+            toggleUltimate();
+        }
+        if(teeButton) {
+            toggleTeeMode();
+        }
         if(speedButton){
             gcc.toggleSpeedMultiplier();
         }
         if(fireModeButton) {
             cycleFireMode();
+        }
+    }
+
+    private void toggleUltimate() {
+        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
+        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
+        if(fpc.getNumberOfBullets() < 24) {
+            fpc.setNumberOfBullets(24);
+            fpc.setDeltaTheta((float)Math.PI/6);
+            fcc.setRateOfFire(fcc.getRateOfFire()/2);
+        }
+        else {
+            fpc.setNumberOfBullets(1);
+            fcc.setRateOfFire(fcc.getRateOfFire()*2);
+            fpc.setBaseDirection(Directions.UP);
+            fpc.setDeltaTheta(0);
+        }
+    }
+
+    private void toggleTeeMode() {
+        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
+        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
+        if(fpc.getDividingAngle() != (float)Math.PI/2) {
+            fpc.setDividingAngle((float)Math.PI/2); // hardcoded :(
+        }
+        else {
+            fpc.setDividingAngle((float)Math.PI/12);
         }
     }
 
@@ -72,21 +108,21 @@ public class HandleInputSystem implements ISystem {
     }
 
     private byte setDirectionBitMask() {
+        boolean up = Gdx.input.isKeyPressed(Input.Keys.UP);
+        boolean down = Gdx.input.isKeyPressed(Input.Keys.DOWN);
+        boolean left = Gdx.input.isKeyPressed(Input.Keys.LEFT);
+        boolean right = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
         byte input = 0;
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)
-                || Gdx.input.isKeyPressed(Input.Keys.W)) {
+        if(up && !down) {
             input |= DirectionBitMask.UP;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)
-                || Gdx.input.isKeyPressed(Input.Keys.S)) {
+        if(down && !up) {
             input |= DirectionBitMask.DOWN;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)
-                || Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if(left && !right) {
             input |= DirectionBitMask.LEFT;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)
-                || Gdx.input.isKeyPressed(Input.Keys.D)) {
+        if(right && !left) {
             input |= DirectionBitMask.RIGHT;
         }
         return input;
