@@ -64,25 +64,9 @@ public class FireControlSystem implements ISystem {
         float baseDirection = fpc.getBaseDirection();
         float angle = fpc.getDividingAngle();
 
-//        if(numBullets == 1) {
-//            BulletData bd = new BulletData(fpc.getBaseDirection(), bt.getSpeed(), bt.getWidtch(),bt.getHeight(),
-//                    x, y, bt.getTexture());
-//        }
-//        else if(numBullets > 1 && angle != Math.PI) {
-//            float offset = 0;
-//            if(Math.PI != angle) {
-//                offset = -1*(angle * numBullets)/2;
-//            }
-//            for(int i = 0; i < numBullets; i++) {
-//                float direction = baseDirection + offset;
-//                BulletData bd = new BulletData(direction, bt.getSpeed(), bt.getWidtch(),bt.getHeight(), x, y, bt.getTexture());
-//                BulletEntityFactory.create(amc.getAssetManager(), bd);
-//                offset += angle;
-//            }
-//        }
         float offset = 0;
         if(Math.PI != angle && numBullets > 1) {
-            offset = -1*(angle * numBullets)/2;
+            offset = -1*(angle * (numBullets-1))/2;
         }
         for(int i = 0; i < numBullets; i++) {
             float direction = baseDirection + offset;
