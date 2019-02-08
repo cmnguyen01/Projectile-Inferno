@@ -1,4 +1,4 @@
-package com.droptableteams.game.factories;
+package com.droptableteams.game.builders;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
  *
  * TODO: Rename Factories to Builders -- since not technically factory pattern.
  */
-public class GameEntityFactory {
+public class GameEntityBuilder {
 
     private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
