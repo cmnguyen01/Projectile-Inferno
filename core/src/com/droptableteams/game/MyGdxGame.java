@@ -5,21 +5,20 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.ECSEngine;
+import com.droptableteams.game.factories.BulletEntityFactory;
 import com.droptableteams.game.factories.EnemyEntityFactory;
 import com.droptableteams.game.factories.GameEntityFactory;
 import com.droptableteams.game.factories.PlayerEntityFactory;
-import com.droptableteams.game.statics.SystemUpdateOrder;
-
-import java.util.Dictionary;
-import java.util.HashMap;
+import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
 public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch _batch;
 	private AssetManager _am;
-
 	private ECSEngine _ecsEngine;
 
-	
+	// Temp var for demo
+	private long temporaryLastSpawnVar = 0;
+
 	@Override
 	public void create () {
 		_batch = new SpriteBatch();
@@ -33,7 +32,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-        _ecsEngine.update();
+        temporarySpawnEnemiesMethod();
+	    _ecsEngine.update();
 	}
 	
 	@Override
@@ -43,9 +43,22 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private void loadAssets() {
 	    _am.load("sprites/player.png", Texture.class);
-	    _am.load("sprites/playerbullet.png", Texture.class);
-	    _am.load("sprites/enemyA.png", Texture.class);
+        _am.load("sprites/enemyA.png", Texture.class);
+	    _am.load("sprites/playerBullet.png", Texture.class);
+        _am.load("sprites/enemyBulletA.png", Texture.class);
         while(!_am.update());
 
+    }
+
+    /**
+     * temporary method for demo purposes.
+     */
+    private void temporarySpawnEnemiesMethod() {
+        long time = System.nanoTime();
+        long deltaTime = time - temporaryLastSpawnVar;
+        if((float)(deltaTime/Math.pow(10,9)) > 5.0f) {
+            EnemyEntityFactory.create(_am);
+            temporaryLastSpawnVar = time;
+        }
     }
 }

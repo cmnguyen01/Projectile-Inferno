@@ -10,8 +10,9 @@ import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.PlayerEntity;
-import com.droptableteams.game.statics.SpecialEntityIds;
-import com.droptableteams.game.statics.SystemUpdateOrder;
+import com.droptableteams.game.util.constants.Directions;
+import com.droptableteams.game.util.constants.SpecialEntityIds;
+import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.systems.*;
 import java.util.ArrayList;
 
@@ -20,6 +21,8 @@ import java.util.ArrayList;
  * for use with script inputs or other forms of argument.
  *
  * TODO: Redesign Factory, and consider building an interface.
+ *
+ * TODO: Rename Factories to Builders -- since not technically factory pattern.
  */
 public class PlayerEntityFactory {
 
@@ -40,9 +43,7 @@ public class PlayerEntityFactory {
         float y = Gdx.graphics.getHeight()/4;
         float width = 64;
         float height = 64;
-
         Sprite sp = new Sprite(am.get("sprites/player.png", Texture.class));
-
         sp.setSize(width,height);
         sp.setCenter(x,y);
         _cl.clear();
@@ -52,6 +53,7 @@ public class PlayerEntityFactory {
         _cl.add(new VelocityComponent(id, 512));
         _cl.add(new MoveDirectionComponent(id, null));
         _cl.add(new FireControlComponent(id, 0.125f,false));
+        _cl.add(new FirePatternComponent(id, Directions.UP, 1, 0, 0, "PlayerBullet"));
     }
 
     private static void generateSystemList(int id) {

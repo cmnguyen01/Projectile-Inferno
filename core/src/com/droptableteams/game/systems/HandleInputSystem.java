@@ -7,8 +7,8 @@ import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.FireControlComponent;
 import com.droptableteams.game.components.GameCheatsComponent;
 import com.droptableteams.game.components.MoveDirectionComponent;
-import com.droptableteams.game.statics.SpecialEntityIds;
-import com.droptableteams.game.statics.Directions;
+import com.droptableteams.game.util.constants.SpecialEntityIds;
+import com.droptableteams.game.util.constants.Directions;
 
 public class HandleInputSystem implements ISystem {
     private int _id;
