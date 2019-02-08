@@ -44,14 +44,10 @@ public class FireControlSystem implements ISystem {
         float newDirection = (fpc.getDeltaTheta()*Gdx.graphics.getDeltaTime()*gcc.getSpeedMultiplier())+fpc.getBaseDirection();
         fpc.setBaseDirection(newDirection);
 
-        BulletData bd = new BulletData(fpc.getBaseDirection(), bt.getSpeed(), bt.getWidtch(),bt.getHeight(),
-                lc.getX(), lc.getY(), bt.getTexture());
-
         if(fcc.isFiring()) {
             long time = System.nanoTime();
             long deltaTime = time - fcc.getLastFired();
             if((float)(deltaTime/Math.pow(10,9)*gcc.getSpeedMultiplier()) > fcc.getRateOfFire()) {
-                //BulletEntityFactory.create(amc.getAssetManager(), bd);
                 spawnBullets(fpc, amc, lc.getX(), lc.getY());
                 fcc.setLastFired(time);
             }
