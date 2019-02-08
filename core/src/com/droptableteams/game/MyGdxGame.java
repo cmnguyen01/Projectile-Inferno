@@ -4,11 +4,14 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
+import com.droptableteams.game.components.GameCheatsComponent;
 import com.droptableteams.game.factories.BulletEntityFactory;
 import com.droptableteams.game.factories.EnemyEntityFactory;
 import com.droptableteams.game.factories.GameEntityFactory;
 import com.droptableteams.game.factories.PlayerEntityFactory;
+import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
 public class MyGdxGame extends ApplicationAdapter {
@@ -27,7 +30,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		_ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
 		GameEntityFactory.create(_batch, _am);
 		PlayerEntityFactory.create(_am);
-		EnemyEntityFactory.create(_am);
+		//EnemyEntityFactory.create(_am);
 	}
 
 	@Override
@@ -55,8 +58,10 @@ public class MyGdxGame extends ApplicationAdapter {
      */
     private void temporarySpawnEnemiesMethod() {
         long time = System.nanoTime();
+		ComponentManager cm = _ecsEngine.getComponentManager();
+        GameCheatsComponent gcc = (GameCheatsComponent) cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
         long deltaTime = time - temporaryLastSpawnVar;
-        if((float)(deltaTime/Math.pow(10,9)) > 5.0f) {
+        if((float)(deltaTime/Math.pow(10,9)) > 10.0f/gcc.getSpeedMultiplier()) {
             EnemyEntityFactory.create(_am);
             temporaryLastSpawnVar = time;
         }
