@@ -8,6 +8,7 @@ import com.droptableteams.game.components.FireControlComponent;
 import com.droptableteams.game.components.FirePatternComponent;
 import com.droptableteams.game.components.GameCheatsComponent;
 import com.droptableteams.game.components.MoveDirectionComponent;
+import com.droptableteams.game.util.constants.DirectionBitMask;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.Directions;
 
@@ -39,77 +40,75 @@ public class HandleInputSystem implements ISystem {
         FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
         GameCheatsComponent gcc = (GameCheatsComponent)
                 _cm.getComponent(SpecialEntityIds.getGameEntityId(), "GameCheatsComponent");
-        boolean left = Gdx.input.isKeyPressed(Input.Keys.LEFT);
-        boolean right = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
-        boolean up = Gdx.input.isKeyPressed(Input.Keys.UP);
-        boolean dn = Gdx.input.isKeyPressed(Input.Keys.DOWN);
         boolean speedButton = Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT);
-        boolean fireButton = Gdx.input.isKeyPressed(Input.Keys.SPACE);
         boolean fireModeButton = Gdx.input.isKeyJustPressed(Input.Keys.F);
 
+        setDirection(mdc);
         if(speedButton){
             gcc.toggleSpeedMultiplier();
         }
-        if(fireButton) {
-             fcc.setFiring(true);
+        if(fireModeButton) {
+            cycleFireMode(fpc);
+        }
+    }
+
+    private void cycleFireMode(FirePatternComponent fpc) {
+        if(fpc.getNumberOfBullets() == 1) {
+            fpc.setNumberOfBullets(3);
+        }
+        else if(fpc.getNumberOfBullets() == 3) {
+            fpc.setNumberOfBullets(5);
         }
         else {
-            fcc.setFiring(false);
+            fpc.setNumberOfBullets(1);
         }
-        if(fireModeButton) {
-            if(fpc.getNumberOfBullets() == 1) {
-                fpc.setNumberOfBullets(3);
-            }
-            else if(fpc.getNumberOfBullets() == 3) {
-                fpc.setNumberOfBullets(5);
-            }
-            else {
-                fpc.setNumberOfBullets(1);
-            }
-        }
+    }
 
-        if(left && right) {
-            left = false;
-            right = false;
+    private byte setDirectionBitMask() {
+        byte input = 0;
+        if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            input |= DirectionBitMask.UP;
         }
-        if(up && dn) {
-            up = false;
-            dn = false;
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            input |= DirectionBitMask.DOWN;
         }
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            input |= DirectionBitMask.LEFT;
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            input |= DirectionBitMask.RIGHT;
+        }
+        return input;
+    }
 
-        if(!left && !right) {
-            if(up) {
-                mdc.setRadians(Directions.UP);
-            }
-            else if(dn) {
-                mdc.setRadians(Directions.DOWN);
-            }
-            else {
-                mdc.setRadians(null);
-            }
-        }
-        else if(!up && !dn) {
-            if(right) {
-                mdc.setRadians(Directions.RIGHT);
-            }
-            else if(left) {
+    private void setDirection(MoveDirectionComponent mdc) {
+        switch (setDirectionBitMask()) {
+            case DirectionBitMask.LEFT:
                 mdc.setRadians(Directions.LEFT);
-            }
-            else {
+                break;
+            case DirectionBitMask.UP_LEFT:
+                mdc.setRadians(Directions.UP_LEFT);
+                break;
+            case DirectionBitMask.UP:
+                mdc.setRadians(Directions.UP);
+                break;
+            case DirectionBitMask.UP_RIGHT:
+                mdc.setRadians(Directions.UP_RIGHT);
+                break;
+            case DirectionBitMask.RIGHT:
+                mdc.setRadians(Directions.RIGHT);
+                break;
+            case DirectionBitMask.DOWN_RIGHT:
+                mdc.setRadians(Directions.DOWN_RIGHT);
+                break;
+            case DirectionBitMask.DOWN:
+                mdc.setRadians(Directions.DOWN);
+                break;
+            case DirectionBitMask.DOWN_LEFT:
+                mdc.setRadians(Directions.DOWN_LEFT);
+                break;
+            default:
                 mdc.setRadians(null);
-            }
-        }
-        else if(up && right) {
-            mdc.setRadians(Directions.UP_RIGHT);
-        }
-        else if(up && left) {
-            mdc.setRadians(Directions.UP_LEFT);
-        }
-        else if(dn && right) {
-            mdc.setRadians(Directions.DOWN_RIGHT);
-        }
-        else if(dn && left) {
-            mdc.setRadians(Directions.DOWN_LEFT);
         }
     }
 }
