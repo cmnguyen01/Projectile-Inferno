@@ -1,14 +1,18 @@
 package com.droptableteams.game.factories;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.components.AssetManagerComponent;
+import com.droptableteams.game.components.GameCheatsComponent;
 import com.droptableteams.game.components.RenderComponent;
 import com.droptableteams.game.entities.GameEntity;
-import com.droptableteams.game.statics.EntityRenderOrder;
-import com.droptableteams.game.statics.OrderedSystemTypes;
+import com.droptableteams.game.util.constants.SpecialEntityIds;
+import com.droptableteams.game.util.constants.EntityRenderOrder;
+import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.systems.RenderSystem;
 
 import java.util.ArrayList;
@@ -18,30 +22,32 @@ import java.util.ArrayList;
  * for use with script inputs or other forms of argument.
  *
  * TODO: Redesign Factory, and consider building an interface.
+ *
+ * TODO: Rename Factories to Builders -- since not technically factory pattern.
  */
 public class GameEntityFactory {
 
-    private static ECSEngine _engine = ECSEngine.getInstance(OrderedSystemTypes.get());
+    private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
     private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
 
-    public static void create(SpriteBatch batch) {
-        int id = _engine.acquireEntityId();
+    public static void create(SpriteBatch batch, AssetManager am) {
+        int id = SpecialEntityIds.getGameEntityId();
         IEntity entity = new GameEntity(id);
-        generateComponentList(id, batch);
-        generateSystemList(id, batch);
+        generateComponentList(id, batch, am);
+        generateSystemList(id);
         _engine.addEntity(entity, _cl, _sl);
     }
 
-    private static void generateComponentList(int id, SpriteBatch batch) {
+    private static void generateComponentList(int id, SpriteBatch batch, AssetManager am) {
         _cl.clear();
-        IComponent c1 = new RenderComponent(id, batch, EntityRenderOrder.get());
-        _cl.add(c1);
+        _cl.add(new RenderComponent(id, batch, EntityRenderOrder.get()));
+        _cl.add(new AssetManagerComponent(id, am));
+        _cl.add(new GameCheatsComponent(id, 0.5f));
     }
 
-    private static void generateSystemList(int id, SpriteBatch batch) {
+    private static void generateSystemList(int id) {
         _sl.clear();
-        ISystem s1 = new RenderSystem(id);
-        _sl.add(s1);
+        _sl.add(new RenderSystem(id));
     }
 }

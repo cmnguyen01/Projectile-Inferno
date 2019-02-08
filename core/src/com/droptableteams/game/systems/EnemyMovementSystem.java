@@ -1,21 +1,18 @@
 package com.droptableteams.game.systems;
 
-import com.badlogic.gdx.Gdx;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.VelocityComponent;
 
-import java.io.Console;
-
-public class UpdateLocationSystem implements ISystem {
+public class EnemyMovementSystem implements ISystem {
     private int _id;
     private String _type;
-    ComponentManager _cm;
+    private ComponentManager _cm;
 
-    public UpdateLocationSystem(int id) {
+    public EnemyMovementSystem(int id){
         _id = id;
-        _type = "UpdateLocationSystem";
+        _type = "EnemyMovementSystem";
         _cm = ComponentManager.getInstance();
     }
 
@@ -31,22 +28,11 @@ public class UpdateLocationSystem implements ISystem {
 
     @Override
     public void update() {
-        LocationComponent lc = (LocationComponent)_cm.getComponent(_id, "LocationComponent");
         VelocityComponent vc = (VelocityComponent)_cm.getComponent(_id, "VelocityComponent");
 
-        float dt = Gdx.graphics.getDeltaTime();
-        float dx = vc.getDx();
-        float dy = vc.getDy();
-        float x = lc.getX();
-        float y = lc.getY();
-        float newX = x+dx*dt;
-        float newY = y+dy*dt;
+        vc.setDx(vc.getBaseSpeed());
 
-        if(newY > Gdx.graphics.getHeight()) {
-            newX = newX;
-        }
+        vc.setDx(48f);
 
-        lc.setX(newX);
-        lc.setY(newY);
     }
 }

@@ -4,7 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.components.VelocityComponent;
+import com.droptableteams.game.components.FireControlComponent;
+import com.droptableteams.game.components.FirePatternComponent;
+import com.droptableteams.game.components.GameCheatsComponent;
+import com.droptableteams.game.components.MoveDirectionComponent;
+import com.droptableteams.game.util.constants.DirectionBitMask;
+import com.droptableteams.game.util.constants.SpecialEntityIds;
+import com.droptableteams.game.util.constants.Directions;
 
 public class HandleInputSystem implements ISystem {
     private int _id;
@@ -29,72 +35,92 @@ public class HandleInputSystem implements ISystem {
 
     @Override
     public void update() {
-        VelocityComponent vc = (VelocityComponent)_cm.getComponent(_id, "VelocityComponent");
-        boolean left = Gdx.input.isKeyPressed(Input.Keys.LEFT);
-        boolean right = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
-        boolean up = Gdx.input.isKeyPressed(Input.Keys.UP);
-        boolean dn = Gdx.input.isKeyPressed(Input.Keys.DOWN);
+        GameCheatsComponent gcc = (GameCheatsComponent)
+                _cm.getComponent(SpecialEntityIds.getGameEntityId(), "GameCheatsComponent");
         boolean speedButton = Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT);
+        boolean fireModeButton = Gdx.input.isKeyJustPressed(Input.Keys.F);
 
-
-
+        setDirection();
         if(speedButton){
-            VelocityComponent velocity = (VelocityComponent)_cm.getComponent(_id, "VelocityComponent");
-            velocity.set_speedMultiplier();
+            gcc.toggleSpeedMultiplier();
         }
+        if(fireModeButton) {
+            cycleFireMode();
+        }
+    }
 
-        if(left && right) {
-            left = false;
-            right = false;
+    private void cycleFireMode() {
+        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
+        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
+        if(fpc.getNumberOfBullets() == 1) {
+            fpc.setNumberOfBullets(3);
         }
-        if(up && dn) {
-            up = false;
-            dn = false;
+        else if(fpc.getNumberOfBullets() == 3) {
+            fpc.setNumberOfBullets(5);
         }
+        else if(fpc.getNumberOfBullets() == 5) {
+            fpc.setNumberOfBullets(24);
+            fpc.setDeltaTheta((float)Math.PI/6);
+            fcc.setRateOfFire(fcc.getRateOfFire()/2);
+        }
+        else {
+            fpc.setNumberOfBullets(1);
+            fcc.setRateOfFire(fcc.getRateOfFire()*2);
+            fpc.setBaseDirection(Directions.UP);
+            fpc.setDeltaTheta(0);
+        }
+    }
 
-        if(!left && !right) {
-            vc.setDx(0);
-            if(up) {
-                vc.setDy(vc.getBaseSpeed());
-            }
-            else if(dn) {
-                vc.setDy(vc.getBaseSpeed()*-1);
-            }
-            else {
-                vc.setDy(0);
-            }
+    private byte setDirectionBitMask() {
+        byte input = 0;
+        if(Gdx.input.isKeyPressed(Input.Keys.UP)
+                || Gdx.input.isKeyPressed(Input.Keys.W)) {
+            input |= DirectionBitMask.UP;
         }
-        else if(!up && !dn) {
-            vc.setDy(0);
-            if(right) {
-                vc.setDx(vc.getBaseSpeed());
-            }
-            else if(left) {
-                vc.setDx(vc.getBaseSpeed()*-1);
-            }
-            else {
-                vc.setDx(0);
-            }
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)
+                || Gdx.input.isKeyPressed(Input.Keys.S)) {
+            input |= DirectionBitMask.DOWN;
         }
-        else if(up && right) {
-            float axisSpeed = vc.getBaseSpeed()/(float)Math.sqrt(2.0f);
-            vc.setDx(axisSpeed);
-            vc.setDy(axisSpeed);
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)
+                || Gdx.input.isKeyPressed(Input.Keys.A)) {
+            input |= DirectionBitMask.LEFT;
         }
-        else if(up && left) {
-            float axisSpeed = vc.getBaseSpeed()/(float)Math.sqrt(2.0f);
-            vc.setDx(axisSpeed*-1);
-            vc.setDy(axisSpeed);
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)
+                || Gdx.input.isKeyPressed(Input.Keys.D)) {
+            input |= DirectionBitMask.RIGHT;
         }
-        else if(dn && right) {
-            float axisSpeed = vc.getBaseSpeed()/(float)Math.sqrt(2.0f);
-            vc.setDx(axisSpeed);
-            vc.setDy(axisSpeed*-1);
-        }
-        else if(dn && left) {
-            float axisSpeed = vc.getBaseSpeed()/(float)Math.sqrt(2.0f);
-            vc.setDx(axisSpeed*-1);
-            vc.setDy(axisSpeed*-1);
+        return input;
+    }
+
+    private void setDirection() {
+        MoveDirectionComponent mdc = (MoveDirectionComponent)_cm.getComponent(_id, "MoveDirectionComponent");
+        switch (setDirectionBitMask()) {
+            case DirectionBitMask.LEFT:
+                mdc.setRadians(Directions.LEFT);
+                break;
+            case DirectionBitMask.UP_LEFT:
+                mdc.setRadians(Directions.UP_LEFT);
+                break;
+            case DirectionBitMask.UP:
+                mdc.setRadians(Directions.UP);
+                break;
+            case DirectionBitMask.UP_RIGHT:
+                mdc.setRadians(Directions.UP_RIGHT);
+                break;
+            case DirectionBitMask.RIGHT:
+                mdc.setRadians(Directions.RIGHT);
+                break;
+            case DirectionBitMask.DOWN_RIGHT:
+                mdc.setRadians(Directions.DOWN_RIGHT);
+                break;
+            case DirectionBitMask.DOWN:
+                mdc.setRadians(Directions.DOWN);
+                break;
+            case DirectionBitMask.DOWN_LEFT:
+                mdc.setRadians(Directions.DOWN_LEFT);
+                break;
+            default:
+                mdc.setRadians(null);
         }
     }
 }
