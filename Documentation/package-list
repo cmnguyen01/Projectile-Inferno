@@ -1,8 +1,0 @@
-com.droptableteams.game
-com.droptableteams.game.LibECS
-com.droptableteams.game.LibECS.interfaces
-com.droptableteams.game.components
-com.droptableteams.game.entities
-com.droptableteams.game.factories
-com.droptableteams.game.statics
-com.droptableteams.game.systems

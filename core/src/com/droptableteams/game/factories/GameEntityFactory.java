@@ -10,9 +10,9 @@ import com.droptableteams.game.components.AssetManagerComponent;
 import com.droptableteams.game.components.GameCheatsComponent;
 import com.droptableteams.game.components.RenderComponent;
 import com.droptableteams.game.entities.GameEntity;
-import com.droptableteams.game.statics.SpecialEntityIds;
-import com.droptableteams.game.statics.EntityRenderOrder;
-import com.droptableteams.game.statics.SystemUpdateOrder;
+import com.droptableteams.game.util.constants.SpecialEntityIds;
+import com.droptableteams.game.util.constants.EntityRenderOrder;
+import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.systems.RenderSystem;
 
 import java.util.ArrayList;
@@ -22,6 +22,8 @@ import java.util.ArrayList;
  * for use with script inputs or other forms of argument.
  *
  * TODO: Redesign Factory, and consider building an interface.
+ *
+ * TODO: Rename Factories to Builders -- since not technically factory pattern.
  */
 public class GameEntityFactory {
 
