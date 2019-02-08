@@ -35,24 +35,23 @@ public class HandleInputSystem implements ISystem {
 
     @Override
     public void update() {
-        MoveDirectionComponent mdc = (MoveDirectionComponent)_cm.getComponent(_id, "MoveDirectionComponent");
-        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
-        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
         GameCheatsComponent gcc = (GameCheatsComponent)
                 _cm.getComponent(SpecialEntityIds.getGameEntityId(), "GameCheatsComponent");
         boolean speedButton = Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT);
         boolean fireModeButton = Gdx.input.isKeyJustPressed(Input.Keys.F);
 
-        setDirection(mdc);
+        setDirection();
         if(speedButton){
             gcc.toggleSpeedMultiplier();
         }
         if(fireModeButton) {
-            cycleFireMode(fpc);
+            cycleFireMode();
         }
     }
 
-    private void cycleFireMode(FirePatternComponent fpc) {
+    private void cycleFireMode() {
+        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
+        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
         if(fpc.getNumberOfBullets() == 1) {
             fpc.setNumberOfBullets(3);
         }
@@ -61,9 +60,14 @@ public class HandleInputSystem implements ISystem {
         }
         else if(fpc.getNumberOfBullets() == 5) {
             fpc.setNumberOfBullets(24);
+            fpc.setDeltaTheta((float)Math.PI/6);
+            fcc.setRateOfFire(fcc.getRateOfFire()/2);
         }
         else {
             fpc.setNumberOfBullets(1);
+            fcc.setRateOfFire(fcc.getRateOfFire()*2);
+            fpc.setBaseDirection(Directions.UP);
+            fpc.setDeltaTheta(0);
         }
     }
 
@@ -88,7 +92,8 @@ public class HandleInputSystem implements ISystem {
         return input;
     }
 
-    private void setDirection(MoveDirectionComponent mdc) {
+    private void setDirection() {
+        MoveDirectionComponent mdc = (MoveDirectionComponent)_cm.getComponent(_id, "MoveDirectionComponent");
         switch (setDirectionBitMask()) {
             case DirectionBitMask.LEFT:
                 mdc.setRadians(Directions.LEFT);
