@@ -10,19 +10,27 @@ public class FirePatternComponent implements IComponent {
     private String _type;
     private float _baseDirection;
     private int _numberOfBullets;
-    private int _dividingAngle;
+    private float _dividingAngle;
     private float _deltaTheta;
-    private boolean _splitAroundBaseDirection;
     private String _bulletType;
 
+    public FirePatternComponent(int id, float baseDirection, String bulletType) {
+        _id = id;
+        _baseDirection = baseDirection; // TODO: centerDirection is redundant/unnecessary
+        _numberOfBullets = 1;
+        _dividingAngle = 0;
+        _deltaTheta = 0;
+        _bulletType = bulletType;
+        _type = "FirePatternComponent";
+    }
+
     public FirePatternComponent(int id, float baseDirection, int numberOfBullets,
-                                int dividingAngle, float deltaTheta, String bulletType) {
+                                float dividingAngle, float deltaTheta, String bulletType) {
         _id = id;
         _baseDirection = baseDirection;
         _numberOfBullets = numberOfBullets;
         _dividingAngle = dividingAngle;
         _deltaTheta = deltaTheta;
-        _splitAroundBaseDirection = false;
         _bulletType = bulletType;
         _type = "FirePatternComponent";
     }
@@ -53,20 +61,12 @@ public class FirePatternComponent implements IComponent {
         _numberOfBullets = numberOfBullets;
     }
 
-    public int getDividingAngle() {
+    public float getDividingAngle() {
         return _dividingAngle;
     }
 
-    public void set_dividingAngle(int dividingAngle) {
+    public void setDividingAngle(float dividingAngle) {
         _dividingAngle = dividingAngle;
-    }
-
-    public boolean isSplitAroundBaseDirection() {
-        return _splitAroundBaseDirection;
-    }
-
-    public void splitAroundBaseDirection(boolean splitForEven) {
-        _splitAroundBaseDirection = splitForEven;
     }
 
     public float getDeltaTheta() { return _deltaTheta; }

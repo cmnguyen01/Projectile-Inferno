@@ -40,17 +40,56 @@ public class FireControlSystem implements ISystem {
         GameCheatsComponent gcc = (GameCheatsComponent) _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
         BulletType bt = BulletTypeFactory.make(fpc.getBulletType());
 
+        // apply fire pattern rotation
         float newDirection = (fpc.getDeltaTheta()*Gdx.graphics.getDeltaTime()*gcc.getSpeedMultiplier())+fpc.getBaseDirection();
         fpc.setBaseDirection(newDirection);
-        BulletData bd = new BulletData(fpc.getBaseDirection(),
-                bt.getSpeed(), 16,16, lc.getX(), lc.getY(), bt.getTexture());
+
+        BulletData bd = new BulletData(fpc.getBaseDirection(), bt.getSpeed(), bt.getWidtch(),bt.getHeight(),
+                lc.getX(), lc.getY(), bt.getTexture());
+
         if(fcc.isFiring()) {
             long time = System.nanoTime();
             long deltaTime = time - fcc.getLastFired();
             if((float)(deltaTime/Math.pow(10,9)*gcc.getSpeedMultiplier()) > fcc.getRateOfFire()) {
-                BulletEntityFactory.create(amc.getAssetManager(), bd);
+                //BulletEntityFactory.create(amc.getAssetManager(), bd);
+                spawnBullets(fpc, amc, lc.getX(), lc.getY());
                 fcc.setLastFired(time);
             }
         }
+    }
+
+    private void spawnBullets(FirePatternComponent fpc, AssetManagerComponent amc, float x, float y) {
+        BulletType bt = BulletTypeFactory.make(fpc.getBulletType());
+        int numBullets = fpc.getNumberOfBullets();
+        float baseDirection = fpc.getBaseDirection();
+        float angle = fpc.getDividingAngle();
+
+//        if(numBullets == 1) {
+//            BulletData bd = new BulletData(fpc.getBaseDirection(), bt.getSpeed(), bt.getWidtch(),bt.getHeight(),
+//                    x, y, bt.getTexture());
+//        }
+//        else if(numBullets > 1 && angle != Math.PI) {
+//            float offset = 0;
+//            if(Math.PI != angle) {
+//                offset = -1*(angle * numBullets)/2;
+//            }
+//            for(int i = 0; i < numBullets; i++) {
+//                float direction = baseDirection + offset;
+//                BulletData bd = new BulletData(direction, bt.getSpeed(), bt.getWidtch(),bt.getHeight(), x, y, bt.getTexture());
+//                BulletEntityFactory.create(amc.getAssetManager(), bd);
+//                offset += angle;
+//            }
+//        }
+        float offset = 0;
+        if(Math.PI != angle && numBullets > 1) {
+            offset = -1*(angle * numBullets)/2;
+        }
+        for(int i = 0; i < numBullets; i++) {
+            float direction = baseDirection + offset;
+            BulletData bd = new BulletData(direction, bt.getSpeed(), bt.getWidtch(),bt.getHeight(), x, y, bt.getTexture());
+            BulletEntityFactory.create(amc.getAssetManager(), bd);
+            offset += angle;
+        }
+
     }
 }

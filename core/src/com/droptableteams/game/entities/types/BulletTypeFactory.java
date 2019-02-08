@@ -13,10 +13,20 @@ public class BulletTypeFactory {
     }
 
     private static BulletType makePlayerBullet() {
-        return new BulletType(512,0,"sprites/playerBullet.png");
+        float speed = 512;
+        float width = 20;
+        float height = 20;
+        int damage = 0;
+        String texture = "sprites/playerBullet.png";
+        return new BulletType(speed, width, height, damage, texture);
     }
 
     private static BulletType makeEnemyBulletA() {
-        return new BulletType(200,0,"sprites/enemyBulletA.png");
+        float speed = 180;
+        float width = 20;
+        float height = 20;
+        int damage = 0;
+        String texture = "sprites/enemyBulletA.png";
+        return new BulletType(speed, width, height, damage, texture);
     }
 }

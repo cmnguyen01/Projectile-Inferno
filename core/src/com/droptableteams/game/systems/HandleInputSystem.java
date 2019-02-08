@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.FireControlComponent;
+import com.droptableteams.game.components.FirePatternComponent;
 import com.droptableteams.game.components.GameCheatsComponent;
 import com.droptableteams.game.components.MoveDirectionComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
@@ -35,6 +36,7 @@ public class HandleInputSystem implements ISystem {
     public void update() {
         MoveDirectionComponent mdc = (MoveDirectionComponent)_cm.getComponent(_id, "MoveDirectionComponent");
         FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
+        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
         GameCheatsComponent gcc = (GameCheatsComponent)
                 _cm.getComponent(SpecialEntityIds.getGameEntityId(), "GameCheatsComponent");
         boolean left = Gdx.input.isKeyPressed(Input.Keys.LEFT);
@@ -43,6 +45,7 @@ public class HandleInputSystem implements ISystem {
         boolean dn = Gdx.input.isKeyPressed(Input.Keys.DOWN);
         boolean speedButton = Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT);
         boolean fireButton = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+        boolean fireModeButton = Gdx.input.isKeyJustPressed(Input.Keys.F);
 
         if(speedButton){
             gcc.toggleSpeedMultiplier();
@@ -52,6 +55,17 @@ public class HandleInputSystem implements ISystem {
         }
         else {
             fcc.setFiring(false);
+        }
+        if(fireModeButton) {
+            if(fpc.getNumberOfBullets() == 1) {
+                fpc.setNumberOfBullets(3);
+            }
+            else if(fpc.getNumberOfBullets() == 3) {
+                fpc.setNumberOfBullets(5);
+            }
+            else {
+                fpc.setNumberOfBullets(1);
+            }
         }
 
         if(left && right) {

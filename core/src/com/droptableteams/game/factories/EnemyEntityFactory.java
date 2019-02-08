@@ -51,11 +51,12 @@ public class EnemyEntityFactory {
         _cl.add(new SpriteComponent(id, sp));
         _cl.add(new LocationComponent(id, x,y));
         _cl.add(new SizeComponent(id, width,height));
-        _cl.add(new VelocityComponent(id, 128));
+        _cl.add(new VelocityComponent(id, 32));
         _cl.add(new HasBeenInboundsComponent(id, false));
         _cl.add(new MoveDirectionComponent(id, 0f));
         _cl.add(new FireControlComponent(id, 0.15f, true));
-        _cl.add(new FirePatternComponent(id, Directions.DOWN, 1, 0, (float)Math.PI/2, "EnemyBulletA"));
+        _cl.add(new FirePatternComponent(id, Directions.DOWN,2,
+                (float)Math.PI, (float)Math.PI/2, "EnemyBulletA"));
     }
 
     private static void generateSystemList(int id) {
