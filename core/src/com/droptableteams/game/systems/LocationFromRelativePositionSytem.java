@@ -12,7 +12,8 @@ public class LocationFromRelativePositionSytem implements ISystem {
 
     public LocationFromRelativePositionSytem(int id) {
         _id = id;
-        _type = "LocationFromRelativePositionSytem";
+        _type = "LocationFromRelativePositionSystem";
+        _cm = ComponentManager.getInstance();
     }
 
     @Override
