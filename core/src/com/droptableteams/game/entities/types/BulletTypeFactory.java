@@ -14,8 +14,8 @@ public class BulletTypeFactory {
 
     private static BulletType makePlayerBullet() {
         float speed = 430;
-        float width = 25;
-        float height = 25;
+        float width = 24;
+        float height = 24;
         int damage = 0;
         String texture = "sprites/playerBullet.png";
         return new BulletType(speed, width, height, damage, texture);

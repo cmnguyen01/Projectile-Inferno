@@ -41,7 +41,7 @@ public class EnemyEntityBuilder {
         float x = -64;
         float y = Gdx.graphics.getHeight()/2;
 
-        float width = 52;
+        float width = 42;
         float height = 52;
         Sprite sp = new Sprite(am.get("sprites/enemyA.png", Texture.class));
 
@@ -56,7 +56,7 @@ public class EnemyEntityBuilder {
         _cl.add(new MoveDirectionComponent(id, 0f));
         _cl.add(new FireControlComponent(id, 0.15f, true));
         _cl.add(new FirePatternComponent(id, Directions.DOWN,2,
-                (float)Math.PI, (float)Math.PI/2, "EnemyBulletA"));
+                (float)(Math.PI), (float)Math.PI/2, "EnemyBulletA"));
     }
 
     private static void generateSystemList(int id) {

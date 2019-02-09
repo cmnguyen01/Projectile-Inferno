@@ -2,17 +2,17 @@ package com.droptableteams.game.systems;
 
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.components.HitboxComponent;
 import com.droptableteams.game.components.LocationComponent;
-import com.droptableteams.game.components.VelocityComponent;
 
-public class EnemyMovementSystem implements ISystem {
+public class SetHitboxLocationSystem implements ISystem {
     private int _id;
     private String _type;
     private ComponentManager _cm;
 
-    public EnemyMovementSystem(int id){
+    public SetHitboxLocationSystem(int id) {
         _id = id;
-        _type = "EnemyMovementSystem";
+        _type = "SetHitboxLocationSystem";
         _cm = ComponentManager.getInstance();
     }
 
@@ -28,11 +28,8 @@ public class EnemyMovementSystem implements ISystem {
 
     @Override
     public void update() {
-        VelocityComponent vc = (VelocityComponent)_cm.getComponent(_id, "VelocityComponent");
-
-        vc.setDx(vc.getBaseSpeed());
-
-        vc.setDx(48f);
-
+        LocationComponent lc = (LocationComponent)_cm.getComponent(_id, "LocationComponent");
+        HitboxComponent hc = (HitboxComponent)_cm.getComponent(_id, "HitboxComponent");
+        hc.getHitbox().setCenter(lc.getX(), lc.getY());
     }
 }

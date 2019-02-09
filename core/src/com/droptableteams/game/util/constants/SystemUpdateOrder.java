@@ -11,6 +11,8 @@ public class SystemUpdateOrder {
             "DirectionalMovementSystem",
             "SpeedModifierSystem",
             "UpdateLocationSystem",
+            "LocationFromRelativePositionSystem",
+            "SetHitboxLocationSystem",
             "StopAtBoundarySystem",
             "RotateSpriteToDirectionSystem",
             "UpdateSpriteSystem",
