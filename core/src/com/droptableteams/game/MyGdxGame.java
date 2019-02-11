@@ -61,7 +61,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		ComponentManager cm = _ecsEngine.getComponentManager();
         GameCheatsComponent gcc = (GameCheatsComponent) cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
         long deltaTime = time - temporaryLastSpawnVar;
-        if((float)(deltaTime/Math.pow(10,9)) > 10.0f/gcc.getSpeedMultiplier()) {
+        if((float)(deltaTime/Math.pow(10,9)) > 10.0f) { // TODO: removing speed mult from all but player move
             EnemyEntityFactory.create(_am);
             temporaryLastSpawnVar = time;
         }

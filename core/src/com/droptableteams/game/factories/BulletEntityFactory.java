@@ -55,7 +55,6 @@ public class BulletEntityFactory {
         _sl.add(new UpdateSpriteSystem(id));
         _sl.add(new DespawnOutOfBoundsSystem(id));
         _sl.add(new DirectionalMovementSystem(id));
-        _sl.add(new SpeedModifierSystem(id));
         _sl.add(new RotateSpriteToDirectionSystem(id));
     }
 }

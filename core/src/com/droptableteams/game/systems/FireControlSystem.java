@@ -49,7 +49,7 @@ public class FireControlSystem implements ISystem {
         if(fcc.isFiring()) {
             long time = System.nanoTime();
             long deltaTime = time - fcc.getLastFired();
-            if((float)(deltaTime/Math.pow(10,9)*gcc.getSpeedMultiplier()) > fcc.getRateOfFire()) {
+            if((float)(deltaTime/Math.pow(10,9)) > fcc.getRateOfFire()) {
                 spawnBullets(fpc, amc, lc.getX(), lc.getY());
                 fcc.setLastFired(time);
             }

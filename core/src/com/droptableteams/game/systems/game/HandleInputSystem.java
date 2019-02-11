@@ -82,11 +82,13 @@ public class HandleInputSystem implements ISystem {
         boolean ultimateButton = Gdx.input.isKeyJustPressed(Input.Keys.Q);
         if(ultimateButton) {
             if(fpc.getNumberOfBullets() < 24) {
+                fpc.setDividingAngle((float)(Math.PI/12));
                 fpc.setNumberOfBullets(24);
                 fpc.setDeltaTheta((float)Math.PI/6);
                 fcc.setRateOfFire(fcc.getRateOfFire()/2);
             }
             else {
+                fpc.setDividingAngle((float)(Math.PI/24));
                 fpc.setNumberOfBullets(1);
                 fcc.setRateOfFire(fcc.getRateOfFire()*2);
                 fpc.setBaseDirection(Directions.UP);
@@ -117,6 +119,7 @@ public class HandleInputSystem implements ISystem {
                 fpc.setNumberOfBullets(5);
             }
             else if(fpc.getNumberOfBullets() == 5) {
+                fpc.setDividingAngle((float)(Math.PI/12));
                 fpc.setNumberOfBullets(24);
                 fpc.setDeltaTheta((float)Math.PI/6);
                 fcc.setRateOfFire(fcc.getRateOfFire()/2);
@@ -125,6 +128,7 @@ public class HandleInputSystem implements ISystem {
                 fpc.setNumberOfBullets(1);
                 fcc.setRateOfFire(fcc.getRateOfFire()*2);
                 fpc.setBaseDirection(Directions.UP);
+                fpc.setDividingAngle((float)(Math.PI/24));
                 fpc.setDeltaTheta(0);
             }
         }

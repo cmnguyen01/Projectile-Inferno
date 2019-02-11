@@ -22,7 +22,7 @@ public class BulletTypeFactory {
     }
 
     private static BulletType makeEnemyBulletA() {
-        float speed = 180;
+        float speed = 60;
         float width = 30;
         float height = 35;
         int damage = 0;

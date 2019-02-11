@@ -54,7 +54,7 @@ public class PlayerEntityFactory {
         _cl.add(new VelocityComponent(id, 360));
         _cl.add(new MoveDirectionComponent(id, null));
         _cl.add(new FireControlComponent(id, 0.125f,false));
-        _cl.add(new FirePatternComponent(id, Directions.UP, 1, (float)Math.PI/12, 0, "PlayerBullet"));
+        _cl.add(new FirePatternComponent(id, Directions.UP, 1, (float)Math.PI/24, 0, "PlayerBullet"));
     }
 
     private static void generateSystemList(int id) {
