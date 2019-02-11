@@ -31,7 +31,6 @@ public class SpeedModifierSystem implements ISystem {
     public void update() {
         GameCheatsComponent gcc = (GameCheatsComponent) _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
         VelocityComponent vc = (VelocityComponent)_cm.getComponent(_id,"VelocityComponent");
-        vc.setDx(vc.getDx() * gcc.getSpeedMultiplier());
-        vc.setDy(vc.getDy() * gcc.getSpeedMultiplier());
+        vc.setModifiedSpeed(vc.getBaseSpeed() * gcc.getSpeedMultiplier());
     }
 }

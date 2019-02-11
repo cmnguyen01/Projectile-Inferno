@@ -11,7 +11,6 @@ import com.droptableteams.game.components.MoveDirectionComponent;
 import com.droptableteams.game.util.constants.DirectionBitMask;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.Directions;
-import com.sun.javafx.scene.traversal.Direction;
 
 public class HandleInputSystem implements ISystem {
     private int _id;
@@ -36,74 +35,100 @@ public class HandleInputSystem implements ISystem {
 
     @Override
     public void update() {
-        GameCheatsComponent gcc = (GameCheatsComponent)
-                _cm.getComponent(SpecialEntityIds.getGameEntityId(), "GameCheatsComponent");
-        boolean speedButton = Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT);
-        boolean fireModeButton = Gdx.input.isKeyJustPressed(Input.Keys.F);
-        boolean ultimateButton = Gdx.input.isKeyJustPressed(Input.Keys.Q);
-        boolean teeButton = Gdx.input.isKeyJustPressed(Input.Keys.T);
+        setMoveDirection();
+        setSpeedModifier();
+        setFiring();
+        toggleSpinDirection();
+        toggleUltimate();
+        toggleTeeMode();
+        cycleFireMode();
+    }
 
-        setDirection();
-        if(ultimateButton) {
-            toggleUltimate();
-        }
-        if(teeButton) {
-            toggleTeeMode();
-        }
+    private void setSpeedModifier() {
+        GameCheatsComponent gcc = (GameCheatsComponent)
+                _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
+        boolean speedButton = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT);
         if(speedButton){
-            gcc.toggleSpeedMultiplier();
+            gcc.setSpeedMultiplier(0.5f);
         }
-        if(fireModeButton) {
-            cycleFireMode();
+        else{
+            gcc.setSpeedMultiplier(1.0f);
+        }
+    }
+
+    private void setFiring() {
+        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
+        boolean fireButton = Gdx.input.isKeyPressed(Input.Keys.Z);
+        if(fireButton) {
+            fcc.setFiring(true);
+        }
+        else {
+            fcc.setFiring(false);
+        }
+    }
+
+    private void toggleSpinDirection() {
+        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
+        boolean rotationButton = Gdx.input.isKeyJustPressed(Input.Keys.R);
+        if(rotationButton) {
+            fpc.setDeltaTheta(-1*fpc.getDeltaTheta());
         }
     }
 
     private void toggleUltimate() {
         FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
         FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
-        if(fpc.getNumberOfBullets() < 24) {
-            fpc.setNumberOfBullets(24);
-            fpc.setDeltaTheta((float)Math.PI/6);
-            fcc.setRateOfFire(fcc.getRateOfFire()/2);
-        }
-        else {
-            fpc.setNumberOfBullets(1);
-            fcc.setRateOfFire(fcc.getRateOfFire()*2);
-            fpc.setBaseDirection(Directions.UP);
-            fpc.setDeltaTheta(0);
+        boolean ultimateButton = Gdx.input.isKeyJustPressed(Input.Keys.Q);
+        if(ultimateButton) {
+            if(fpc.getNumberOfBullets() < 24) {
+                fpc.setNumberOfBullets(24);
+                fpc.setDeltaTheta((float)Math.PI/6);
+                fcc.setRateOfFire(fcc.getRateOfFire()/2);
+            }
+            else {
+                fpc.setNumberOfBullets(1);
+                fcc.setRateOfFire(fcc.getRateOfFire()*2);
+                fpc.setBaseDirection(Directions.UP);
+                fpc.setDeltaTheta(0);
+            }
         }
     }
 
     private void toggleTeeMode() {
         FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
-        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
-        if(fpc.getDividingAngle() != (float)Math.PI/2) {
-            fpc.setDividingAngle((float)Math.PI/2); // hardcoded :(
-        }
-        else {
-            fpc.setDividingAngle((float)Math.PI/12);
+        boolean teeButton = Gdx.input.isKeyJustPressed(Input.Keys.T);
+        if(teeButton) {
+            if(fpc.getDividingAngle() != (float)Math.PI/2) {
+                fpc.setDividingAngle((float)Math.PI/2); // hardcoded :(
+            }
+            else {
+                fpc.setDividingAngle((float)Math.PI/12);
+            }
         }
     }
 
     private void cycleFireMode() {
         FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
         FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
-        if(fpc.getNumberOfBullets() == 1) {
-            fpc.setNumberOfBullets(3);
-        }
-        else if(fpc.getNumberOfBullets() == 3) {
-            fpc.setNumberOfBullets(5);
-        }
-        else if(fpc.getNumberOfBullets() == 5) {
-            fpc.setNumberOfBullets(24);
-            fpc.setDeltaTheta((float)Math.PI/6);
-            fcc.setRateOfFire(fcc.getRateOfFire()/2);
-        }
-        else {
-            fpc.setNumberOfBullets(1);
-            fcc.setRateOfFire(fcc.getRateOfFire()*2);
-            fpc.setBaseDirection(Directions.UP);
-            fpc.setDeltaTheta(0);
+        boolean fireModeButton = Gdx.input.isKeyJustPressed(Input.Keys.F);
+        if(fireModeButton) {
+            if(fpc.getNumberOfBullets() == 1) {
+                fpc.setNumberOfBullets(3);
+            }
+            else if(fpc.getNumberOfBullets() == 3) {
+                fpc.setNumberOfBullets(5);
+            }
+            else if(fpc.getNumberOfBullets() == 5) {
+                fpc.setNumberOfBullets(24);
+                fpc.setDeltaTheta((float)Math.PI/6);
+                fcc.setRateOfFire(fcc.getRateOfFire()/2);
+            }
+            else {
+                fpc.setNumberOfBullets(1);
+                fcc.setRateOfFire(fcc.getRateOfFire()*2);
+                fpc.setBaseDirection(Directions.UP);
+                fpc.setDeltaTheta(0);
+            }
         }
     }
 
@@ -128,7 +153,7 @@ public class HandleInputSystem implements ISystem {
         return input;
     }
 
-    private void setDirection() {
+    private void setMoveDirection() {
         MoveDirectionComponent mdc = (MoveDirectionComponent)_cm.getComponent(_id, "MoveDirectionComponent");
         switch (setDirectionBitMask()) {
             case DirectionBitMask.LEFT:
