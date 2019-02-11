@@ -1,4 +1,4 @@
-package com.droptableteams.game.builders;
+package com.droptableteams.game.factories;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,7 +10,6 @@ import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.BulletEntity;
 import com.droptableteams.game.util.BulletData;
-import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.systems.*;
 
@@ -24,7 +23,7 @@ import java.util.ArrayList;
  *
  * TODO: Rename Factories to Builders -- since not technically factory pattern.
  */
-public class BulletEntityBuilder {
+public class BulletEntityFactory {
 
     private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
@@ -39,9 +38,6 @@ public class BulletEntityBuilder {
     }
 
     private static void generateComponentList(int id, AssetManager am, BulletData bd) {
-        int playerId = SpecialEntityIds.PLAYER_ENTITY;
-
-
         Sprite sp = new Sprite(am.get(bd.texture, Texture.class));
         sp.setSize(bd.width,bd.height);
         sp.setCenter(bd.x,bd.y);

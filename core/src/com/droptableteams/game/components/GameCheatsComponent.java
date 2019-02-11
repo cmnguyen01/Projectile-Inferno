@@ -34,5 +34,6 @@ public class GameCheatsComponent implements IComponent {
         }
     }
 
+    public void setSpeedMultiplier(float multiplier) { _speedMultiplier = multiplier; }
     public float getSpeedMultiplier() { return _speedMultiplier; }
 }
