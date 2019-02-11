@@ -10,6 +10,7 @@ import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.PlayerEntity;
+import com.droptableteams.game.systems.game.HandleInputSystem;
 import com.droptableteams.game.util.constants.Directions;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
@@ -60,7 +61,6 @@ public class PlayerEntityFactory {
         _sl.clear();
         _sl.add(new UpdateSpriteSystem(id));
         _sl.add(new UpdateLocationSystem(id));
-        _sl.add(new HandleInputSystem(id));
         _sl.add(new StopAtBoundarySystem(id));
         _sl.add(new DirectionalMovementSystem(id));
         _sl.add(new FireControlSystem(id));

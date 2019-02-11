@@ -1,4 +1,4 @@
-package com.droptableteams.game.systems;
+package com.droptableteams.game.systems.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -7,7 +7,7 @@ import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.EntityManager;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.components.RenderComponent;
+import com.droptableteams.game.components.game.RenderComponent;
 import com.droptableteams.game.components.SpriteComponent;
 
 import java.util.HashMap;

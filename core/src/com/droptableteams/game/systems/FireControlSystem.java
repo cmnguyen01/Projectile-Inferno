@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
+import com.droptableteams.game.components.game.AssetManagerComponent;
+import com.droptableteams.game.components.game.GameCheatsComponent;
 import com.droptableteams.game.entities.types.BulletType;
 import com.droptableteams.game.entities.types.BulletTypeFactory;
 import com.droptableteams.game.util.BulletData;

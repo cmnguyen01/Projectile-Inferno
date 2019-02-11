@@ -2,7 +2,7 @@ package com.droptableteams.game.systems;
 
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.components.GameCheatsComponent;
+import com.droptableteams.game.components.game.GameCheatsComponent;
 import com.droptableteams.game.components.VelocityComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 

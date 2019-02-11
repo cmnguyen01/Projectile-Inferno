@@ -1,4 +1,4 @@
-package com.droptableteams.game.components;
+package com.droptableteams.game.components.game;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
