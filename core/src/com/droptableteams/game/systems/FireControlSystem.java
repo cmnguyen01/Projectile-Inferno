@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
+import com.droptableteams.game.components.game.AssetManagerComponent;
+import com.droptableteams.game.components.game.GameCheatsComponent;
 import com.droptableteams.game.entities.types.BulletType;
 import com.droptableteams.game.entities.types.BulletTypeFactory;
 import com.droptableteams.game.util.BulletData;
-import com.droptableteams.game.builders.BulletEntityBuilder;
+import com.droptableteams.game.factories.BulletEntityFactory;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 
 public class FireControlSystem implements ISystem {
@@ -47,7 +49,7 @@ public class FireControlSystem implements ISystem {
         if(fcc.isFiring()) {
             long time = System.nanoTime();
             long deltaTime = time - fcc.getLastFired();
-            if((float)(deltaTime/Math.pow(10,9)*gcc.getSpeedMultiplier()) > fcc.getRateOfFire()) {
+            if((float)(deltaTime/Math.pow(10,9)) > fcc.getRateOfFire()) {
                 spawnBullets(fpc, amc, lc.getX(), lc.getY());
                 fcc.setLastFired(time);
             }
@@ -66,8 +68,8 @@ public class FireControlSystem implements ISystem {
         }
         for(int i = 0; i < numBullets; i++) {
             float direction = baseDirection + offset;
-            BulletData bd = new BulletData(direction, bt.getSpeed(), bt.getWidtch(),bt.getHeight(), x, y, bt.getTexture());
-            BulletEntityBuilder.create(amc.getAssetManager(), bd);
+            BulletData bd = new BulletData(direction, bt.getSpeed(), 0, bt.getWidtch(),bt.getHeight(), x, y, bt.getTexture());
+            BulletEntityFactory.create(amc.getAssetManager(), bd);
             offset += angle;
         }
     }

@@ -18,15 +18,15 @@ public class BulletTypeFactory {
         float height = 24;
         int damage = 0;
         String texture = "sprites/playerBullet.png";
-        return new BulletType(speed, width, height, damage, texture);
+        return new BulletType("BulletEntity", "PlayerBullet",speed, width, height, damage, texture);
     }
 
     private static BulletType makeEnemyBulletA() {
-        float speed = 180;
+        float speed = 60;
         float width = 30;
         float height = 35;
         int damage = 0;
         String texture = "sprites/enemyBulletA.png";
-        return new BulletType(speed, width, height, damage, texture);
+        return new BulletType("BulletEntity", "EnemyBulletA",speed, width, height, damage, texture);
     }
 }

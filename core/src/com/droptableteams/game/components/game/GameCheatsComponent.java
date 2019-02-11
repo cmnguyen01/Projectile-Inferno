@@ -1,4 +1,4 @@
-package com.droptableteams.game.components;
+package com.droptableteams.game.components.game;
 
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 
@@ -34,5 +34,6 @@ public class GameCheatsComponent implements IComponent {
         }
     }
 
+    public void setSpeedMultiplier(float multiplier) { _speedMultiplier = multiplier; }
     public float getSpeedMultiplier() { return _speedMultiplier; }
 }

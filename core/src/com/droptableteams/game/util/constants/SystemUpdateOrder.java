@@ -8,8 +8,9 @@ public class SystemUpdateOrder {
     private static String[] _systemUpdateOrder = {
             "HandleInputSystem",
             "FireControlSystem",
-            "DirectionalMovementSystem",
             "SpeedModifierSystem",
+            "DirectionalMovementSystem",
+            "DestinationMovementSystem",
             "UpdateLocationSystem",
             "LocationFromRelativePositionSystem",
             "SetHitboxLocationSystem",
