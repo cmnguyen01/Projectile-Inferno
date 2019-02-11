@@ -61,7 +61,6 @@ public class EnemyEntityFactory {
     private static void generateSystemList(int id) {
         _sl.clear();
         _sl.add(new UpdateSpriteSystem(id));
-        _sl.add(new UpdateLocationSystem(id));
         _sl.add(new DirectionalMovementSystem(id));
         _sl.add(new DespawnOutOfBoundsSystem(id));
         _sl.add(new SpeedModifierSystem(id));
