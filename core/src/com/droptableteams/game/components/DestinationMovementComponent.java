@@ -1,6 +1,7 @@
 package com.droptableteams.game.components;
 
 import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.util.TimeVector2;
 
 import java.util.ArrayList;
 
@@ -8,24 +9,20 @@ import java.util.ArrayList;
 public class DestinationMovementComponent implements IComponent {
     private int _id;
     private String _type;
-
-    private ArrayList<Float> _xList;
-    private ArrayList<Float> _yList;
-    private ArrayList<Long> _stayForMillis;
+    private ArrayList<TimeVector2> _destinationList;
     private int nextDest;
     private long _hereSinceMillis;
     private boolean _shouldLoop;
 
 
-    public DestinationMovementComponent(int id, ArrayList<Float> xList, ArrayList<Float> yList, ArrayList<Long> stayForMillis, boolean shouldLoop) {
+    public DestinationMovementComponent(int id, ArrayList<TimeVector2> destinationList, boolean shouldLoop) {
         _id = id;
         _type = "DestinationMovementComponent";
-        _xList = xList;
-        _yList = yList;
-        _stayForMillis = stayForMillis;
         nextDest = 0;
         _hereSinceMillis = -1;
         _shouldLoop = shouldLoop;
+        _destinationList = destinationList;
+
     }
 
     @Override
@@ -39,15 +36,15 @@ public class DestinationMovementComponent implements IComponent {
     }
 
     public float getNextX() {
-        return _xList.get(nextDest);
+        return _destinationList.get(nextDest).getX();
     }
 
     public float getNextY() {
-        return _yList.get(nextDest);
+        return _destinationList.get(nextDest).getY();
     }
 
     public long getStayFor() {
-        return _stayForMillis.get(nextDest);
+        return _destinationList.get(nextDest).getTime();
     }
 
     public long getHereFor(long currentTimeMillis) {
@@ -58,7 +55,7 @@ public class DestinationMovementComponent implements IComponent {
     }
 
     public boolean incrementNextDest() {
-        if(nextDest < _xList.size()-1) {
+        if(nextDest < _destinationList.size()-1) {
             nextDest++;
             return true;
         }

@@ -14,7 +14,12 @@ def file_len(fname):
             pass
     return i + 1
 
+def truncate(n, decimals=0):
+    multiplier = 10 ** decimals
+    return int(n * multiplier) / multiplier
+
 sloc = 0
+nfiles = 0
 dir_tree = os.walk('.')
 
 for entry in dir_tree:
@@ -24,7 +29,11 @@ for entry in dir_tree:
             length = file_len(file_path)
             print('{} lines in {}'.format(length, file_path))
             sloc += length
+            nfiles += 1
 
-print('\n========================')
-print('  project SLOC = {}'.format(sloc))
-print('========================')
+avg = truncate(sloc/nfiles,1)
+
+print('\n=========== SLOC ===========')
+print('  {} lines in {} files'.format(sloc,nfiles))
+print('  avg. file: {} lines'.format(avg))
+print('============================')

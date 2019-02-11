@@ -10,6 +10,7 @@ import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.EnemyEntity;
+import com.droptableteams.game.util.TimeVector2;
 import com.droptableteams.game.util.constants.Directions;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.systems.*;
@@ -83,12 +84,9 @@ public class EnemyEntityFactory {
 
         float destX = Gdx.graphics.getWidth()/2;
         float destY = 3*Gdx.graphics.getHeight()/4;
-        ArrayList<Float> xList = new ArrayList<Float>();
-        xList.add(destX);
-        ArrayList<Float> yList = new ArrayList<Float>();
-        yList.add(destY);
-        ArrayList<Long> stayForList = new ArrayList<Long>();
-        stayForList.add(0l);
+
+        ArrayList<TimeVector2> destinations = new ArrayList<TimeVector2>();
+        destinations.add(new TimeVector2(destX, destY, 0l));
 
         sp.setSize(width,height);
         sp.setCenter(x,y);
@@ -98,8 +96,8 @@ public class EnemyEntityFactory {
         _cl.add(new SizeComponent(id, width,height));
         _cl.add(new VelocityComponent(id, 400));
         _cl.add(new HasBeenInboundsComponent(id, false));
-        _cl.add(new DestinationMovementComponent(id, xList, yList, stayForList, false ));
-        _cl.add(new FireControlComponent(id, 0.4f, true));
+        _cl.add(new DestinationMovementComponent(id, destinations,false));
+        _cl.add(new FireControlComponent(id,0.4f, true));
         _cl.add(new FirePatternComponent(id, Directions.DOWN,2,
                 (float)(Math.PI), (float)Math.PI/2, "EnemyBulletA"));
     }
@@ -111,5 +109,4 @@ public class EnemyEntityFactory {
         _sl.add(new DespawnOutOfBoundsSystem(id));
         _sl.add(new FireControlSystem(id));
     }
-
 }

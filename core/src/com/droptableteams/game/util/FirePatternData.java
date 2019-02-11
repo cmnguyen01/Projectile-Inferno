@@ -4,17 +4,22 @@ package com.droptableteams.game.util;
  * currently unused.
  * TODO: store as a member of fire control component?
  */
-public class FirePattern {
+public class FirePatternData {
     private float _baseDirection;
     private int _numberOfBullets;
-    private int _dividingAngle;
+    private float _dividingAngle;
     private boolean _splitForEven;
+    private float _deltaTheta;
+    private float _fireRate;
+    private String _bulletType;
 
-    public FirePattern(float baseDirection, int numberOfBullets, int dividingAngle, boolean splitAroundBaseDirection) {
+    public FirePatternData(float baseDirection, int numberOfBullets, float dividingAngle, float deltaTheta, float fireRate, String bulletType) {
         _baseDirection = baseDirection;
         _numberOfBullets = numberOfBullets;
         _dividingAngle = dividingAngle;
-        _splitForEven = splitAroundBaseDirection;
+        _deltaTheta = deltaTheta;
+        _fireRate = fireRate;
+        _bulletType = bulletType;
     }
 
 
@@ -34,11 +39,11 @@ public class FirePattern {
         _numberOfBullets = nnumberOfBullets;
     }
 
-    public int getDividingAngle() {
+    public float getDividingAngle() {
         return _dividingAngle;
     }
 
-    public void set_dividingAngle(int dividingAngle) {
+    public void setDividingAngle(float dividingAngle) {
         _dividingAngle = dividingAngle;
     }
 
@@ -48,5 +53,29 @@ public class FirePattern {
 
     public void setSplitForEven(boolean splitForEven) {
         _splitForEven = splitForEven;
+    }
+
+    public float getDeltaTheta() {
+        return _deltaTheta;
+    }
+
+    public void setDeltaTheta(float deltaTheta) {
+        _deltaTheta = deltaTheta;
+    }
+
+    public float getFireRate() {
+        return _fireRate;
+    }
+
+    public void setFireRate(float fireRate) {
+        _fireRate = fireRate;
+    }
+
+    public String get_bulletType() {
+        return _bulletType;
+    }
+
+    public void set_bulletType(String _bulletType) {
+        this._bulletType = _bulletType;
     }
 }

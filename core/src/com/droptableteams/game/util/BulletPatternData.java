@@ -2,6 +2,6 @@ package com.droptableteams.game.util;
 
 import java.util.ArrayList;
 
-public class BulletPattern {
+public class BulletPatternData {
     private ArrayList<BulletData> _bullets;
 }
