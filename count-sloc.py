@@ -1,3 +1,10 @@
+'''
+    Count source-lines-of-code (SLOC) in project.
+
+    Counts the total number of lines in all .java
+    files. This includes white space and comments.
+'''
+
 import os
 import glob
 
