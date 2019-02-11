@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.factories.EnemyEntityFactory;
-import com.droptableteams.game.components.GameCheatsComponent;
+import com.droptableteams.game.components.game.GameCheatsComponent;
 import com.droptableteams.game.factories.GameEntityFactory;
 import com.droptableteams.game.factories.PlayerEntityFactory;
 import com.droptableteams.game.util.constants.SpecialEntityIds;

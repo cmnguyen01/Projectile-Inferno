@@ -6,14 +6,15 @@ import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.components.AssetManagerComponent;
-import com.droptableteams.game.components.GameCheatsComponent;
-import com.droptableteams.game.components.RenderComponent;
+import com.droptableteams.game.components.game.AssetManagerComponent;
+import com.droptableteams.game.components.game.GameCheatsComponent;
+import com.droptableteams.game.components.game.RenderComponent;
 import com.droptableteams.game.entities.GameEntity;
+import com.droptableteams.game.systems.game.HandleInputSystem;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.EntityRenderOrder;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
-import com.droptableteams.game.systems.RenderSystem;
+import com.droptableteams.game.systems.game.RenderSystem;
 
 import java.util.ArrayList;
 
@@ -49,5 +50,6 @@ public class GameEntityFactory {
     private static void generateSystemList(int id) {
         _sl.clear();
         _sl.add(new RenderSystem(id));
+        _sl.add(new HandleInputSystem(id));
     }
 }

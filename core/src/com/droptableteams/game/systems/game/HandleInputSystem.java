@@ -1,4 +1,4 @@
-package com.droptableteams.game.systems;
+package com.droptableteams.game.systems.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -6,12 +6,13 @@ import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.FireControlComponent;
 import com.droptableteams.game.components.FirePatternComponent;
-import com.droptableteams.game.components.GameCheatsComponent;
+import com.droptableteams.game.components.game.GameCheatsComponent;
 import com.droptableteams.game.components.MoveDirectionComponent;
 import com.droptableteams.game.util.constants.DirectionBitMask;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.Directions;
 
+// TODO: HandleInputSystem should belong to the GameEntity, not the player
 public class HandleInputSystem implements ISystem {
     private int _id;
     private String _type;
@@ -35,18 +36,22 @@ public class HandleInputSystem implements ISystem {
 
     @Override
     public void update() {
-        setMoveDirection();
-        setSpeedModifier();
-        setFiring();
-        toggleSpinDirection();
-        toggleUltimate();
-        toggleTeeMode();
-        cycleFireMode();
-    }
-
-    private void setSpeedModifier() {
+        MoveDirectionComponent mdc = (MoveDirectionComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "MoveDirectionComponent");
+        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "FirePatternComponent");
+        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "FireControlComponent");
         GameCheatsComponent gcc = (GameCheatsComponent)
                 _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
+
+        setMoveDirection(mdc);
+        setSpeedModifier(gcc);
+        setFiring(fcc);
+        toggleSpinDirection(fpc);
+        toggleUltimate(fpc, fcc);
+        toggleTeeMode(fpc);
+        cycleFireMode(fpc, fcc);
+    }
+
+    private void setSpeedModifier(GameCheatsComponent gcc) {
         boolean speedButton = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT);
         if(speedButton){
             gcc.setSpeedMultiplier(0.5f);
@@ -56,8 +61,7 @@ public class HandleInputSystem implements ISystem {
         }
     }
 
-    private void setFiring() {
-        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
+    private void setFiring(FireControlComponent fcc) {
         boolean fireButton = Gdx.input.isKeyPressed(Input.Keys.Z);
         if(fireButton) {
             fcc.setFiring(true);
@@ -67,17 +71,14 @@ public class HandleInputSystem implements ISystem {
         }
     }
 
-    private void toggleSpinDirection() {
-        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
+    private void toggleSpinDirection(FirePatternComponent fpc) {
         boolean rotationButton = Gdx.input.isKeyJustPressed(Input.Keys.R);
         if(rotationButton) {
             fpc.setDeltaTheta(-1*fpc.getDeltaTheta());
         }
     }
 
-    private void toggleUltimate() {
-        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
-        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
+    private void toggleUltimate(FirePatternComponent fpc, FireControlComponent fcc) {
         boolean ultimateButton = Gdx.input.isKeyJustPressed(Input.Keys.Q);
         if(ultimateButton) {
             if(fpc.getNumberOfBullets() < 24) {
@@ -94,8 +95,7 @@ public class HandleInputSystem implements ISystem {
         }
     }
 
-    private void toggleTeeMode() {
-        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
+    private void toggleTeeMode(FirePatternComponent fpc) {
         boolean teeButton = Gdx.input.isKeyJustPressed(Input.Keys.T);
         if(teeButton) {
             if(fpc.getDividingAngle() != (float)Math.PI/2) {
@@ -107,9 +107,7 @@ public class HandleInputSystem implements ISystem {
         }
     }
 
-    private void cycleFireMode() {
-        FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
-        FireControlComponent fcc = (FireControlComponent)_cm.getComponent(_id, "FireControlComponent");
+    private void cycleFireMode(FirePatternComponent fpc, FireControlComponent fcc) {
         boolean fireModeButton = Gdx.input.isKeyJustPressed(Input.Keys.F);
         if(fireModeButton) {
             if(fpc.getNumberOfBullets() == 1) {
@@ -132,29 +130,7 @@ public class HandleInputSystem implements ISystem {
         }
     }
 
-    private byte setDirectionBitMask() {
-        boolean up = Gdx.input.isKeyPressed(Input.Keys.UP);
-        boolean down = Gdx.input.isKeyPressed(Input.Keys.DOWN);
-        boolean left = Gdx.input.isKeyPressed(Input.Keys.LEFT);
-        boolean right = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
-        byte input = 0;
-        if(up && !down) {
-            input |= DirectionBitMask.UP;
-        }
-        if(down && !up) {
-            input |= DirectionBitMask.DOWN;
-        }
-        if(left && !right) {
-            input |= DirectionBitMask.LEFT;
-        }
-        if(right && !left) {
-            input |= DirectionBitMask.RIGHT;
-        }
-        return input;
-    }
-
-    private void setMoveDirection() {
-        MoveDirectionComponent mdc = (MoveDirectionComponent)_cm.getComponent(_id, "MoveDirectionComponent");
+    private void setMoveDirection(MoveDirectionComponent mdc) {
         switch (setDirectionBitMask()) {
             case DirectionBitMask.LEFT:
                 mdc.setRadians(Directions.LEFT);
@@ -183,5 +159,26 @@ public class HandleInputSystem implements ISystem {
             default:
                 mdc.setRadians(null);
         }
+    }
+
+    private byte setDirectionBitMask() {
+        boolean up = Gdx.input.isKeyPressed(Input.Keys.UP);
+        boolean down = Gdx.input.isKeyPressed(Input.Keys.DOWN);
+        boolean left = Gdx.input.isKeyPressed(Input.Keys.LEFT);
+        boolean right = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
+        byte input = 0;
+        if(up && !down) {
+            input |= DirectionBitMask.UP;
+        }
+        if(down && !up) {
+            input |= DirectionBitMask.DOWN;
+        }
+        if(left && !right) {
+            input |= DirectionBitMask.LEFT;
+        }
+        if(right && !left) {
+            input |= DirectionBitMask.RIGHT;
+        }
+        return input;
     }
 }

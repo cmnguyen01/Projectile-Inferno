@@ -18,7 +18,6 @@ public class DirectionalMovementSystem implements ISystem {
         _cm = ComponentManager.getInstance();
     }
 
-
     @Override
     public int getId() {
         return _id;
