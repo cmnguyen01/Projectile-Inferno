@@ -1,4 +1,4 @@
-package com.droptableteams.game.util;
+package com.droptableteams.game.factories.data;
 
 import java.util.ArrayList;
 

@@ -10,6 +10,9 @@ import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.EnemyEntity;
+import com.droptableteams.game.entities.types.EnemyType;
+import com.droptableteams.game.entities.types.EnemyTypeFactory;
+import com.droptableteams.game.factories.data.EnemyData;
 import com.droptableteams.game.util.TimeVector2;
 import com.droptableteams.game.util.constants.Directions;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
@@ -30,33 +33,31 @@ public class EnemyEntityFactory {
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
     private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
 
-    public static void create(AssetManager assetManager) {
+    public static void create(AssetManager am, EnemyData ed) {
         int id = _engine.acquireEntityId();
         IEntity entity = new EnemyEntity(id);
-        generateComponentList(id, assetManager);
+        generateComponentList(id, am, ed);
         generateSystemList(id);
         _engine.addEntity(entity, _cl, _sl);
     }
 
-    private static void generateComponentList(int id, AssetManager am) {
+    private static void generateComponentList(int id, AssetManager am, EnemyData ed) {
+        EnemyType et = EnemyTypeFactory.make(ed.enemyType);
         float x = -64;
         float y = Gdx.graphics.getHeight()/2;
-        float width = 42;
-        float height = 52;
-        Sprite sp = new Sprite(am.get("sprites/enemyA.png", Texture.class));
-
-        sp.setSize(width,height);
+        Sprite sp = new Sprite(am.get(et.texture, Texture.class));
+        sp.setSize(et.width,et.width);
         sp.setCenter(x,y);
         _cl.clear();
         _cl.add(new SpriteComponent(id, sp));
-        _cl.add(new LocationComponent(id, x,y));
-        _cl.add(new SizeComponent(id, width,height));
-        _cl.add(new VelocityComponent(id, 32));
+        _cl.add(new LocationComponent(id, ed.x,ed.y));
+        _cl.add(new SizeComponent(id, et.width,et.height));
+        _cl.add(new VelocityComponent(id, et.speed));
         _cl.add(new HasBeenInboundsComponent(id, false));
-        _cl.add(new MoveDirectionComponent(id, 0f));
-        _cl.add(new FireControlComponent(id, 0.4f, true));
-        _cl.add(new FirePatternComponent(id, Directions.DOWN,2,
-                (float)(Math.PI), (float)Math.PI/2, "EnemyBulletA"));
+        _cl.add(new MoveDirectionComponent(id, 0f));                // TODO: replace with destinational movement
+        _cl.add(new FireControlComponent(id, et.firePattern.getFireRate(), true));
+        _cl.add(new FirePatternComponent(id, et.firePattern.getBaseDirection(),et.firePattern.getNumberOfBullets(),
+                et.firePattern.getDividingAngle(), et.firePattern.getDeltaTheta(), et.firePattern.getBulletType()));
     }
 
     private static void generateSystemList(int id) {
@@ -67,39 +68,31 @@ public class EnemyEntityFactory {
         _sl.add(new FireControlSystem(id));
     }
 
-    public static void createTypeB(AssetManager assetManager) {
+    public static void createTypeB(AssetManager am, EnemyData ed) {
         int id = _engine.acquireEntityId();
         IEntity entity = new EnemyEntity(id);
-        generateComponentListB(id, assetManager);
+        generateComponentListB(id, am, ed);
         generateSystemListB(id);
         _engine.addEntity(entity, _cl, _sl);
     }
 
-    private static void generateComponentListB(int id, AssetManager am) {
-        float x = Gdx.graphics.getWidth();
-        float y = Gdx.graphics.getHeight();
-        float width = 42;
-        float height = 52;
-        Sprite sp = new Sprite(am.get("sprites/enemyA.png", Texture.class));
-
-        float destX = Gdx.graphics.getWidth()/2;
-        float destY = 3*Gdx.graphics.getHeight()/4;
-
-        ArrayList<TimeVector2> destinations = new ArrayList<TimeVector2>();
-        destinations.add(new TimeVector2(destX, destY, 0l));
-
-        sp.setSize(width,height);
+    private static void generateComponentListB(int id, AssetManager am, EnemyData ed) {
+        EnemyType et = EnemyTypeFactory.make(ed.enemyType);
+        float x = ed.x;
+        float y = ed.y;
+        Sprite sp = new Sprite(am.get(et.texture, Texture.class));
+        sp.setSize(et.width,et.width);
         sp.setCenter(x,y);
         _cl.clear();
         _cl.add(new SpriteComponent(id, sp));
-        _cl.add(new LocationComponent(id, x,y));
-        _cl.add(new SizeComponent(id, width,height));
-        _cl.add(new VelocityComponent(id, 400));
-        _cl.add(new HasBeenInboundsComponent(id, false));
-        _cl.add(new DestinationMovementComponent(id, destinations,false));
-        _cl.add(new FireControlComponent(id,0.4f, true));
-        _cl.add(new FirePatternComponent(id, Directions.DOWN,2,
-                (float)(Math.PI), (float)Math.PI/2, "EnemyBulletA"));
+        _cl.add(new LocationComponent(id, ed.x,ed.y));
+        _cl.add(new SizeComponent(id, et.width,et.height));
+        _cl.add(new VelocityComponent(id, et.speed));
+        _cl.add(new HasBeenInboundsComponent(id, false));               // TODO: replace with destinational movement
+        _cl.add(new DestinationMovementComponent(id, ed.destinationList,et.loopDesinations));
+        _cl.add(new FireControlComponent(id, et.firePattern.getFireRate(), true));
+        _cl.add(new FirePatternComponent(id, et.firePattern.getBaseDirection(),et.firePattern.getNumberOfBullets(),
+                et.firePattern.getDividingAngle(), et.firePattern.getDeltaTheta(), et.firePattern.getBulletType()));
     }
 
     private static void generateSystemListB(int id) {

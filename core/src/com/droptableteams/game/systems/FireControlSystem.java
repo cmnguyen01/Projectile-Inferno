@@ -8,7 +8,7 @@ import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.components.game.GameCheatsComponent;
 import com.droptableteams.game.entities.types.BulletType;
 import com.droptableteams.game.entities.types.BulletTypeFactory;
-import com.droptableteams.game.util.BulletData;
+import com.droptableteams.game.factories.data.BulletData;
 import com.droptableteams.game.factories.BulletEntityFactory;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 
@@ -68,7 +68,7 @@ public class FireControlSystem implements ISystem {
         }
         for(int i = 0; i < numBullets; i++) {
             float direction = baseDirection + offset;
-            BulletData bd = new BulletData(direction, bt.getSpeed(), 0, bt.getWidtch(),bt.getHeight(), x, y, bt.getTexture());
+            BulletData bd = new BulletData(direction, bt.speed, 0, bt.width, bt.height, x, y, bt.texture);
             BulletEntityFactory.create(amc.getAssetManager(), bd);
             offset += angle;
         }

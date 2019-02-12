@@ -1,4 +1,4 @@
-package com.droptableteams.game.util;
+package com.droptableteams.game.factories.data;
 
 /**
  * currently unused.
@@ -71,11 +71,11 @@ public class FirePatternData {
         _fireRate = fireRate;
     }
 
-    public String get_bulletType() {
+    public String getBulletType() {
         return _bulletType;
     }
 
-    public void set_bulletType(String _bulletType) {
-        this._bulletType = _bulletType;
+    public void setBulletType(String bulletType) {
+        _bulletType = bulletType;
     }
 }
