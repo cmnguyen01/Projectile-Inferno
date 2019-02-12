@@ -33,7 +33,7 @@ public class SpawnerSystem implements ISystem {
         SpawnListComponent slc = (SpawnListComponent)_cm.getComponent(_id, "SpawnListComponent");
         GameTimeComponent gtc = (GameTimeComponent)_cm.getComponent(_id, "GameTimeComponent");
         for (Spawnable spawnable : slc.getSpawnList()) {
-            if(gtc.getTimeInMillis() >= spawnable.timeInMillis) {
+            if(gtc.getTimeInMillis() >= spawnable.spawnTime) {
                 if("EnemyEntity" == spawnable.entityType) {
                     spawnEnemy(spawnable);
                 }
@@ -42,6 +42,6 @@ public class SpawnerSystem implements ISystem {
     }
 
     private void spawnEnemy(Spawnable spawnable) {
-        EnemyData ed = (EnemyData)spawnable.args;
+        EnemyData ed = (EnemyData)spawnable.data;
     }
 }

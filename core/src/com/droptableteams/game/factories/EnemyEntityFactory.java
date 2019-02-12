@@ -13,8 +13,6 @@ import com.droptableteams.game.entities.EnemyEntity;
 import com.droptableteams.game.entities.types.EnemyType;
 import com.droptableteams.game.entities.types.EnemyTypeFactory;
 import com.droptableteams.game.factories.data.EnemyData;
-import com.droptableteams.game.util.TimeVector2;
-import com.droptableteams.game.util.constants.Directions;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.systems.*;
 
@@ -89,7 +87,7 @@ public class EnemyEntityFactory {
         _cl.add(new SizeComponent(id, et.width,et.height));
         _cl.add(new VelocityComponent(id, et.speed));
         _cl.add(new HasBeenInboundsComponent(id, false));               // TODO: replace with destinational movement
-        _cl.add(new DestinationMovementComponent(id, ed.destinationList,et.loopDesinations));
+        _cl.add(new DestinationMovementComponent(id, ed.destinationList,et.loopDestinations));
         _cl.add(new FireControlComponent(id, et.firePattern.getFireRate(), true));
         _cl.add(new FirePatternComponent(id, et.firePattern.getBaseDirection(),et.firePattern.getNumberOfBullets(),
                 et.firePattern.getDividingAngle(), et.firePattern.getDeltaTheta(), et.firePattern.getBulletType()));

@@ -1,0 +1,40 @@
+[
+	{
+		"class": "com.droptableteams.game.util.Spawnable",
+		"spawnTime": 0,
+		"entityType": "EnemyEntity",
+		"data": {
+			"enemyType": "EnemyA",
+			"destinationList": [
+				{
+					"_position": {
+						"x": 480,
+						"y": 360
+					},
+					"_time": 0
+				}
+			],
+			"x": 0,
+			"y": 480
+		}
+	},
+	{
+		"class": "com.droptableteams.game.util.Spawnable",
+		"spawnTime": 0,
+		"entityType": "EnemyEntity",
+		"data": {
+			"enemyType": "EnemyB",
+			"destinationList": [
+				{
+					"_position": {
+						"x": 160,
+						"y": 360
+					},
+					"_time": 0
+				}
+			],
+			"x": 640,
+			"y": 480
+		}
+	}
+]
