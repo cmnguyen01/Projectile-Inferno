@@ -13,6 +13,17 @@ public class BulletData {
     public float y;
     public String texture; // stored in BulletType TODO: remove
 
+    public BulletData() {
+        direction = 0;
+        speed = 0;
+        delay = 0;
+        width = 0;
+        height = 0;
+        x = 0;
+        y = 0;
+        texture = "unknown";
+    }
+
     public BulletData(float direction, float speed, long delay, float width, float height, float x, float y, String texture) {
         this.direction = direction;
         this.speed = speed;

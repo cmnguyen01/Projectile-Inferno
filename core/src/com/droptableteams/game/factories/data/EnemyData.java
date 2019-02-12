@@ -10,6 +10,13 @@ public class EnemyData {
     public float x;
     public float y;
 
+    public EnemyData() {
+        enemyType = "unknown";
+        destinationList = null;
+        x = 0;
+        y = 0;
+    }
+
     public EnemyData(String enemyType, ArrayList<TimeVector2> destinationList, float x, float y) {
         this.enemyType = enemyType;
         this.destinationList = destinationList;
