@@ -18,12 +18,7 @@ import com.droptableteams.game.systems.*;
 import java.util.ArrayList;
 
 /**
- * Factory is not currently very extensible or adaptable
- * for use with script inputs or other forms of argument.
- *
- * TODO: Redesign Factory, and consider building an interface.
- *
- * TODO: Rename Factories to Builders -- since not technically factory pattern.
+ * TODO: create PlayerData class, and transition factory to use PlayerData, instead of hardcoded values
  */
 public class PlayerEntityFactory {
 
@@ -32,7 +27,7 @@ public class PlayerEntityFactory {
     private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
 
     public static void create(AssetManager assetManager) {
-        int id = SpecialEntityIds.getPlayerEntityId();
+        int id = SpecialEntityIds.PLAYER_ENTITY;
         IEntity entity = new PlayerEntity(id);
         generateComponentList(id, assetManager);
         generateSystemList(id);
@@ -40,8 +35,8 @@ public class PlayerEntityFactory {
     }
 
     private static void generateComponentList(int id, AssetManager am) {
-        float x = Gdx.graphics.getWidth()/2;
-        float y = Gdx.graphics.getHeight()/4;
+        float x = Gdx.graphics.getWidth()/2f;
+        float y = Gdx.graphics.getHeight()/4f;
         float width = 64;
         float height = 64;
         Sprite sp = new Sprite(am.get("sprites/player.png", Texture.class));
@@ -54,7 +49,7 @@ public class PlayerEntityFactory {
         _cl.add(new VelocityComponent(id, 360));
         _cl.add(new MoveDirectionComponent(id, null));
         _cl.add(new FireControlComponent(id, 0.125f,false));
-        _cl.add(new FirePatternComponent(id, Directions.UP, 1, (float)Math.PI/24, 0, "PlayerBullet"));
+        _cl.add(new FirePatternComponent(id, Directions.UP, 1, (float)Math.PI/24f, 0, "PlayerBullet"));
     }
 
     private static void generateSystemList(int id) {

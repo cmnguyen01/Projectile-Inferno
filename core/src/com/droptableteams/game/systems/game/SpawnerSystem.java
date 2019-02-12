@@ -43,7 +43,7 @@ public class SpawnerSystem implements ISystem {
                 if(spawnable.entityType.equals("EnemyEntity")) {
                     spawnEnemy(spawnable);
                     flaggedForRemoval.add(spawnable);
-                    EnemyEntityFactory.createTypeB(amc.getAssetManager(), (EnemyData)spawnable.data);
+                    EnemyEntityFactory.create(amc.getAssetManager(), (EnemyData)spawnable.data);
                 }
             }
         }

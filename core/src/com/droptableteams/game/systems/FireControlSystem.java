@@ -68,7 +68,7 @@ public class FireControlSystem implements ISystem {
         }
         for(int i = 0; i < numBullets; i++) {
             float direction = baseDirection + offset;
-            BulletData bd = new BulletData(direction, bt.speed, 0, bt.width, bt.height, x, y, bt.texture);
+            BulletData bd = new BulletData(direction, 0, x, y, bt.subtype);
             BulletEntityFactory.create(amc.getAssetManager(), bd);
             offset += angle;
         }

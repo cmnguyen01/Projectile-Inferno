@@ -1,6 +1,5 @@
 package com.droptableteams.game.factories;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -18,14 +17,6 @@ import com.droptableteams.game.systems.*;
 
 import java.util.ArrayList;
 
-/**
- * Factory is not currently very extensible or adaptable
- * for use with script inputs or other forms of argument.
- *
- * TODO: Redesign Factory, and consider building an interface.
- *
- * TODO: Rename Factories to Builders -- since not technically factory pattern.
- */
 public class EnemyEntityFactory {
     private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
@@ -34,47 +25,12 @@ public class EnemyEntityFactory {
     public static void create(AssetManager am, EnemyData ed) {
         int id = _engine.acquireEntityId();
         IEntity entity = new EnemyEntity(id);
-        generateComponentList(id, am, ed);
+        generateComponentsList(id, am, ed);
         generateSystemList(id);
         _engine.addEntity(entity, _cl, _sl);
     }
 
-    private static void generateComponentList(int id, AssetManager am, EnemyData ed) {
-        EnemyType et = EnemyTypeFactory.make(ed.enemyType);
-        float x = -64;
-        float y = Gdx.graphics.getHeight()/2;
-        Sprite sp = new Sprite(am.get(et.texture, Texture.class));
-        sp.setSize(et.width,et.width);
-        sp.setCenter(x,y);
-        _cl.clear();
-        _cl.add(new SpriteComponent(id, sp));
-        _cl.add(new LocationComponent(id, ed.x,ed.y));
-        _cl.add(new SizeComponent(id, et.width,et.height));
-        _cl.add(new VelocityComponent(id, et.speed));
-        _cl.add(new HasBeenInboundsComponent(id, false));
-        _cl.add(new MoveDirectionComponent(id, 0f));                // TODO: replace with destinational movement
-        _cl.add(new FireControlComponent(id, et.firePattern.getFireRate(), true));
-        _cl.add(new FirePatternComponent(id, et.firePattern.getBaseDirection(),et.firePattern.getNumberOfBullets(),
-                et.firePattern.getDividingAngle(), et.firePattern.getDeltaTheta(), et.firePattern.getBulletType()));
-    }
-
-    private static void generateSystemList(int id) {
-        _sl.clear();
-        _sl.add(new UpdateSpriteSystem(id));
-        _sl.add(new DirectionalMovementSystem(id));
-        _sl.add(new DespawnOutOfBoundsSystem(id));
-        _sl.add(new FireControlSystem(id));
-    }
-
-    public static void createTypeB(AssetManager am, EnemyData ed) {
-        int id = _engine.acquireEntityId();
-        IEntity entity = new EnemyEntity(id);
-        generateComponentListB(id, am, ed);
-        generateSystemListB(id);
-        _engine.addEntity(entity, _cl, _sl);
-    }
-
-    private static void generateComponentListB(int id, AssetManager am, EnemyData ed) {
+    private static void generateComponentsList(int id, AssetManager am, EnemyData ed) {
         EnemyType et = EnemyTypeFactory.make(ed.enemyType);
         float x = ed.x;
         float y = ed.y;
@@ -86,14 +42,14 @@ public class EnemyEntityFactory {
         _cl.add(new LocationComponent(id, ed.x,ed.y));
         _cl.add(new SizeComponent(id, et.width,et.height));
         _cl.add(new VelocityComponent(id, et.speed));
-        _cl.add(new HasBeenInboundsComponent(id, false));               // TODO: replace with destinational movement
+        _cl.add(new HasBeenInboundsComponent(id, false));
         _cl.add(new DestinationMovementComponent(id, ed.destinationList,et.loopDestinations));
         _cl.add(new FireControlComponent(id, et.firePattern.getFireRate(), true));
         _cl.add(new FirePatternComponent(id, et.firePattern.getBaseDirection(),et.firePattern.getNumberOfBullets(),
                 et.firePattern.getDividingAngle(), et.firePattern.getDeltaTheta(), et.firePattern.getBulletType()));
     }
 
-    private static void generateSystemListB(int id) {
+    private static void generateSystemList(int id) {
         _sl.clear();
         _sl.add(new UpdateSpriteSystem(id));
         _sl.add(new DestinationMovementSystem(id));

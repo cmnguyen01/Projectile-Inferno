@@ -1,7 +1,7 @@
 package com.droptableteams.game.components;
 
 import com.droptableteams.game.LibECS.interfaces.IComponent;
-import com.droptableteams.game.util.TimeVector2;
+import com.droptableteams.game.util.TimeVector3;
 
 import java.util.ArrayList;
 
@@ -9,13 +9,13 @@ import java.util.ArrayList;
 public class DestinationMovementComponent implements IComponent {
     private int _id;
     private String _type;
-    private ArrayList<TimeVector2> _destinationList;
+    private ArrayList<TimeVector3> _destinationList;
     private int nextDest;
     private long _hereSinceMillis;
     private boolean _shouldLoop;
 
 
-    public DestinationMovementComponent(int id, ArrayList<TimeVector2> destinationList, boolean shouldLoop) {
+    public DestinationMovementComponent(int id, ArrayList<TimeVector3> destinationList, boolean shouldLoop) {
         _id = id;
         _type = "DestinationMovementComponent";
         nextDest = 0;

@@ -2,15 +2,14 @@ package com.droptableteams.game.util;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
-import sun.java2d.pipe.SpanClipRenderer;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 
 public class ScriptReader {
-    public static ArrayList<Spawnable> readLevel(String levelName) {
-        String filePath = "scripts/levels/" + levelName + ".json";
+    public static ArrayList<Spawnable> readLevel(String filename) {
+        String filePath = "scripts/levels/" + filename;
         try
         {
             Array spawnArray = null;

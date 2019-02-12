@@ -18,14 +18,6 @@ import com.droptableteams.game.systems.game.RenderSystem;
 
 import java.util.ArrayList;
 
-/**
- * Factory is not currently very extensible or adaptable
- * for use with script inputs or other forms of argument.
- *
- * TODO: Redesign Factory, and consider building an interface.
- *
- * TODO: Rename Factories to Builders -- since not technically factory pattern.
- */
 public class GameEntityFactory {
     private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
@@ -44,7 +36,7 @@ public class GameEntityFactory {
         _cl.add(new RenderComponent(id, batch, EntityRenderOrder.get()));
         _cl.add(new AssetManagerComponent(id, am));
         _cl.add(new GameCheatsComponent(id, 0.5f));
-        _cl.add(new SpawnListComponent(id, ScriptReader.readLevel("sample-level")));
+        _cl.add(new SpawnListComponent(id, ScriptReader.readLevel("sample-level.json")));
         _cl.add(new GameTimeComponent(id));
     }
 
