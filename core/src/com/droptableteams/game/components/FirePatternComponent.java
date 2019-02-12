@@ -16,7 +16,7 @@ public class FirePatternComponent implements IComponent {
 
     public FirePatternComponent(int id, float baseDirection, String bulletType) {
         _id = id;
-        _baseDirection = baseDirection; // TODO: centerDirection is redundant/unnecessary
+        _baseDirection = baseDirection;
         _numberOfBullets = 1;
         _dividingAngle = 0;
         _deltaTheta = 0;

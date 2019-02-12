@@ -4,6 +4,7 @@ import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.game.GameTimeComponent;
 import com.droptableteams.game.components.game.SpawnListComponent;
+import com.droptableteams.game.factories.data.EnemyData;
 import com.droptableteams.game.util.Spawnable;
 
 public class SpawnerSystem implements ISystem {
@@ -33,8 +34,14 @@ public class SpawnerSystem implements ISystem {
         GameTimeComponent gtc = (GameTimeComponent)_cm.getComponent(_id, "GameTimeComponent");
         for (Spawnable spawnable : slc.getSpawnList()) {
             if(gtc.getTimeInMillis() >= spawnable.timeInMillis) {
-                // spawn the thing...
+                if("EnemyEntity" == spawnable.entityType) {
+                    spawnEnemy(spawnable);
+                }
             }
         }
+    }
+
+    private void spawnEnemy(Spawnable spawnable) {
+        EnemyData ed = (EnemyData)spawnable.args;
     }
 }
