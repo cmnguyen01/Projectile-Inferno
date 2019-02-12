@@ -14,6 +14,12 @@ public class Spawnable implements Json.Serializable {
     public String entityType;
     public Object data;
 
+    public Spawnable() {
+        spawnTime = 0;
+        entityType = "UnknownType";
+        data = null;
+    }
+
     /**
      *  Constructor
      * @param spawnTime time in millis since beginning of level

@@ -10,10 +10,10 @@ public class SpawnListComponent implements IComponent {
     private String _type;
     private ArrayList<Spawnable> _spawnList;
 
-    public SpawnListComponent(int id) {
+    public SpawnListComponent(int id, ArrayList<Spawnable> spawnList) {
         _id = id;
         _type = "SpawnListComponent";
-        _spawnList = new ArrayList<Spawnable>();
+        _spawnList = spawnList;
     }
 
     @Override
@@ -28,5 +28,9 @@ public class SpawnListComponent implements IComponent {
 
     public ArrayList<Spawnable> getSpawnList() {
         return _spawnList;
+    }
+
+    public void setSpawnList(ArrayList<Spawnable> spawnList) {
+        _spawnList = spawnList;
     }
 }

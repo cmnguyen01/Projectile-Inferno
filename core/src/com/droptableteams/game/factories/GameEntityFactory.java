@@ -6,11 +6,11 @@ import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.components.game.AssetManagerComponent;
-import com.droptableteams.game.components.game.GameCheatsComponent;
-import com.droptableteams.game.components.game.RenderComponent;
+import com.droptableteams.game.components.game.*;
 import com.droptableteams.game.entities.GameEntity;
 import com.droptableteams.game.systems.game.HandleInputSystem;
+import com.droptableteams.game.systems.game.SpawnerSystem;
+import com.droptableteams.game.util.ScriptReader;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.EntityRenderOrder;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
@@ -27,13 +27,12 @@ import java.util.ArrayList;
  * TODO: Rename Factories to Builders -- since not technically factory pattern.
  */
 public class GameEntityFactory {
-
     private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
     private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
 
     public static void create(SpriteBatch batch, AssetManager am) {
-        int id = SpecialEntityIds.getGameEntityId();
+        int id = SpecialEntityIds.GAME_ENTITY;
         IEntity entity = new GameEntity(id);
         generateComponentList(id, batch, am);
         generateSystemList(id);
@@ -45,11 +44,14 @@ public class GameEntityFactory {
         _cl.add(new RenderComponent(id, batch, EntityRenderOrder.get()));
         _cl.add(new AssetManagerComponent(id, am));
         _cl.add(new GameCheatsComponent(id, 0.5f));
+        _cl.add(new SpawnListComponent(id, ScriptReader.readLevel("sample-level")));
+        _cl.add(new GameTimeComponent(id));
     }
 
     private static void generateSystemList(int id) {
         _sl.clear();
         _sl.add(new RenderSystem(id));
         _sl.add(new HandleInputSystem(id));
+        _sl.add(new SpawnerSystem(id));
     }
 }

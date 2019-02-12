@@ -39,12 +39,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		_ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
 		GameEntityFactory.create(_batch, _am);
 		PlayerEntityFactory.create(_am);
-		//writeSampleLevelJson();
 	}
 
 	@Override
 	public void render () {
-        temporarySpawnEnemiesMethod();
+        //temporarySpawnEnemiesMethod();
 	    _ecsEngine.update();
 	}
 	
