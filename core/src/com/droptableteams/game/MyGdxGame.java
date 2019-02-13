@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.droptableteams.game.LibECS.ECSEngine;
-import com.droptableteams.game.factories.GameEntityFactory;
-import com.droptableteams.game.factories.PlayerEntityFactory;
-import com.droptableteams.game.factories.VisibleHitboxEntityFactory;
+import com.droptableteams.game.builders.GameEntityBuilder;
+import com.droptableteams.game.builders.PlayerEntityBuilder;
+import com.droptableteams.game.builders.VisibleHitboxEntityBuilder;
 import com.droptableteams.game.util.data.EnemyData;
 import com.droptableteams.game.util.Spawnable;
 import com.droptableteams.game.util.TimeVector3;
@@ -33,9 +33,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		_am = new AssetManager();
 		loadAssets();
 		_ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
-		GameEntityFactory.create(_batch, _am);
-		PlayerEntityFactory.create(_am);
-		VisibleHitboxEntityFactory.create(_am);
+		GameEntityBuilder.create(_batch, _am);
+		PlayerEntityBuilder.create(_am);
+		VisibleHitboxEntityBuilder.create(_am);
 	}
 
 	@Override

@@ -88,7 +88,7 @@ public class HandleInputSystem implements ISystem {
     }
 
     private void toggleUltimate(FirePatternComponent fpc, FireControlComponent fcc) {
-        boolean ultimateButton = Gdx.input.isKeyJustPressed(Input.Keys.Q);
+        boolean ultimateButton = Gdx.input.isKeyJustPressed(Input.Keys.X);
         if(ultimateButton) {
             if(fpc.getNumberOfBullets() < 24) {
                 fpc.setDividingAngle((float)(Math.PI/12));
