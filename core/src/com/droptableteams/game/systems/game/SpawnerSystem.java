@@ -6,7 +6,7 @@ import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.components.game.GameTimeComponent;
 import com.droptableteams.game.components.game.SpawnListComponent;
 import com.droptableteams.game.factories.EnemyEntityFactory;
-import com.droptableteams.game.factories.data.EnemyData;
+import com.droptableteams.game.util.data.EnemyData;
 import com.droptableteams.game.util.Spawnable;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class SpawnerSystem implements ISystem {
                 if(spawnable.entityType.equals("EnemyEntity")) {
                     spawnEnemy(spawnable);
                     flaggedForRemoval.add(spawnable);
-                    EnemyEntityFactory.createTypeB(amc.getAssetManager(), (EnemyData)spawnable.data);
+                    EnemyEntityFactory.create(amc.getAssetManager(), (EnemyData)spawnable.data);
                 }
             }
         }

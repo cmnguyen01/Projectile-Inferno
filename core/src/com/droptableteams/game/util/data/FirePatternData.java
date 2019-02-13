@@ -1,4 +1,4 @@
-package com.droptableteams.game.factories.data;
+package com.droptableteams.game.util.data;
 
 /**
  * currently unused.

@@ -1,6 +1,8 @@
 package com.droptableteams.game.components;
 
-public class HitpointComponent {
+import com.droptableteams.game.LibECS.interfaces.IComponent;
+
+public class HitpointComponent implements IComponent {
     private int _id;
     private String _type;
     private int _hp;
@@ -26,5 +28,15 @@ public class HitpointComponent {
 
     public void addHp(int amount) {
         _hp += amount;
+    }
+
+    @Override
+    public int getId() {
+        return _id;
+    }
+
+    @Override
+    public String getType() {
+        return _type;
     }
 }

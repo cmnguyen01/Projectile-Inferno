@@ -1,4 +1,4 @@
-package com.droptableteams.game.entities.types;
+package com.droptableteams.game.util.types;
 
 public class BulletTypeFactory {
 
@@ -14,18 +14,18 @@ public class BulletTypeFactory {
 
     private static BulletType makePlayerBullet() {
         float speed = 430;
-        float width = 24;
+        float width = 10;
         float height = 24;
-        int damage = 0;
+        int damage = 10;
         String texture = "sprites/playerBullet.png";
         return new BulletType("BulletEntity", "PlayerBullet",speed, width, height, damage, texture);
     }
 
     private static BulletType makeEnemyBulletA() {
         float speed = 60;
-        float width = 30;
-        float height = 35;
-        int damage = 0;
+        float width = 14;
+        float height = 36;
+        int damage = 10;
         String texture = "sprites/enemyBulletA.png";
         return new BulletType("BulletEntity", "EnemyBulletA",speed, width, height, damage, texture);
     }

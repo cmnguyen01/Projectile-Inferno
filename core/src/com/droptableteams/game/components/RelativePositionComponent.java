@@ -27,12 +27,12 @@ public class RelativePositionComponent implements IComponent {
         return _type;
     }
 
-    public float getDAngle() {
+    public float getAngle() {
         return _angle;
     }
 
-    public void setAngle(float anle) {
-        _angle = anle;
+    public void setAngle(float angle) {
+        _angle = angle;
     }
 
     public float getRadius() {

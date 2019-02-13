@@ -2,16 +2,16 @@ package com.droptableteams.game.util;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class TimeVector2 {
+public class TimeVector3 {
     private Vector2 _position;
     private long _time;
 
-    public TimeVector2() {
+    public TimeVector3() {
         _position = new Vector2();
         _time = 0;
     }
 
-    public TimeVector2(float x, float y, long time) {
+    public TimeVector3(float x, float y, long time) {
         _position = new Vector2(x,y);
         _time = time;
     }
