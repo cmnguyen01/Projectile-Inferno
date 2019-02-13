@@ -7,11 +7,17 @@ package com.droptableteams.game.util.constants;
 public class SystemUpdateOrder {
     private static String[] _systemUpdateOrder = {
             "HandleInputSystem",
+            "SpawnerSystem",
             "FireControlSystem",
-            "DirectionalMovementSystem",
             "SpeedModifierSystem",
+            "DirectionalMovementSystem",
+            "DestinationMovementSystem",
             "UpdateLocationSystem",
+            "RelativePositionSystem",
+            "SetHitboxLocationSystem",
             "StopAtBoundarySystem",
+            "BulletCollisionSystem",
+            "CollisionDamageSystem",
             "RotateSpriteToDirectionSystem",
             "UpdateSpriteSystem",
             "DespawnOutOfBoundsSystem",

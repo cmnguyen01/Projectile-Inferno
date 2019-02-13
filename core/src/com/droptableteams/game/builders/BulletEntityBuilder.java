@@ -1,0 +1,61 @@
+package com.droptableteams.game.builders;
+
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
+import com.droptableteams.game.LibECS.ECSEngine;
+import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.IEntity;
+import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.components.*;
+import com.droptableteams.game.entities.BulletEntity;
+import com.droptableteams.game.util.types.BulletType;
+import com.droptableteams.game.util.types.BulletTypeFactory;
+import com.droptableteams.game.util.data.BulletData;
+import com.droptableteams.game.util.constants.SystemUpdateOrder;
+import com.droptableteams.game.systems.*;
+
+import java.util.ArrayList;
+
+public class BulletEntityBuilder {
+
+    private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
+    private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
+    private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
+
+    public static void create(AssetManager assetManager, BulletData bulletData) {
+        int id = _engine.acquireEntityId();
+        IEntity entity = new BulletEntity(id);
+        generateComponentList(id, assetManager, bulletData);
+        generateSystemList(id);
+        _engine.addEntity(entity, _cl, _sl);
+    }
+
+    private static void generateComponentList(int id, AssetManager am, BulletData bd) {
+        BulletType bt = BulletTypeFactory.make(bd.bulletType);
+        Sprite sp = new Sprite(am.get(bt.texture, Texture.class));
+        sp.setSize(bt.width,bt.height);
+        sp.setCenter(bd.x,bd.y);
+        _cl.clear();
+        _cl.add(new SpriteComponent(id, sp));
+        _cl.add(new LocationComponent(id, bd.x,bd.y));
+        _cl.add(new SizeComponent(id, bt.width,bt.height));
+        _cl.add(new VelocityComponent(id, bt.speed));
+        _cl.add(new HasBeenInboundsComponent(id, false));
+        _cl.add(new MoveDirectionComponent(id, bd.direction));
+        _cl.add(new OwnerComponent(id, bd.ownerId));
+        _cl.add(new DamageComponent(id, bt.damage));
+        _cl.add(new HitboxComponent(id, new Rectangle(bd.x,bd.y,bt.width,bt.height)));
+    }
+
+    private static void generateSystemList(int id) {
+        _sl.clear();
+        _sl.add(new UpdateSpriteSystem(id));
+        _sl.add(new DespawnOutOfBoundsSystem(id));
+        _sl.add(new DirectionalMovementSystem(id));
+        _sl.add(new RotateSpriteToDirectionSystem(id));
+        _sl.add(new BulletCollisionSystem(id));
+        _sl.add(new SetHitboxLocationSystem(id));
+    }
+}

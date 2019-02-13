@@ -2,7 +2,7 @@ package com.droptableteams.game.systems;
 
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.components.GameCheatsComponent;
+import com.droptableteams.game.components.game.GameCheatsComponent;
 import com.droptableteams.game.components.VelocityComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 
@@ -31,7 +31,6 @@ public class SpeedModifierSystem implements ISystem {
     public void update() {
         GameCheatsComponent gcc = (GameCheatsComponent) _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
         VelocityComponent vc = (VelocityComponent)_cm.getComponent(_id,"VelocityComponent");
-        vc.setDx(vc.getDx() * gcc.getSpeedMultiplier());
-        vc.setDy(vc.getDy() * gcc.getSpeedMultiplier());
+        vc.setModifiedSpeed(vc.getBaseSpeed() * gcc.getSpeedMultiplier());
     }
 }

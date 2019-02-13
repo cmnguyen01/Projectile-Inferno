@@ -1,8 +1,0 @@
-{
-  "enemyA": {
-    "sprite":"enemyA.png",
-    "baseSpeed":128,
-    "bulletType":"bulletA",
-    "movePattern":"leftToRight"
-  }
-}
