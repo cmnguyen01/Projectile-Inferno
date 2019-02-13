@@ -1,4 +1,4 @@
-package com.droptableteams.game.factories;
+package com.droptableteams.game.builders;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,7 +18,7 @@ import com.droptableteams.game.systems.*;
 
 import java.util.ArrayList;
 
-public class EnemyEntityFactory {
+public class EnemyEntityBuilder {
     private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
     private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
     private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();

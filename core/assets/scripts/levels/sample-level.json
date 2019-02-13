@@ -40,7 +40,7 @@
 
 	{
 		"class": "com.droptableteams.game.util.Spawnable",
-		"spawnTime": 7000,
+		"spawnTime": 10000,
 		"entityType": "EnemyEntity",
 		"data": {
 			"enemyType": "EnemyA",
@@ -59,7 +59,7 @@
 	},
 	{
 		"class": "com.droptableteams.game.util.Spawnable",
-		"spawnTime": 7000,
+		"spawnTime": 10000,
 		"entityType": "EnemyEntity",
 		"data": {
 			"enemyType": "EnemyB",
@@ -78,7 +78,7 @@
 	},
 	{
 		"class": "com.droptableteams.game.util.Spawnable",
-		"spawnTime": 10000,
+		"spawnTime": 15000,
 		"entityType": "EnemyEntity",
 		"data": {
 			"enemyType": "EnemyA",
@@ -97,7 +97,7 @@
 	},
 	{
 		"class": "com.droptableteams.game.util.Spawnable",
-		"spawnTime": 10000,
+		"spawnTime": 15000,
 		"entityType": "EnemyEntity",
 		"data": {
 			"enemyType": "EnemyB",
