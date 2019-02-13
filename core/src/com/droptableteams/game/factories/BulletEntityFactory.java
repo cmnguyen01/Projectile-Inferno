@@ -3,6 +3,7 @@ package com.droptableteams.game.factories;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
@@ -43,6 +44,9 @@ public class BulletEntityFactory {
         _cl.add(new VelocityComponent(id, bt.speed));
         _cl.add(new HasBeenInboundsComponent(id, false));
         _cl.add(new MoveDirectionComponent(id, bd.direction));
+        _cl.add(new OwnerComponent(id, bd.ownerId));
+        _cl.add(new DamageComponent(id, bt.damage));
+        _cl.add(new HitboxComponent(id, new Rectangle(bd.x,bd.y,bt.width,bt.height)));
     }
 
     private static void generateSystemList(int id) {
@@ -51,5 +55,7 @@ public class BulletEntityFactory {
         _sl.add(new DespawnOutOfBoundsSystem(id));
         _sl.add(new DirectionalMovementSystem(id));
         _sl.add(new RotateSpriteToDirectionSystem(id));
+        _sl.add(new BulletCollisionSystem(id));
+        _sl.add(new SetHitboxLocationSystem(id));
     }
 }

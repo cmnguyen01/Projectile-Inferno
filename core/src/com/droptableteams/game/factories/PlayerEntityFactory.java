@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
@@ -49,6 +50,9 @@ public class PlayerEntityFactory {
         _cl.add(new VelocityComponent(id, 360));
         _cl.add(new MoveDirectionComponent(id, null));
         _cl.add(new FireControlComponent(id, 0.125f,false));
+        _cl.add(new HitpointComponent(id, 200));
+        _cl.add(new CollisionsComponent(id));
+        _cl.add(new HitboxComponent(id, new Rectangle(x,y,width,height)));
         _cl.add(new FirePatternComponent(id, Directions.UP, 1, (float)Math.PI/24f, 0, "PlayerBullet"));
     }
 
@@ -59,5 +63,7 @@ public class PlayerEntityFactory {
         _sl.add(new DirectionalMovementSystem(id));
         _sl.add(new FireControlSystem(id));
         _sl.add(new SpeedModifierSystem(id));
+        _sl.add(new CollisionDamageSystem(id));
+        _sl.add(new SetHitboxLocationSystem(id));
     }
 }

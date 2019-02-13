@@ -12,6 +12,7 @@ public class EnemyType implements IEntitySubtype, Json.Serializable {
     public float width;
     public float height;
     public float speed;
+    public int hp;
     public boolean despawnOutOfBounds;
     public boolean loopDestinations;
 
@@ -23,17 +24,19 @@ public class EnemyType implements IEntitySubtype, Json.Serializable {
         width = 0;
         height = 0;
         speed = 0;
+        hp = 0;
         despawnOutOfBounds = false;
         loopDestinations = false;
     }
 
-    public EnemyType(String entityType, String subtype, FirePatternData firePattern, float width, float height, float speed, boolean despawnOutOfBounds, boolean loopDestinations, String texture) {
+    public EnemyType(String entityType, String subtype, FirePatternData firePattern, float width, float height, float speed, int hp, boolean despawnOutOfBounds, boolean loopDestinations, String texture) {
         this.entityType = entityType;
         this.subtype = subtype;
         this.firePattern = firePattern;
         this.width = width;
         this.height = height;
         this.speed = speed;
+        this.hp = hp;
         this.despawnOutOfBounds = despawnOutOfBounds;
         this.loopDestinations = loopDestinations;
         this.texture = texture;
@@ -57,6 +60,7 @@ public class EnemyType implements IEntitySubtype, Json.Serializable {
         json.writeValue("width", width);
         json.writeValue("height", height);
         json.writeValue("speed", speed);
+        json.writeValue("hp", hp);
         json.writeValue("despawnOutOfBounds",despawnOutOfBounds);
         json.writeValue("loopDestinations", loopDestinations);
         json.writeValue("firePattern", firePattern, FirePatternData.class);
@@ -70,6 +74,7 @@ public class EnemyType implements IEntitySubtype, Json.Serializable {
         width = jsonData.getFloat("width");
         height = jsonData.getFloat("height");
         speed = jsonData.getFloat("speed");
+        hp = jsonData.getInt("hp");
         despawnOutOfBounds = jsonData.getBoolean("despawnOutOfBounds");
         loopDestinations = jsonData.getBoolean("loopDestinations");
         firePattern = json.readValue("firePattern", FirePatternData.class, jsonData);

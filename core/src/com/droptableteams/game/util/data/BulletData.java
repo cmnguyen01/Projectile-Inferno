@@ -8,6 +8,7 @@ public class BulletData {
     public long delay;
     public float x;
     public float y;
+    public int ownerId;
     public String bulletType;
 
     public BulletData() {
@@ -15,14 +16,16 @@ public class BulletData {
         delay = 0;
         x = 0;
         y = 0;
+        ownerId = -1;
         bulletType = "none";
     }
 
-    public BulletData(float direction, long delay, float x, float y, String bulletType) {
+    public BulletData(float direction, long delay, float x, float y, int ownerId, String bulletType) {
         this.direction = direction;
         this.delay = delay;
         this.x = x;
         this.y = y;
+        this.ownerId = ownerId;
         this.bulletType = bulletType;
     }
 }

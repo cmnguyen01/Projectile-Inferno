@@ -11,7 +11,7 @@ public class EnemyData {
     public float y;
 
     public EnemyData() {
-        enemyType = "unknown";
+        enemyType = "none";
         destinationList = null;
         x = 0;
         y = 0;

@@ -3,6 +3,7 @@ package com.droptableteams.game.factories;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
@@ -44,6 +45,9 @@ public class EnemyEntityFactory {
         _cl.add(new VelocityComponent(id, et.speed));
         _cl.add(new HasBeenInboundsComponent(id, false));
         _cl.add(new DestinationMovementComponent(id, ed.destinationList,et.loopDestinations));
+        _cl.add(new HitpointComponent(id, et.hp));
+        _cl.add(new CollisionsComponent(id));
+        _cl.add(new HitboxComponent(id, new Rectangle(x,y,et.width,et.height)));
         _cl.add(new FireControlComponent(id, et.firePattern.getFireRate(), true));
         _cl.add(new FirePatternComponent(id, et.firePattern.getBaseDirection(),et.firePattern.getNumberOfBullets(),
                 et.firePattern.getDividingAngle(), et.firePattern.getDeltaTheta(), et.firePattern.getBulletType()));
@@ -55,5 +59,7 @@ public class EnemyEntityFactory {
         _sl.add(new DestinationMovementSystem(id));
         _sl.add(new DespawnOutOfBoundsSystem(id));
         _sl.add(new FireControlSystem(id));
+        _sl.add(new CollisionDamageSystem(id));
+        _sl.add(new SetHitboxLocationSystem(id));
     }
 }

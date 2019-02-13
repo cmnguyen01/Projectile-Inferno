@@ -15,12 +15,12 @@ public class EnemyTypeFactory {
     }
 
     public static EnemyType makeEnemyA() {
-        FirePatternData fpd = new FirePatternData(Directions.DOWN, 2, (float)(Math.PI), (float)(Math.PI), 0.4f, "EnemyBulletA");
-        return new EnemyType("EnemyEntity", "EnemyA",fpd, 52, 52, 128, true, false,"sprites/enemyA.png");
+        FirePatternData fpd = new FirePatternData(Directions.DOWN, 2, (float)(Math.PI), (float)(Math.PI), 0.3f, "EnemyBulletA");
+        return new EnemyType("EnemyEntity", "EnemyA",fpd, 52, 52, 128, 100, true, false,"sprites/enemyA.png");
     }
 
     public static EnemyType makeEnemyB() {
-        FirePatternData fpd = new FirePatternData(Directions.DOWN, 2, (float)(Math.PI), (float)(Math.PI), 0.4f, "EnemyBulletA");
-        return new EnemyType("EnemyEntity", "EnemyB",fpd, 52, 52, 128, true, false,"sprites/enemyB.png");
+        FirePatternData fpd = new FirePatternData(Directions.DOWN, 2, (float)(Math.PI), (float)(Math.PI), 0.3f, "EnemyBulletA");
+        return new EnemyType("EnemyEntity", "EnemyB",fpd, 52, 52, 128, 100, true, false,"sprites/enemyB.png");
     }
 }

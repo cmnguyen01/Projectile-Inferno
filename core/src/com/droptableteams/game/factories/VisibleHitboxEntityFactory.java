@@ -39,8 +39,8 @@ public class VisibleHitboxEntityFactory {
             x = lc.getX();
             y = lc.getY();
         }
-        float width = 8;
-        float height = 8;
+        float width = 12;
+        float height = 12;
         Sprite sp = new Sprite(am.get("sprites/hitbox.png", Texture.class));
         sp.setSize(width,height);
         sp.setCenter(x,y);

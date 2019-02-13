@@ -16,6 +16,8 @@ public class SystemUpdateOrder {
             "RelativePositionSystem",
             "SetHitboxLocationSystem",
             "StopAtBoundarySystem",
+            "BulletCollisionSystem",
+            "CollisionDamageSystem",
             "RotateSpriteToDirectionSystem",
             "UpdateSpriteSystem",
             "DespawnOutOfBoundsSystem",
