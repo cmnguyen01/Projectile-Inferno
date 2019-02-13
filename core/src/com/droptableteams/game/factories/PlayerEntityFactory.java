@@ -52,7 +52,7 @@ public class PlayerEntityFactory {
         _cl.add(new FireControlComponent(id, 0.125f,false));
         _cl.add(new HitpointComponent(id, 200));
         _cl.add(new CollisionsComponent(id));
-        _cl.add(new HitboxComponent(id, new Rectangle(x,y,width,height)));
+        _cl.add(new HitboxComponent(id, new Rectangle(x,y,12,12)));
         _cl.add(new FirePatternComponent(id, Directions.UP, 1, (float)Math.PI/24f, 0, "PlayerBullet"));
     }
 
