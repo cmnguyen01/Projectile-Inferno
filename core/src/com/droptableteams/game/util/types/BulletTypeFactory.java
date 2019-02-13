@@ -1,4 +1,4 @@
-package com.droptableteams.game.entities.types;
+package com.droptableteams.game.util.types;
 
 public class BulletTypeFactory {
 

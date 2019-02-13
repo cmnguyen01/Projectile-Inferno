@@ -1,8 +1,8 @@
-package com.droptableteams.game.entities.types;
+package com.droptableteams.game.util.types;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import com.droptableteams.game.factories.data.FirePatternData;
+import com.droptableteams.game.util.data.FirePatternData;
 
 public class EnemyType implements IEntitySubtype, Json.Serializable {
     public String entityType;
@@ -14,6 +14,18 @@ public class EnemyType implements IEntitySubtype, Json.Serializable {
     public float speed;
     public boolean despawnOutOfBounds;
     public boolean loopDestinations;
+
+    public EnemyType() {
+        entityType = "none";
+        subtype = "none";
+        texture = "none";
+        firePattern = null;
+        width = 0;
+        height = 0;
+        speed = 0;
+        despawnOutOfBounds = false;
+        loopDestinations = false;
+    }
 
     public EnemyType(String entityType, String subtype, FirePatternData firePattern, float width, float height, float speed, boolean despawnOutOfBounds, boolean loopDestinations, String texture) {
         this.entityType = entityType;

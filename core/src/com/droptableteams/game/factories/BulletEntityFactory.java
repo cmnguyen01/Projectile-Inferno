@@ -9,9 +9,9 @@ import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.BulletEntity;
-import com.droptableteams.game.entities.types.BulletType;
-import com.droptableteams.game.entities.types.BulletTypeFactory;
-import com.droptableteams.game.factories.data.BulletData;
+import com.droptableteams.game.util.types.BulletType;
+import com.droptableteams.game.util.types.BulletTypeFactory;
+import com.droptableteams.game.util.data.BulletData;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.systems.*;
 

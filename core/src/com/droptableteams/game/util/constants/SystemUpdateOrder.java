@@ -13,7 +13,7 @@ public class SystemUpdateOrder {
             "DirectionalMovementSystem",
             "DestinationMovementSystem",
             "UpdateLocationSystem",
-            "LocationFromRelativePositionSystem",
+            "RelativePositionSystem",
             "SetHitboxLocationSystem",
             "StopAtBoundarySystem",
             "RotateSpriteToDirectionSystem",

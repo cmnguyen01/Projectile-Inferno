@@ -1,4 +1,4 @@
-package com.droptableteams.game.entities.types;
+package com.droptableteams.game.util.types;
 
 /**
  * immutable data that will always be the same for all entities

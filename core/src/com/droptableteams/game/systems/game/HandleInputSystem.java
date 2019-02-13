@@ -3,9 +3,11 @@ package com.droptableteams.game.systems.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.droptableteams.game.LibECS.ComponentManager;
+import com.droptableteams.game.LibECS.EntityManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.FireControlComponent;
 import com.droptableteams.game.components.FirePatternComponent;
+import com.droptableteams.game.components.SpriteComponent;
 import com.droptableteams.game.components.game.GameCheatsComponent;
 import com.droptableteams.game.components.MoveDirectionComponent;
 import com.droptableteams.game.util.constants.DirectionBitMask;
@@ -17,11 +19,13 @@ public class HandleInputSystem implements ISystem {
     private int _id;
     private String _type;
     private ComponentManager _cm;
+    private EntityManager _em;
 
     public HandleInputSystem(int id) {
         _id = id;
         _type = "HandleInputSystem";
         _cm = ComponentManager.getInstance();
+        _em = EntityManager.getInstance();
     }
 
     @Override
@@ -42,8 +46,11 @@ public class HandleInputSystem implements ISystem {
         GameCheatsComponent gcc = (GameCheatsComponent)
                 _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
 
+        Integer hitboxId = (Integer)_em.getEntities("VisibleHitboxEntity").keySet().toArray()[0];
+        SpriteComponent spc = (SpriteComponent)_cm.getComponent(hitboxId, "SpriteComponent");
+
         setMoveDirection(mdc);
-        setSpeedModifier(gcc);
+        setSlowMode(gcc, spc);
         setFiring(fcc);
         toggleSpinDirection(fpc);
         toggleUltimate(fpc, fcc);
@@ -51,13 +58,15 @@ public class HandleInputSystem implements ISystem {
         cycleFireMode(fpc, fcc);
     }
 
-    private void setSpeedModifier(GameCheatsComponent gcc) {
+    private void setSlowMode(GameCheatsComponent gcc, SpriteComponent spc) {
         boolean speedButton = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT);
         if(speedButton){
             gcc.setSpeedMultiplier(0.5f);
+            spc.setVisible(true);
         }
         else{
             gcc.setSpeedMultiplier(1.0f);
+            spc.setVisible(false);
         }
     }
 

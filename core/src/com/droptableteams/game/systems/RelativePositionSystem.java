@@ -5,14 +5,14 @@ import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.RelativePositionComponent;
 
-public class LocationFromRelativePositionSytem implements ISystem {
+public class RelativePositionSystem implements ISystem {
     private int _id;
     private String _type;
     private ComponentManager _cm;
 
-    public LocationFromRelativePositionSytem(int id) {
+    public RelativePositionSystem(int id) {
         _id = id;
-        _type = "LocationFromRelativePositionSystem";
+        _type = "RelativePositionSystem";
         _cm = ComponentManager.getInstance();
     }
 
@@ -31,10 +31,10 @@ public class LocationFromRelativePositionSytem implements ISystem {
         RelativePositionComponent rpc = (RelativePositionComponent)_cm.getComponent(_id, "RelativePositionComponent");
         LocationComponent thisLc = (LocationComponent)_cm.getComponent(_id, "LocationComponent");
         LocationComponent thatLc = (LocationComponent)_cm.getComponent(rpc.getRelativeEntityId(), "LocationComponent");
-        float angle = rpc.getDAngle();
+        float angle = rpc.getAngle();
         float hyp = rpc.getRadius();
-        float adj = (float)Math.cos(angle)*hyp;
-        float opp = (float)Math.sin(angle)*hyp;
+        float adj = (float)(Math.cos(angle)*hyp);
+        float opp = (float)(Math.sin(angle)*hyp);
         thisLc.setX(thatLc.getX()+adj);
         thisLc.setY(thatLc.getY()+opp);
     }

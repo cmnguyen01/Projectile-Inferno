@@ -6,7 +6,7 @@ import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.components.game.GameTimeComponent;
 import com.droptableteams.game.components.game.SpawnListComponent;
 import com.droptableteams.game.factories.EnemyEntityFactory;
-import com.droptableteams.game.factories.data.EnemyData;
+import com.droptableteams.game.util.data.EnemyData;
 import com.droptableteams.game.util.Spawnable;
 
 import java.util.ArrayList;

@@ -9,9 +9,9 @@ import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.EnemyEntity;
-import com.droptableteams.game.entities.types.EnemyType;
-import com.droptableteams.game.entities.types.EnemyTypeFactory;
-import com.droptableteams.game.factories.data.EnemyData;
+import com.droptableteams.game.util.types.EnemyType;
+import com.droptableteams.game.util.types.EnemyTypeFactory;
+import com.droptableteams.game.util.data.EnemyData;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.systems.*;
 

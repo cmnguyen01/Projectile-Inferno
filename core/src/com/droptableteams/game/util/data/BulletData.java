@@ -1,11 +1,11 @@
-package com.droptableteams.game.factories.data;
+package com.droptableteams.game.util.data;
 
 /**
  * TODO: refactor to use string reference to BulletType, then remove all fields stored by BulletType class
  */
 public class BulletData {
     public float direction;
-    public long delay; // possibly move to type?
+    public long delay;
     public float x;
     public float y;
     public String bulletType;
@@ -15,7 +15,7 @@ public class BulletData {
         delay = 0;
         x = 0;
         y = 0;
-        bulletType = "unknown";
+        bulletType = "none";
     }
 
     public BulletData(float direction, long delay, float x, float y, String bulletType) {

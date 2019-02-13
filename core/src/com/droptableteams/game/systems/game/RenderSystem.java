@@ -9,6 +9,7 @@ import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.game.RenderComponent;
 import com.droptableteams.game.components.SpriteComponent;
+import com.droptableteams.game.util.constants.SpecialEntityIds;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +52,9 @@ public class RenderSystem implements ISystem {
                 for(Map.Entry<Integer,IEntity> e : entities) {
                     int id = e.getValue().getId();
                     SpriteComponent sp = (SpriteComponent)_cm.getComponent(id, "SpriteComponent");
-                    sp.getSprite().draw(batch);
+                    if(sp.isVisible()) {
+                        sp.getSprite().draw(batch);
+                    }
                 }
             }
         }

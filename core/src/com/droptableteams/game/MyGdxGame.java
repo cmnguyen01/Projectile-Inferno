@@ -9,7 +9,8 @@ import com.badlogic.gdx.utils.JsonWriter;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.factories.GameEntityFactory;
 import com.droptableteams.game.factories.PlayerEntityFactory;
-import com.droptableteams.game.factories.data.EnemyData;
+import com.droptableteams.game.factories.VisibleHitboxEntityFactory;
+import com.droptableteams.game.util.data.EnemyData;
 import com.droptableteams.game.util.Spawnable;
 import com.droptableteams.game.util.TimeVector3;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
@@ -26,9 +27,6 @@ public class MyGdxGame extends ApplicationAdapter {
 	private AssetManager _am;
 	private ECSEngine _ecsEngine;
 
-	// Temp var for demo
-	private long temporaryLastSpawnVar = 0;
-
 	@Override
 	public void create () {
 		_batch = new SpriteBatch();
@@ -37,6 +35,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		_ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
 		GameEntityFactory.create(_batch, _am);
 		PlayerEntityFactory.create(_am);
+		VisibleHitboxEntityFactory.create(_am);
 	}
 
 	@Override
@@ -47,12 +46,14 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void dispose () {
         _batch.dispose();
+        _am.dispose();
 	}
 
 	private void loadAssets() {
 	    _am.load("sprites/player.png", Texture.class);
         _am.load("sprites/enemyA.png", Texture.class);
 		_am.load("sprites/enemyB.png", Texture.class);
+		_am.load("sprites/hitbox.png", Texture.class);
 	    _am.load("sprites/playerBullet.png", Texture.class);
 		_am.load("sprites/playerBulletD.png", Texture.class);
         _am.load("sprites/enemyBulletA.png", Texture.class);

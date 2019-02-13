@@ -2,7 +2,7 @@ package com.droptableteams.game.util;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import com.droptableteams.game.factories.data.EnemyData;
+import com.droptableteams.game.util.data.EnemyData;
 
 /**
  * TODO: fields of type 'Object' may be difficult to serialize:
