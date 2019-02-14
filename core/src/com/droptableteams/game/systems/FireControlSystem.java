@@ -2,10 +2,12 @@ package com.droptableteams.game.systems;
 
 import com.badlogic.gdx.Gdx;
 import com.droptableteams.game.LibECS.ComponentManager;
+import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.components.game.GameCheatsComponent;
+import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.util.types.BulletType;
 import com.droptableteams.game.util.types.BulletTypeFactory;
 import com.droptableteams.game.util.data.BulletData;
@@ -69,7 +71,10 @@ public class FireControlSystem implements ISystem {
         for(int i = 0; i < numBullets; i++) {
             float direction = baseDirection + offset;
             BulletData bd = new BulletData(direction, 0, x, y, _id, bt.subtype);
-            BulletEntityBuilder.create(amc.getAssetManager(), bd);
+            BulletEntityBuilder builder = BulletEntityBuilder.getInstance(amc.getAssetManager());
+            builder.setBuildData(bd);
+            ECSEngine.getInstance(SystemUpdateOrder.get()).addEntity(builder);
+            //BulletEntityBuilder.create(amc.getAssetManager(), bd);
             offset += angle;
         }
     }

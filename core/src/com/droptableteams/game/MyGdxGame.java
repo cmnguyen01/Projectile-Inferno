@@ -33,7 +33,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		_am = new AssetManager();
 		loadAssets();
 		_ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
-		GameEntityBuilder.create(_batch, _am);
+		GameEntityBuilder geBuilder = GameEntityBuilder.getInstance(_am, _batch);
+		_ecsEngine.addEntity(geBuilder);
 		PlayerEntityBuilder.create(_am);
 		VisibleHitboxEntityBuilder.create(_am);
 	}

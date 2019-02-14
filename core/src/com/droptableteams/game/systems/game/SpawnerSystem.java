@@ -1,11 +1,13 @@
 package com.droptableteams.game.systems.game;
 
 import com.droptableteams.game.LibECS.ComponentManager;
+import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.components.game.GameTimeComponent;
 import com.droptableteams.game.components.game.SpawnListComponent;
 import com.droptableteams.game.builders.EnemyEntityBuilder;
+import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.util.data.EnemyData;
 import com.droptableteams.game.util.Spawnable;
 
@@ -43,7 +45,10 @@ public class SpawnerSystem implements ISystem {
                 if(spawnable.entityType.equals("EnemyEntity")) {
                     spawnEnemy(spawnable);
                     flaggedForRemoval.add(spawnable);
-                    EnemyEntityBuilder.create(amc.getAssetManager(), (EnemyData)spawnable.data);
+
+                    EnemyEntityBuilder builder = EnemyEntityBuilder.getInstance(amc.getAssetManager());
+                    builder.setBuildData((EnemyData)spawnable.data);
+                    ECSEngine.getInstance(SystemUpdateOrder.get()).addEntity(builder);
                 }
             }
         }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.BulletEntity;
@@ -18,44 +19,79 @@ import com.droptableteams.game.systems.*;
 
 import java.util.ArrayList;
 
-public class BulletEntityBuilder {
+public class BulletEntityBuilder extends AbstractEntityBuilder {
+    private static BulletEntityBuilder _self;
+    private AssetManager _am;
+    private BulletData _bd;
 
-    private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
-    private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
-    private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
-
-    public static void create(AssetManager assetManager, BulletData bulletData) {
-        int id = _engine.acquireEntityId();
-        IEntity entity = new BulletEntity(id);
-        generateComponentList(id, assetManager, bulletData);
-        generateSystemList(id);
-        _engine.addEntity(entity, _cl, _sl);
+    private BulletEntityBuilder(AssetManager am) {
+        _am = am;
+        _bd = null;
+        _id = null;
     }
 
-    private static void generateComponentList(int id, AssetManager am, BulletData bd) {
-        BulletType bt = BulletTypeFactory.make(bd.bulletType);
-        Sprite sp = new Sprite(am.get(bt.texture, Texture.class));
+    public static BulletEntityBuilder getInstance(AssetManager am) {
+        if(null == _self) {
+            _self = new BulletEntityBuilder(am);
+        }
+        return _self;
+    }
+
+    public void setBuildData(BulletData bd) {
+        _bd = bd;
+    }
+
+    @Override
+    public void finishBuild() {
+        super.finishBuild();
+        _bd = null;
+    }
+
+    @Override
+    public IEntity buildEntity() throws NullPointerException {
+        if(null == _id) {
+            throw new NullPointerException();
+        }
+        return new BulletEntity(_id);
+    }
+
+    @Override
+    public ArrayList<IComponent> buildComponentList() throws NullPointerException {
+        if(null == _id) {
+            throw new NullPointerException("_id cannot be null. Was startBuild() called? Note: ECSEngine does this automatically.");
+        }
+        if(null == _bd) {
+            throw new NullPointerException("Must call setBuildData() first.");
+        }
+        ArrayList<IComponent> cl = new ArrayList<IComponent>();
+        BulletType bt = BulletTypeFactory.make(_bd.bulletType);
+        Sprite sp = new Sprite(_am.get(bt.texture, Texture.class));
         sp.setSize(bt.width,bt.height);
-        sp.setCenter(bd.x,bd.y);
-        _cl.clear();
-        _cl.add(new SpriteComponent(id, sp));
-        _cl.add(new LocationComponent(id, bd.x,bd.y));
-        _cl.add(new SizeComponent(id, bt.width,bt.height));
-        _cl.add(new VelocityComponent(id, bt.speed));
-        _cl.add(new HasBeenInboundsComponent(id, false));
-        _cl.add(new MoveDirectionComponent(id, bd.direction));
-        _cl.add(new OwnerComponent(id, bd.ownerId));
-        _cl.add(new DamageComponent(id, bt.damage));
-        _cl.add(new HitboxComponent(id, new Rectangle(bd.x,bd.y,bt.width,bt.height)));
+        sp.setCenter(_bd.x,_bd.y);
+        cl.add(new SpriteComponent(_id, sp));
+        cl.add(new LocationComponent(_id, _bd.x,_bd.y));
+        cl.add(new SizeComponent(_id, bt.width,bt.height));
+        cl.add(new VelocityComponent(_id, bt.speed));
+        cl.add(new HasBeenInboundsComponent(_id, false));
+        cl.add(new MoveDirectionComponent(_id, _bd.direction));
+        cl.add(new OwnerComponent(_id, _bd.ownerId));
+        cl.add(new DamageComponent(_id, bt.damage));
+        cl.add(new HitboxComponent(_id, new Rectangle(_bd.x,_bd.y,bt.width,bt.height)));
+        return cl;
     }
 
-    private static void generateSystemList(int id) {
-        _sl.clear();
-        _sl.add(new UpdateSpriteSystem(id));
-        _sl.add(new DespawnOutOfBoundsSystem(id));
-        _sl.add(new DirectionalMovementSystem(id));
-        _sl.add(new RotateSpriteToDirectionSystem(id));
-        _sl.add(new BulletCollisionSystem(id));
-        _sl.add(new SetHitboxLocationSystem(id));
+    @Override
+    public ArrayList<ISystem> buildSystemList() throws NullPointerException {
+        if(null == _id) {
+            throw new NullPointerException("_id cannot be null. Was startBuild() called?");
+        }
+        ArrayList<ISystem> sl = new ArrayList<ISystem>();
+        sl.add(new UpdateSpriteSystem(_id));
+        sl.add(new DespawnOutOfBoundsSystem(_id));
+        sl.add(new DirectionalMovementSystem(_id));
+        sl.add(new RotateSpriteToDirectionSystem(_id));
+        sl.add(new BulletCollisionSystem(_id));
+        sl.add(new SetHitboxLocationSystem(_id));
+        return sl;
     }
 }
