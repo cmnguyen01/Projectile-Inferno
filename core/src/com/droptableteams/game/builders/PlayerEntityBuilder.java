@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.droptableteams.game.LibECS.ECSEngine;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
@@ -20,49 +21,68 @@ import java.util.ArrayList;
 /**
  * TODO: create PlayerData class, and transition factory to use PlayerData, instead of hardcoded values
  */
-public class PlayerEntityBuilder {
+public class PlayerEntityBuilder extends AbstractEntityBuilder {
+    private static PlayerEntityBuilder _self;
+    private AssetManager _am;
 
-    private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
-    private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
-    private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
-
-    public static void create(AssetManager assetManager) {
-        int id = SpecialEntityIds.PLAYER_ENTITY;
-        IEntity entity = new PlayerEntity(id);
-        generateComponentList(id, assetManager);
-        generateSystemList(id);
-        _engine.addEntity(entity, _cl, _sl);
+    private PlayerEntityBuilder(AssetManager am) {
+        _am = am;
+        _id = null;
     }
 
-    private static void generateComponentList(int id, AssetManager am) {
+    public static PlayerEntityBuilder getInstance(AssetManager am) {
+        if(null == _self) {
+            _self = new PlayerEntityBuilder(am);
+        }
+        return _self;
+    }
+
+    @Override
+    public void startBuild() {
+        _id = SpecialEntityIds.PLAYER_ENTITY;
+    }
+
+    @Override
+    public IEntity buildEntity() throws NullPointerException {
+        checkIdNotNull();
+        return new PlayerEntity(_id);
+    }
+
+    @Override
+    public ArrayList<IComponent> buildComponentList() throws NullPointerException {
+        checkIdNotNull();
+        ArrayList<IComponent> cl = new ArrayList<IComponent>();
         float x = Gdx.graphics.getWidth()/2f;
         float y = Gdx.graphics.getHeight()/4f;
         float width = 64;
         float height = 64;
-        Sprite sp = new Sprite(am.get("sprites/player.png", Texture.class));
+        Sprite sp = new Sprite(_am.get("sprites/player.png", Texture.class));
         sp.setSize(width,height);
         sp.setCenter(x,y);
-        _cl.clear();
-        _cl.add(new SpriteComponent(id, sp, true));
-        _cl.add(new LocationComponent(id, x,y));
-        _cl.add(new SizeComponent(id, width,height));
-        _cl.add(new VelocityComponent(id, 360));
-        _cl.add(new MoveDirectionComponent(id, null));
-        _cl.add(new FireControlComponent(id, 0.125f,false));
-        _cl.add(new HitpointComponent(id, 200));
-        _cl.add(new CollisionsComponent(id));
-        _cl.add(new HitboxComponent(id, new Rectangle(x,y,12,12)));
-        _cl.add(new FirePatternComponent(id, Directions.UP, 1, (float)Math.PI/24f, 0, "PlayerBullet"));
+        cl.add(new SpriteComponent(_id, sp, true));
+        cl.add(new LocationComponent(_id, x,y));
+        cl.add(new SizeComponent(_id, width,height));
+        cl.add(new VelocityComponent(_id, 360));
+        cl.add(new MoveDirectionComponent(_id, null));
+        cl.add(new FireControlComponent(_id, 0.125f,false));
+        cl.add(new HitpointComponent(_id, 200));
+        cl.add(new CollisionsComponent(_id));
+        cl.add(new HitboxComponent(_id, new Rectangle(x,y,12,12)));
+        cl.add(new FirePatternComponent(_id, Directions.UP, 1, (float)Math.PI/24f, 0, "PlayerBullet"));
+        return cl;
     }
 
-    private static void generateSystemList(int id) {
-        _sl.clear();
-        _sl.add(new UpdateSpriteSystem(id));
-        _sl.add(new StopAtBoundarySystem(id));
-        _sl.add(new DirectionalMovementSystem(id));
-        _sl.add(new FireControlSystem(id));
-        _sl.add(new SpeedModifierSystem(id));
-        _sl.add(new CollisionDamageSystem(id));
-        _sl.add(new SetHitboxLocationSystem(id));
+    @Override
+    public ArrayList<ISystem> buildSystemList() throws NullPointerException {
+        checkIdNotNull();
+        ArrayList<ISystem> sl = new ArrayList<ISystem>();
+        sl.add(new UpdateSpriteSystem(_id));
+        sl.add(new StopAtBoundarySystem(_id));
+        sl.add(new DirectionalMovementSystem(_id));
+        sl.add(new FireControlSystem(_id));
+        sl.add(new SpeedModifierSystem(_id));
+        sl.add(new CollisionDamageSystem(_id));
+        sl.add(new SetHitboxLocationSystem(_id));
+        return sl;
     }
 }

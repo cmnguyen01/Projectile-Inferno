@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.droptableteams.game.LibECS.ECSEngine;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
@@ -18,48 +19,76 @@ import com.droptableteams.game.systems.*;
 
 import java.util.ArrayList;
 
-public class EnemyEntityBuilder {
-    private static ECSEngine _engine = ECSEngine.getInstance(SystemUpdateOrder.get());
-    private static ArrayList<IComponent> _cl = new ArrayList<IComponent>();
-    private static ArrayList<ISystem> _sl = new ArrayList<ISystem>();
+public class EnemyEntityBuilder extends AbstractEntityBuilder {
+    private static EnemyEntityBuilder _self;
+    private AssetManager _am;
+    private EnemyData _ed;
 
-    public static void create(AssetManager am, EnemyData ed) {
-        int id = _engine.acquireEntityId();
-        IEntity entity = new EnemyEntity(id);
-        generateComponentsList(id, am, ed);
-        generateSystemList(id);
-        _engine.addEntity(entity, _cl, _sl);
+    private EnemyEntityBuilder(AssetManager am) {
+        _am = am;
+        _ed = null;
+        _id = null;
     }
 
-    private static void generateComponentsList(int id, AssetManager am, EnemyData ed) {
-        EnemyType et = EnemyTypeFactory.make(ed.enemyType);
-        float x = ed.x;
-        float y = ed.y;
-        Sprite sp = new Sprite(am.get(et.texture, Texture.class));
-        sp.setSize(et.width,et.width);
-        sp.setCenter(x,y);
-        _cl.clear();
-        _cl.add(new SpriteComponent(id, sp));
-        _cl.add(new LocationComponent(id, ed.x,ed.y));
-        _cl.add(new SizeComponent(id, et.width,et.height));
-        _cl.add(new VelocityComponent(id, et.speed));
-        _cl.add(new HasBeenInboundsComponent(id, false));
-        _cl.add(new DestinationMovementComponent(id, ed.destinationList,et.loopDestinations));
-        _cl.add(new HitpointComponent(id, et.hp));
-        _cl.add(new CollisionsComponent(id));
-        _cl.add(new HitboxComponent(id, new Rectangle(x,y,et.width,et.height)));
-        _cl.add(new FireControlComponent(id, et.firePattern.getFireRate(), true));
-        _cl.add(new FirePatternComponent(id, et.firePattern.getBaseDirection(),et.firePattern.getNumberOfBullets(),
+    public static EnemyEntityBuilder getInstance(AssetManager am) {
+        if(null == _self) {
+            _self = new EnemyEntityBuilder(am);
+        }
+        return _self;
+    }
+
+    public void setBuildData(EnemyData ed) {
+        _ed = ed;
+    }
+
+    @Override
+    public void finishBuild() {
+        super.finishBuild();
+        _ed = null;
+    }
+
+    @Override
+    public IEntity buildEntity() throws NullPointerException {
+        checkIdNotNull();
+        return new EnemyEntity(_id);
+    }
+
+    @Override
+    public ArrayList<IComponent> buildComponentList() throws NullPointerException {
+        checkIdNotNull();
+        if(null == _ed) {
+            throw new NullPointerException("Must call `setBuildData()` first.");
+        }
+        ArrayList<IComponent> cl = new ArrayList<IComponent>();
+        EnemyType et = EnemyTypeFactory.make(_ed.enemyType);
+        Sprite sp = new Sprite(_am.get(et.texture, Texture.class));
+        sp.setSize(et.width,et.height);
+        sp.setCenter(_ed.x,_ed.y);
+        cl.add(new SpriteComponent(_id, sp));
+        cl.add(new LocationComponent(_id, _ed.x,_ed.y));
+        cl.add(new SizeComponent(_id, et.width,et.height));
+        cl.add(new VelocityComponent(_id, et.speed));
+        cl.add(new HasBeenInboundsComponent(_id, false));
+        cl.add(new DestinationMovementComponent(_id, _ed.destinationList,et.loopDestinations));
+        cl.add(new HitpointComponent(_id, et.hp));
+        cl.add(new CollisionsComponent(_id));
+        cl.add(new HitboxComponent(_id, new Rectangle(_ed.x,_ed.y,et.width,et.height)));
+        cl.add(new FireControlComponent(_id, et.firePattern.getFireRate(), true));
+        cl.add(new FirePatternComponent(_id, et.firePattern.getBaseDirection(),et.firePattern.getNumberOfBullets(),
                 et.firePattern.getDividingAngle(), et.firePattern.getDeltaTheta(), et.firePattern.getBulletType()));
+        return cl;
     }
 
-    private static void generateSystemList(int id) {
-        _sl.clear();
-        _sl.add(new UpdateSpriteSystem(id));
-        _sl.add(new DestinationMovementSystem(id));
-        _sl.add(new DespawnOutOfBoundsSystem(id));
-        _sl.add(new FireControlSystem(id));
-        _sl.add(new CollisionDamageSystem(id));
-        _sl.add(new SetHitboxLocationSystem(id));
+    @Override
+    public ArrayList<ISystem> buildSystemList() throws NullPointerException {
+        checkIdNotNull();
+        ArrayList<ISystem> sl = new ArrayList<ISystem>();
+        sl.add(new UpdateSpriteSystem(_id));
+        sl.add(new DestinationMovementSystem(_id));
+        sl.add(new DespawnOutOfBoundsSystem(_id));
+        sl.add(new FireControlSystem(_id));
+        sl.add(new CollisionDamageSystem(_id));
+        sl.add(new SetHitboxLocationSystem(_id));
+        return sl;
     }
 }

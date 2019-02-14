@@ -2,6 +2,7 @@ package com.droptableteams.game.LibECS;
 
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
+import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 
 import java.util.ArrayList;
@@ -99,6 +100,23 @@ public class ECSEngine {
         for (ISystem s : sl) {
             _sm.addSystem(s);
         }
+    }
+
+    /**
+     * Build an entity and its associated components and systems, and add them to their respective managers.
+     *
+     * @param builder  a builder which generates the entity, components, and systems.
+     */
+    public void addEntity(AbstractEntityBuilder builder) {
+        builder.startBuild();
+        _em.addEntity(builder.buildEntity());
+        for (IComponent c : builder.buildComponentList()) {
+            _cm.addComponent(c);
+        }
+        for (ISystem s : builder.buildSystemList()) {
+            _sm.addSystem(s);
+        }
+        builder.finishBuild();
     }
 
     /**

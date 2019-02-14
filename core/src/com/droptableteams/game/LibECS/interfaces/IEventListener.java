@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * The interface to be implemented by all concrete EventListeners.
  * <p>
- * EventListeners contain a callback to be processed when triggered by an event.
+ * EventListeners contain a callback to be processed when triggered by an event.</p>
  */
 public interface IEventListener {
     Integer getId();
