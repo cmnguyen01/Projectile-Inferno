@@ -42,7 +42,6 @@ public class FireControlSystem implements ISystem {
         FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
         AssetManagerComponent amc = (AssetManagerComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent");
         GameCheatsComponent gcc = (GameCheatsComponent) _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
-        BulletType bt = BulletTypeFactory.make(fpc.getBulletType());
 
         // apply fire pattern rotation
         float newDirection = (fpc.getDeltaTheta()*Gdx.graphics.getDeltaTime()*gcc.getSpeedMultiplier())+fpc.getBaseDirection();
@@ -59,6 +58,8 @@ public class FireControlSystem implements ISystem {
     }
 
     private void spawnBullets(FirePatternComponent fpc, AssetManagerComponent amc, float x, float y) {
+        BulletEntityBuilder builder = BulletEntityBuilder.getInstance(amc.getAssetManager());
+        ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
         BulletType bt = BulletTypeFactory.make(fpc.getBulletType());
         int numBullets = fpc.getNumberOfBullets();
         float baseDirection = fpc.getBaseDirection();
@@ -71,10 +72,8 @@ public class FireControlSystem implements ISystem {
         for(int i = 0; i < numBullets; i++) {
             float direction = baseDirection + offset;
             BulletData bd = new BulletData(direction, 0, x, y, _id, bt.subtype);
-            BulletEntityBuilder builder = BulletEntityBuilder.getInstance(amc.getAssetManager());
             builder.setBuildData(bd);
-            ECSEngine.getInstance(SystemUpdateOrder.get()).addEntity(builder);
-            //BulletEntityBuilder.create(amc.getAssetManager(), bd);
+            engine.addEntity(builder);
             offset += angle;
         }
     }
