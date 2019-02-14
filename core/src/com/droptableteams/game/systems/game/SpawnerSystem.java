@@ -39,25 +39,21 @@ public class SpawnerSystem implements ISystem {
         SpawnListComponent slc = (SpawnListComponent)_cm.getComponent(_id, "SpawnListComponent");
         GameTimeComponent gtc = (GameTimeComponent)_cm.getComponent(_id, "GameTimeComponent");
         AssetManagerComponent amc = (AssetManagerComponent)_cm.getComponent(_id, "AssetManagerComponent");
+        ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
+        EnemyEntityBuilder builder = EnemyEntityBuilder.getInstance(amc.getAssetManager());
         ArrayList<Spawnable> flaggedForRemoval = new ArrayList<Spawnable>();
+
         for (Spawnable spawnable : slc.getSpawnList()) {
             if(gtc.getTimeInMillis() >= spawnable.spawnTime) {
                 if(spawnable.entityType.equals("EnemyEntity")) {
-                    spawnEnemy(spawnable);
                     flaggedForRemoval.add(spawnable);
-
-                    EnemyEntityBuilder builder = EnemyEntityBuilder.getInstance(amc.getAssetManager());
                     builder.setBuildData((EnemyData)spawnable.data);
-                    ECSEngine.getInstance(SystemUpdateOrder.get()).addEntity(builder);
+                    engine.addEntity(builder);
                 }
             }
         }
         for(Spawnable flagged : flaggedForRemoval) {
             slc.getSpawnList().remove(flagged);
         }
-    }
-
-    private void spawnEnemy(Spawnable spawnable) {
-        EnemyData ed = (EnemyData)spawnable.data;
     }
 }
