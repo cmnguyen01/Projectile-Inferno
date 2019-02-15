@@ -11,6 +11,13 @@
 						"x": 480,
 						"y": 360
 					},
+					"_time": 7000
+				},
+				{
+					"_position": {
+						"x": 320,
+						"y": 640
+					},
 					"_time": 0
 				}
 			],
@@ -30,44 +37,12 @@
 						"x": 160,
 						"y": 360
 					},
-					"_time": 0
-				}
-			],
-			"x": 640,
-			"y": 480
-		}
-	},
-
-	{
-		"class": "com.droptableteams.game.util.Spawnable",
-		"spawnTime": 10000,
-		"entityType": "EnemyEntity",
-		"data": {
-			"enemyType": "EnemyA",
-			"destinationList": [
+					"_time": 7000
+				},
 				{
 					"_position": {
-						"x": 480,
-						"y": 360
-					},
-					"_time": 0
-				}
-			],
-			"x": 0,
-			"y": 480
-		}
-	},
-	{
-		"class": "com.droptableteams.game.util.Spawnable",
-		"spawnTime": 10000,
-		"entityType": "EnemyEntity",
-		"data": {
-			"enemyType": "EnemyB",
-			"destinationList": [
-				{
-					"_position": {
-						"x": 160,
-						"y": 360
+						"x": 320,
+						"y": 640
 					},
 					"_time": 0
 				}
@@ -78,7 +53,7 @@
 	},
 	{
 		"class": "com.droptableteams.game.util.Spawnable",
-		"spawnTime": 15000,
+		"spawnTime": 8000,
 		"entityType": "EnemyEntity",
 		"data": {
 			"enemyType": "EnemyA",
@@ -88,6 +63,13 @@
 						"x": 400,
 						"y": 240
 					},
+					"_time": 7000
+				},
+				{
+					"_position": {
+						"x": 320,
+						"y": 640
+					},
 					"_time": 0
 				}
 			],
@@ -97,7 +79,7 @@
 	},
 	{
 		"class": "com.droptableteams.game.util.Spawnable",
-		"spawnTime": 15000,
+		"spawnTime": 8000,
 		"entityType": "EnemyEntity",
 		"data": {
 			"enemyType": "EnemyB",
@@ -107,11 +89,70 @@
 						"x": 240,
 						"y": 240
 					},
+					"_time": 7000
+				},
+				{
+					"_position": {
+						"x": 320,
+						"y": 640
+					},
 					"_time": 0
 				}
 			],
 			"x": 640,
 			"y": 120
+		}
+	},
+	{
+		"class": "com.droptableteams.game.util.Spawnable",
+		"spawnTime": 16000,
+		"entityType": "EnemyEntity",
+		"data": {
+			"enemyType": "EnemyA",
+			"destinationList": [
+				{
+					"_position": {
+						"x": 480,
+						"y": 360
+					},
+					"_time": 7000
+				},
+				{
+					"_position": {
+						"x": 320,
+						"y": 640
+					},
+					"_time": 0
+				}
+			],
+			"x": 0,
+			"y": 480
+		}
+	},
+	{
+		"class": "com.droptableteams.game.util.Spawnable",
+		"spawnTime": 16000,
+		"entityType": "EnemyEntity",
+		"data": {
+			"enemyType": "EnemyB",
+			"destinationList": [
+				{
+					"_position": {
+						"x": 160,
+						"y": 360
+					},
+					"_time": 7000
+				},
+				{
+					"_position": {
+						"x": 320,
+						"y": 640
+					},
+					"_time": 0
+				}
+			],
+			"x": 640,
+			"y": 480
 		}
 	}
 ]
