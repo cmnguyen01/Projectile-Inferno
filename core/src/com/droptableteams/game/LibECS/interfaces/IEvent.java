@@ -10,5 +10,5 @@ import java.util.HashMap;
 public interface IEvent {
     int getId();
     String getType();
-    HashMap<String, String> getArgs();
+    HashMap<String, Object> getArgs(); // TODO: replace with HashMap<String, Object>
 }
