@@ -24,6 +24,10 @@ public class GameTimeComponent implements IComponent {
         return _type;
     }
 
+    public void endWave(){
+        _startTime = Utils.nanosToMillis((System.nanoTime()));
+    }
+
     public long getTimeInMillis() {
         long now = Utils.nanosToMillis(System.nanoTime());
         return now - _startTime;

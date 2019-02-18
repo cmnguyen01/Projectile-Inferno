@@ -1,16 +1,47 @@
 package com.droptableteams.game.util;
 
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.Gdx;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
+import static java.lang.System.err;
+
 public class ScriptReader {
-    public static ArrayList<Spawnable> readLevel(String filename) {
+    public  static ArrayList<Wave> readWaves(String filename){
+        Json json = new Json();
         String filePath = "scripts/levels/" + filename;
+
         try
+        {
+            ArrayList<Wave> level = json.fromJson(ArrayList.class, Wave.class, Gdx.files.internal(filePath));
+            return  level;
+        }
+        catch (Exception e){
+            err.format("Exception occurred trying to read '%s'.", filePath);
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+    public static ArrayList<ArrayList<Spawnable>> readLevel(String filename) {
+        ArrayList<ArrayList<Spawnable>> result = new ArrayList<ArrayList<Spawnable>>();
+        for (Wave x: readWaves(filename)) {
+            String filePath = "scripts/levels/" + x.waveLocation;
+            try
+            {
+                Json json = new Json();
+                result.add( json.fromJson(ArrayList.class, Spawnable.class, Gdx.files.internal(filePath)));
+            }
+            catch (Exception e){
+                err.format("Exception occurred trying to read '%s'.", filePath);
+                e.printStackTrace();
+                return null;
+            }
+        }
+/*        try
         {
             Array spawnArray = null;
             ArrayList<Spawnable> spawnList = new ArrayList<Spawnable>();
@@ -27,9 +58,10 @@ public class ScriptReader {
         }
         catch (Exception e)
         {
-            System.err.format("Exception occurred trying to read '%s'.", filePath);
+            err.format("Exception occurred trying to read '%s'.", filePath);
             e.printStackTrace();
             return null;
-        }
+        }*/
+        return result;
     }
 }

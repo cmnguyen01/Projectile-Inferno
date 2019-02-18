@@ -8,9 +8,9 @@ import java.util.ArrayList;
 public class SpawnListComponent implements IComponent {
     private int _id;
     private String _type;
-    private ArrayList<Spawnable> _spawnList;
+    private ArrayList<ArrayList<Spawnable>> _spawnList;
 
-    public SpawnListComponent(int id, ArrayList<Spawnable> spawnList) {
+    public SpawnListComponent(int id, ArrayList<ArrayList<Spawnable>> spawnList) {
         _id = id;
         _type = "SpawnListComponent";
         _spawnList = spawnList;
@@ -26,11 +26,11 @@ public class SpawnListComponent implements IComponent {
         return _type;
     }
 
-    public ArrayList<Spawnable> getSpawnList() {
+    public ArrayList<ArrayList<Spawnable>> getSpawnList() {
         return _spawnList;
     }
 
-    public void setSpawnList(ArrayList<Spawnable> spawnList) {
+    public void setSpawnList(ArrayList<ArrayList<Spawnable>> spawnList) {
         _spawnList = spawnList;
     }
 }

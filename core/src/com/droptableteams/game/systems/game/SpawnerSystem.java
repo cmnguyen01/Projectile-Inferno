@@ -36,24 +36,36 @@ public class SpawnerSystem implements ISystem {
 
     @Override
     public void update() {
-        SpawnListComponent slc = (SpawnListComponent)_cm.getComponent(_id, "SpawnListComponent");
-        GameTimeComponent gtc = (GameTimeComponent)_cm.getComponent(_id, "GameTimeComponent");
-        AssetManagerComponent amc = (AssetManagerComponent)_cm.getComponent(_id, "AssetManagerComponent");
+        SpawnListComponent slc = (SpawnListComponent) _cm.getComponent(_id, "SpawnListComponent");
+        GameTimeComponent gtc = (GameTimeComponent) _cm.getComponent(_id, "GameTimeComponent");
+        AssetManagerComponent amc = (AssetManagerComponent) _cm.getComponent(_id, "AssetManagerComponent");
         ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
         EnemyEntityBuilder builder = EnemyEntityBuilder.getInstance(amc.getAssetManager());
         ArrayList<Spawnable> flaggedForRemoval = new ArrayList<Spawnable>();
-
-        for (Spawnable spawnable : slc.getSpawnList()) {
-            if(gtc.getTimeInMillis() >= spawnable.spawnTime) {
-                if(spawnable.entityType.equals("EnemyEntity")) {
-                    flaggedForRemoval.add(spawnable);
-                    builder.setBuildData((EnemyData)spawnable.data);
-                    engine.addEntity(builder);
-                }
+        ArrayList<Spawnable> currentWave = null;
+        if (!slc.getSpawnList().isEmpty()) {
+            currentWave = (slc.getSpawnList().get(0));
+            if (currentWave.isEmpty()) {
+                slc.getSpawnList().remove(0);
+                if (!slc.getSpawnList().isEmpty())
+                    currentWave = slc.getSpawnList().get(0);
+                gtc.endWave();
             }
         }
-        for(Spawnable flagged : flaggedForRemoval) {
-            slc.getSpawnList().remove(flagged);
+        if (currentWave != null)
+        {
+            for (Spawnable spawnable : currentWave) {
+                if (gtc.getTimeInMillis() >= spawnable.spawnTime) {
+                    if (spawnable.entityType.equals("EnemyEntity")) {
+                        flaggedForRemoval.add(spawnable);
+                        builder.setBuildData((EnemyData) spawnable.data);
+                        engine.addEntity(builder);
+                    }
+                }
+            }
+            for (Spawnable flagged : flaggedForRemoval) {
+                slc.getSpawnList().get(0).remove(flagged);
+            }
         }
     }
 }
