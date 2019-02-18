@@ -10,6 +10,7 @@ import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.builders.GameEntityBuilder;
 import com.droptableteams.game.builders.PlayerEntityBuilder;
 import com.droptableteams.game.builders.VisibleHitboxEntityBuilder;
+import com.droptableteams.game.entities.PlayerEntity;
 import com.droptableteams.game.util.data.EnemyData;
 import com.droptableteams.game.util.Spawnable;
 import com.droptableteams.game.util.TimeVector3;
@@ -33,9 +34,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		_am = new AssetManager();
 		loadAssets();
 		_ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
-		GameEntityBuilder.create(_batch, _am);
-		PlayerEntityBuilder.create(_am);
-		VisibleHitboxEntityBuilder.create(_am);
+		initializeEntities();
 	}
 
 	@Override
@@ -49,6 +48,9 @@ public class MyGdxGame extends ApplicationAdapter {
         _am.dispose();
 	}
 
+	/**
+	 * Load all assets into asset manager, and loop until loading complete.
+	 */
 	private void loadAssets() {
 	    _am.load("sprites/player.png", Texture.class);
         _am.load("sprites/enemyA.png", Texture.class);
@@ -60,6 +62,18 @@ public class MyGdxGame extends ApplicationAdapter {
 		_am.load("sprites/enemyBulletB.png", Texture.class);
         while(!_am.update());
     }
+
+	/**
+	 * Add starting entities to ECSEngine.
+	 */
+	private void initializeEntities() {
+		GameEntityBuilder geBuilder = GameEntityBuilder.getInstance(_am, _batch);
+		_ecsEngine.addEntity(geBuilder);
+		PlayerEntityBuilder peBuilder = PlayerEntityBuilder.getInstance(_am);
+		_ecsEngine.addEntity(peBuilder);
+		VisibleHitboxEntityBuilder vheBuilder = VisibleHitboxEntityBuilder.getInstance(_am);
+		_ecsEngine.addEntity(vheBuilder);
+	}
 
     /**
      * temporary method to generate json files
@@ -85,6 +99,5 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 		catch (IOException e) {
 		}
-
 	}
 }

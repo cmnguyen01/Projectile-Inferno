@@ -6,6 +6,7 @@ import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.DestinationMovementComponent;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.VelocityComponent;
+import com.droptableteams.game.util.Utils;
 
 import java.io.Console;
 
@@ -88,7 +89,7 @@ public class DestinationMovementSystem implements ISystem {
     }
 
     private void handleAlreadyHere(DestinationMovementComponent dmc, LocationComponent lc, VelocityComponent vc) {
-        long hereFor = dmc.getHereFor(nanosToMillis(System.nanoTime()));
+        long hereFor = dmc.getHereFor(Utils.nanosToMillis(System.nanoTime()));
         long stayFor = dmc.getStayFor();
 
         if(hereFor >= stayFor) {
@@ -102,12 +103,7 @@ public class DestinationMovementSystem implements ISystem {
     private void goToDestination(LocationComponent lc, DestinationMovementComponent dmc) {
         lc.setX(dmc.getNextX());
         lc.setY(dmc.getNextY());
-        dmc.setHereSinceMillis(nanosToMillis(System.nanoTime()));
-    }
-
-    private long nanosToMillis(long nanos) {
-        Double result = (nanos/Math.pow(10,6));
-        return result.longValue();
+        dmc.setHereSinceMillis(Utils.nanosToMillis(System.nanoTime()));
     }
 
     private float atan(float x, float y) {

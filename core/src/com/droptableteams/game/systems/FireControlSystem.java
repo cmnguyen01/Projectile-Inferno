@@ -2,10 +2,12 @@ package com.droptableteams.game.systems;
 
 import com.badlogic.gdx.Gdx;
 import com.droptableteams.game.LibECS.ComponentManager;
+import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.components.game.GameCheatsComponent;
+import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.util.types.BulletType;
 import com.droptableteams.game.util.types.BulletTypeFactory;
 import com.droptableteams.game.util.data.BulletData;
@@ -40,7 +42,6 @@ public class FireControlSystem implements ISystem {
         FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
         AssetManagerComponent amc = (AssetManagerComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent");
         GameCheatsComponent gcc = (GameCheatsComponent) _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
-        BulletType bt = BulletTypeFactory.make(fpc.getBulletType());
 
         // apply fire pattern rotation
         float newDirection = (fpc.getDeltaTheta()*Gdx.graphics.getDeltaTime()*gcc.getSpeedMultiplier())+fpc.getBaseDirection();
@@ -57,6 +58,8 @@ public class FireControlSystem implements ISystem {
     }
 
     private void spawnBullets(FirePatternComponent fpc, AssetManagerComponent amc, float x, float y) {
+        BulletEntityBuilder builder = BulletEntityBuilder.getInstance(amc.getAssetManager());
+        ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
         BulletType bt = BulletTypeFactory.make(fpc.getBulletType());
         int numBullets = fpc.getNumberOfBullets();
         float baseDirection = fpc.getBaseDirection();
@@ -69,7 +72,8 @@ public class FireControlSystem implements ISystem {
         for(int i = 0; i < numBullets; i++) {
             float direction = baseDirection + offset;
             BulletData bd = new BulletData(direction, 0, x, y, _id, bt.subtype);
-            BulletEntityBuilder.create(amc.getAssetManager(), bd);
+            builder.setBuildData(bd);
+            engine.addEntity(builder);
             offset += angle;
         }
     }
