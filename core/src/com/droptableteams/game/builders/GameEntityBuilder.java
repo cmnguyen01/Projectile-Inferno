@@ -2,7 +2,6 @@ package com.droptableteams.game.builders;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
@@ -14,7 +13,6 @@ import com.droptableteams.game.systems.game.SpawnerSystem;
 import com.droptableteams.game.util.ScriptReader;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.EntityRenderOrder;
-import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.systems.game.RenderSystem;
 
 import java.util.ArrayList;
@@ -58,7 +56,7 @@ public class GameEntityBuilder extends AbstractEntityBuilder {
         cl.add(new RenderComponent(_id, _batch, EntityRenderOrder.get()));
         cl.add(new AssetManagerComponent(_id, _am));
         cl.add(new GameCheatsComponent(_id, 0.5f));
-        cl.add(new SpawnListComponent(_id, ScriptReader.readLevel("sample-level.json")));
+        cl.add(new SpawnListComponent(_id, ScriptReader.readLevel("test-level-with-waves.json")));
         cl.add(new GameTimeComponent(_id));
         return cl;
     }
