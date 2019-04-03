@@ -7,6 +7,7 @@ import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.components.game.GameTimeComponent;
 import com.droptableteams.game.components.game.SpawnListComponent;
 import com.droptableteams.game.builders.EnemyEntityBuilder;
+import com.droptableteams.game.util.Wave;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.util.data.EnemyData;
 import com.droptableteams.game.util.Spawnable;
@@ -42,30 +43,19 @@ public class SpawnerSystem implements ISystem {
         ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
         EnemyEntityBuilder builder = EnemyEntityBuilder.getInstance(amc.getAssetManager());
         ArrayList<Spawnable> flaggedForRemoval = new ArrayList<Spawnable>();
-        ArrayList<Spawnable> currentWave = null;
-        if (!slc.getSpawnList().isEmpty()) {
-            currentWave = (slc.getSpawnList().get(0));
-            if (currentWave.isEmpty()) {
-                slc.getSpawnList().remove(0);
-                if (!slc.getSpawnList().isEmpty())
-                    currentWave = slc.getSpawnList().get(0);
-                gtc.endWave();
-            }
-        }
-        if (currentWave != null)
-        {
-            for (Spawnable spawnable : currentWave) {
-                if (gtc.getTimeInMillis() >= spawnable.spawnTime) {
-                    if (spawnable.entityType.equals("EnemyEntity")) {
-                        flaggedForRemoval.add(spawnable);
-                        builder.setBuildData((EnemyData) spawnable.data);
-                        engine.addEntity(builder);
-                    }
+        ArrayList<Spawnable> currentWave;
+        currentWave = slc.getSpawnList();
+        for (Spawnable spawnable : currentWave) {
+            if (gtc.getTimeInMillis() >= spawnable.spawnTime) {
+                if (spawnable.entityType.equals("EnemyEntity")) {
+                    flaggedForRemoval.add(spawnable);
+                    builder.setBuildData((EnemyData) spawnable.data);
+                    engine.addEntity(builder);
                 }
             }
-            for (Spawnable flagged : flaggedForRemoval) {
-                slc.getSpawnList().get(0).remove(flagged);
-            }
+        }
+        for (Spawnable flagged : flaggedForRemoval) {
+            slc.getSpawnList().remove(flagged);
         }
     }
 }
