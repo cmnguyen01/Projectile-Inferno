@@ -1,9 +1,11 @@
 package com.droptableteams.game.builders;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Json;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
@@ -64,7 +66,9 @@ public class BulletEntityBuilder extends AbstractEntityBuilder {
             throw new NullPointerException("Must call setBuildData() first.");
         }
         ArrayList<IComponent> cl = new ArrayList<IComponent>();
-        BulletType bt = BulletTypeFactory.make(_bd.bulletType);
+        //BulletType bt = BulletTypeFactory.make(_bd.bulletType);
+        Json json = new Json();
+        BulletType bt = json.fromJson(BulletType.class, Gdx.files.internal("scripts/enemies/"+_bd.bulletType + ".json"));
         Sprite sp = new Sprite(_am.get(bt.texture, Texture.class));
         sp.setSize(bt.width,bt.height);
         sp.setCenter(_bd.x,_bd.y);

@@ -52,6 +52,7 @@ public class BulletType implements IEntitySubtype, Serializable {
         json.writeValue("damage", damage);
         json.writeValue("entityType", entityType);
         json.writeValue("subtype", subtype);
+        json.writeValue("texture", texture);
     }
 
     @Override
@@ -62,5 +63,6 @@ public class BulletType implements IEntitySubtype, Serializable {
         damage = jsonData.getInt("damage");
         entityType = jsonData.getString("entityType");
         subtype = jsonData.getString("subtype");
+        texture = jsonData.getString("texture");
     }
 }
