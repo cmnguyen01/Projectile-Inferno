@@ -2,10 +2,12 @@ package com.droptableteams.game.systems;
 
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
+import com.droptableteams.game.LibECS.EntityManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.CollisionsComponent;
 import com.droptableteams.game.components.DamageComponent;
 import com.droptableteams.game.components.HitpointComponent;
+import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
 public class CollisionDamageSystem implements ISystem {
@@ -40,7 +42,14 @@ public class CollisionDamageSystem implements ISystem {
             if(null != thatDc) {
                 hc.subtractHp(thatDc.getDamage());
                 if(hc.getHp() <= 0) {
-                    engine.flagEntityForRemoval(_id); // TODO: fix crash on player death.
+
+
+                    engine.flagEntityForRemoval(_id);
+
+                    // If the player dies, also remove VisibleHitboxEntity (id: -3)
+                    if(_id == SpecialEntityIds.PLAYER_ENTITY){
+                        engine.flagEntityForRemoval(SpecialEntityIds.VISIBLE_HITBOX_ENTITY);
+                    }
                     break;
                 }
             }
