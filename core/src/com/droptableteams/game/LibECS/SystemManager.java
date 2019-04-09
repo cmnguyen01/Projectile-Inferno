@@ -15,6 +15,7 @@ public class SystemManager {
     private HashMap<Integer, HashMap<String, ISystem>> _systemIdPools;
     private HashMap<String, HashMap<Integer, ISystem>> _systemTypePools;
 
+
     /**
      * A private constructor for the singleton pattern.
      */

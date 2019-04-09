@@ -125,6 +125,7 @@ public class ECSEngine {
      * @param id  the id of the entity to remove.
      * @return  true if successfully removed.
      */
+    @Deprecated
     public boolean removeEntity(int id) {
         boolean removed = _em.removeEntity(id);
         _cm.removeComponents(id);

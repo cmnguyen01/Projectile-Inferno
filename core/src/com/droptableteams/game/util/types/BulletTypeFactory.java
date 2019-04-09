@@ -3,10 +3,10 @@ package com.droptableteams.game.util.types;
 public class BulletTypeFactory {
 
     public static BulletType make(String type) {
-        if("PlayerBullet" == type) {
+        if(type.equals("PlayerBullet")) {
             return makePlayerBullet();
         }
-        else if("EnemyBulletA" == type) {
+        else if(type.equals("EnemyBulletA")) {
             return makeEnemyBulletA();
         }
         return makePlayerBullet();
