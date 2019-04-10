@@ -49,7 +49,10 @@ public class ComponentManager {
      * @return  the requested component.
      */
     public IComponent getComponent(int id, String type) {
-        return _componentIdPools.get(id).get(type);
+        if(_componentIdPools.get(id) != null){
+            return _componentIdPools.get(id).get(type);
+        }
+        return null;
     }
 
     /**

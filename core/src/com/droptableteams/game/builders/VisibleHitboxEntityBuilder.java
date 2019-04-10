@@ -41,6 +41,11 @@ public class VisibleHitboxEntityBuilder extends AbstractEntityBuilder {
     }
 
     @Override
+    public void startBuild() {
+        _id = SpecialEntityIds.VISIBLE_HITBOX_ENTITY;
+    }
+
+    @Override
     public ArrayList<IComponent> buildComponentList() throws NullPointerException {
         checkIdNotNull();
         ArrayList<IComponent> cl = new ArrayList<IComponent>();
