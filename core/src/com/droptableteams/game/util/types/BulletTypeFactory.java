@@ -2,7 +2,8 @@ package com.droptableteams.game.util.types;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
-//DEPRECATED
+
+@Deprecated
 public class BulletTypeFactory {
 
     private static void makeBullet() {
