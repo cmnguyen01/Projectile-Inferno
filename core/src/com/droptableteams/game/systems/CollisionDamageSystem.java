@@ -10,6 +10,9 @@ import com.droptableteams.game.components.HitpointComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class CollisionDamageSystem implements ISystem {
     private int _id;
     private String _type;
@@ -49,6 +52,9 @@ public class CollisionDamageSystem implements ISystem {
                     // If the player dies, also remove VisibleHitboxEntity (id: -3)
                     if(_id == SpecialEntityIds.PLAYER_ENTITY){
                         engine.flagEntityForRemoval(SpecialEntityIds.VISIBLE_HITBOX_ENTITY);
+                        Integer[] lifeIDs = engine.getEntityManager().getEntityIds("LifeDisplayEntity");
+                        int currentLifeID = Collections.max(Arrays.asList(lifeIDs));
+                        //engine.flagEntityForRemoval(currentLifeID);
                     }
                     break;
                 }

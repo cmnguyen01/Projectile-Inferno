@@ -57,8 +57,7 @@ public class PlayerEntityBuilder extends AbstractEntityBuilder {
         float width = 64;
         float height = 64;
         Sprite sp = new Sprite(_am.get("sprites/player.png", Texture.class));
-        sp.setSize(width,height);
-        sp.setCenter(x,y);
+        //sp.setCenter(x,y);
         cl.add(new SpriteComponent(_id, sp, true));
         cl.add(new LocationComponent(_id, x,y));
         cl.add(new SizeComponent(_id, width,height));

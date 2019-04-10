@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.builders.GameEntityBuilder;
+import com.droptableteams.game.builders.LifeDisplayBuilder;
 import com.droptableteams.game.builders.PlayerEntityBuilder;
 import com.droptableteams.game.builders.VisibleHitboxEntityBuilder;
 import com.droptableteams.game.entities.PlayerEntity;
@@ -73,6 +74,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		_ecsEngine.addEntity(peBuilder);
 		VisibleHitboxEntityBuilder vheBuilder = VisibleHitboxEntityBuilder.getInstance(_am);
 		_ecsEngine.addEntity(vheBuilder);
+		LifeDisplayBuilder leBuilder = LifeDisplayBuilder.getInstance(_am);
+		for(int i = 0; i < 5; i++){
+			_ecsEngine.addEntity(leBuilder);
+		}
 	}
 
     /**
