@@ -7,7 +7,7 @@ import com.droptableteams.game.util.data.FirePatternData;
 import com.droptableteams.game.util.constants.Directions;
 
 import java.util.ArrayList;
-
+//DEPRECATED
 public class EnemyTypeFactory {
 
     public static void makeEnemy() {
