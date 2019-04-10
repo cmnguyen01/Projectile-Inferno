@@ -14,11 +14,11 @@ public class PowerUpEntity implements IEntity {
 
     @Override
     public int getId() {
-        return 0;
+        return _id;
     }
 
     @Override
     public String getType() {
-        return null;
+        return _type;
     }
 }

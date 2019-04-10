@@ -47,17 +47,31 @@ public class PowerUpEntityBuilder extends AbstractEntityBuilder {
         return new PowerUpEntity(_id);
     }
 
+    // Not done yet. Still need to figure out all necessary components
     @Override
     public ArrayList<IComponent> buildComponentList() throws NullPointerException {
         checkIdNotNull();
+
+        //TODO: Add power ups to script. Load powerups from script
+        //TODO: Load sprite, and set size, center, etc
+
+        //Below is some pseudo code to give a general idea for implementation
         ArrayList<IComponent> cl = new ArrayList<IComponent>();
+        //cl.add(new SpriteComponent(_id, sp));
+        //cl.add(location component)
+        //cl.add(size component)
+        //cl.add(hitbox component)
         return cl;
     }
 
+    // Not done yet. Unsure what other systems to add. Will figure out
     @Override
     public ArrayList<ISystem> buildSystemList() throws NullPointerException {
         checkIdNotNull();
         ArrayList<ISystem> sl = new ArrayList<ISystem>();
+        sl.add(new UpdateSpriteSystem(_id));
+        sl.add(new SetHitboxLocationSystem(_id));
+        sl.add(new PowerUpCollisionSystem(_id));
         return sl;
     }
 }
