@@ -2,6 +2,7 @@ package com.droptableteams.game.LibECS;
 
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +42,16 @@ public class EntityManager {
      */
     public HashMap<Integer, IEntity> getEntities(String type) {
         return _entityTypePools.get(type);
+    }
+
+    /**
+     *
+     *
+     * @param type the type of entity whos Ids are needed
+     * @return
+     */
+    public Integer[] getEntityIds(String type) {
+        return (Integer[])_entityTypePools.get(type).keySet().toArray();
     }
 
     /**
