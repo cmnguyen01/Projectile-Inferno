@@ -7,6 +7,7 @@ import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.CollisionsComponent;
 import com.droptableteams.game.components.DamageComponent;
 import com.droptableteams.game.components.HitpointComponent;
+import com.droptableteams.game.components.LifeCounterComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
@@ -41,6 +42,9 @@ public class CollisionDamageSystem implements ISystem {
         ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
 
         for(int thatId : cc.getCollisions()) {
+            if(_id == SpecialEntityIds.PLAYER_ENTITY){
+                ((LifeCounterComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).DecrementLife();
+            }
             DamageComponent thatDc = (DamageComponent)_cm.getComponent(thatId, "DamageComponent");
             if(null != thatDc) {
                 hc.subtractHp(thatDc.getDamage());

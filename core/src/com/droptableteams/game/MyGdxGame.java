@@ -74,10 +74,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		_ecsEngine.addEntity(peBuilder);
 		VisibleHitboxEntityBuilder vheBuilder = VisibleHitboxEntityBuilder.getInstance(_am);
 		_ecsEngine.addEntity(vheBuilder);
-		LifeDisplayBuilder leBuilder = LifeDisplayBuilder.getInstance(_am);
-		for(int i = 0; i < 5; i++){
-			_ecsEngine.addEntity(leBuilder);
-		}
+
 	}
 
     /**

@@ -107,9 +107,9 @@ public class ECSEngine {
      *
      * @param builder  a builder which generates the entity, components, and systems.
      */
-    public void addEntity(AbstractEntityBuilder builder) {
+    public IEntity addEntity(AbstractEntityBuilder builder) {
         builder.startBuild();
-        _em.addEntity(builder.buildEntity());
+        IEntity entity = _em.addEntity(builder.buildEntity());
         for (IComponent c : builder.buildComponentList()) {
             _cm.addComponent(c);
         }
@@ -117,6 +117,7 @@ public class ECSEngine {
             _sm.addSystem(s);
         }
         builder.finishBuild();
+        return entity;
     }
 
     /**
