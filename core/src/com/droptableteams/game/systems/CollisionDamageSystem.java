@@ -2,21 +2,25 @@ package com.droptableteams.game.systems;
 
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
+import com.droptableteams.game.LibECS.EntityManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.CollisionsComponent;
 import com.droptableteams.game.components.DamageComponent;
 import com.droptableteams.game.components.HitpointComponent;
+import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
 public class CollisionDamageSystem implements ISystem {
     private int _id;
     private String _type;
     private ComponentManager _cm;
+    private EntityManager _em;
 
     public CollisionDamageSystem(int id) {
         _id = id;
         _type = "CollisionDamageSystem";
         _cm = ComponentManager.getInstance();
+        _em = EntityManager.getInstance();
     }
 
     @Override
@@ -40,7 +44,15 @@ public class CollisionDamageSystem implements ISystem {
             if(null != thatDc) {
                 hc.subtractHp(thatDc.getDamage());
                 if(hc.getHp() <= 0) {
-                    engine.flagEntityForRemoval(_id); // TODO: fix crash on player death.
+
+                    int playerID = _em.getEntityIds("PlayerEntity")[0];
+                    engine.flagEntityForRemoval(_id);
+
+                    // If the player dies, also remove VisibleHitboxEntity (id: -3)
+                    if(_id == playerID){
+                        int visibleHitboxID = _em.getEntityIds("VisibleHitboxEntity")[0];
+                        engine.flagEntityForRemoval(visibleHitboxID);
+                    }
                     break;
                 }
             }

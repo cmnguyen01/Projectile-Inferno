@@ -40,6 +40,9 @@ public class HandleInputSystem implements ISystem {
 
     @Override
     public void update() {
+        if(_em.getEntities("PlayerEntity").size() == 0){
+            return;
+        }
         MoveDirectionComponent mdc = (MoveDirectionComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "MoveDirectionComponent");
         FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "FirePatternComponent");
         FireControlComponent fcc = (FireControlComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "FireControlComponent");

@@ -21,6 +21,9 @@ public class FirePatternData {
         _fireRate = fireRate;
         _bulletType = bulletType;
     }
+    public FirePatternData(){
+
+    }
 
 
     public float getBaseDirection() {
