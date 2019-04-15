@@ -18,11 +18,13 @@ public class CollisionDamageSystem implements ISystem {
     private int _id;
     private String _type;
     private ComponentManager _cm;
+    private EntityManager _em;
 
     public CollisionDamageSystem(int id) {
         _id = id;
         _type = "CollisionDamageSystem";
         _cm = ComponentManager.getInstance();
+        _em = EntityManager.getInstance();
     }
 
     @Override
@@ -50,15 +52,14 @@ public class CollisionDamageSystem implements ISystem {
                 hc.subtractHp(thatDc.getDamage());
                 if(hc.getHp() <= 0) {
 
-
+                    int playerID = _em.getEntityIds("PlayerEntity")[0];
                     engine.flagEntityForRemoval(_id);
 
                     // If the player dies, also remove VisibleHitboxEntity (id: -3)
-                    if(_id == SpecialEntityIds.PLAYER_ENTITY){
-                        engine.flagEntityForRemoval(SpecialEntityIds.VISIBLE_HITBOX_ENTITY);
-                        Integer[] lifeIDs = engine.getEntityManager().getEntityIds("LifeDisplayEntity");
-                        int currentLifeID = Collections.max(Arrays.asList(lifeIDs));
-                        //engine.flagEntityForRemoval(currentLifeID);
+
+                    if(_id == playerID){
+                        int visibleHitboxID = _em.getEntityIds("VisibleHitboxEntity")[0];
+                        engine.flagEntityForRemoval(visibleHitboxID);
                     }
                     break;
                 }
