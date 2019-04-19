@@ -44,11 +44,12 @@ public class CollisionDamageSystem implements ISystem {
         ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
 
         for(int thatId : cc.getCollisions()) {
-            if(_id == SpecialEntityIds.PLAYER_ENTITY){
-                ((LifeCounterComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).DecrementLife();
-            }
+
             DamageComponent thatDc = (DamageComponent)_cm.getComponent(thatId, "DamageComponent");
             if(null != thatDc) {
+                if(_id == SpecialEntityIds.PLAYER_ENTITY){
+                    ((LifeCounterComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).DecrementLife();
+                }
                 hc.subtractHp(thatDc.getDamage());
                 if(hc.getHp() <= 0) {
 

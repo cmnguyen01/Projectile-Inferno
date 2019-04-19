@@ -5,6 +5,7 @@ import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
+import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.builders.LifeDisplayBuilder;
 import com.droptableteams.game.components.LifeCounterComponent;
@@ -29,12 +30,12 @@ public class LifeUpdateSystem implements ISystem {
 
     @Override
     public int getId() {
-        return 0;
+        return _id;
     }
 
     @Override
     public String getType() {
-        return null;
+        return _type;
     }
 
     @Override
@@ -42,19 +43,18 @@ public class LifeUpdateSystem implements ISystem {
         AssetManager am = ((AssetManagerComponent) _cm.getComponent(_id, "AssetManagerComponent")).getAssetManager();
         LifeCounterComponent counter =(LifeCounterComponent) _cm.getComponents("LifeCounterComponent").get(SpecialEntityIds.PLAYER_ENTITY);
         ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
-        int currentEntityCount = _cm.getComponents("LifeDisplayEntity").size();
-        while( currentEntityCount > counter.getLifeCount()){
+        if(counter != null  && _em.getEntities("LifeDisplayEntity") != null &&_em.getEntities("LifeDisplayEntity").size() > counter.getLifeCount()){
             int currentLife = FindHighestLifeID();
             engine.flagEntityForRemoval(currentLife);
         }
-        while(currentEntityCount < counter.getLifeCount()) {
+        while(counter != null &&  _em.getEntities("LifeDisplayEntity")!= null && _em.getEntities("LifeDisplayEntity").size() < counter.getLifeCount()) {
             engine.addEntity(LifeDisplayBuilder.getInstance(am));
         }
     }
 
     private int FindHighestLifeID() {
         int max = 0;
-        for(IComponent x : _cm.getComponents("LifeDisplayEntity").values()){
+        for(IEntity x : _em.getEntities("LifeDisplayEntity").values()){
             if(x.getId() > max){
                 max = x.getId();
             }

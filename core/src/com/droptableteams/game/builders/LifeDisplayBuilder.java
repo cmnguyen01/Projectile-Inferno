@@ -55,7 +55,6 @@ public class LifeDisplayBuilder extends AbstractEntityBuilder {
         Sprite sp = new Sprite(_am.get("sprites/player.png", Texture.class));
         x = x-width*(numOfLifeEntities+1);
         y = y-height;
-        //sp.setCenter(x,y);
         cl.add(new SpriteComponent(_id, sp, true));
         cl.add(new SizeComponent(_id,width,height));
         cl.add(new LocationComponent(_id, x,y));

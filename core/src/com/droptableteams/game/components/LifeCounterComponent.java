@@ -6,6 +6,7 @@ public class LifeCounterComponent implements IComponent {
     private int _id;
     private int _count;
     private String _type = "LifeCounterComponent";
+    private boolean _isDead;
 
     public LifeCounterComponent(int id, int initialLives){
         _id = id;
@@ -20,6 +21,11 @@ public class LifeCounterComponent implements IComponent {
     }
     public void DecrementLife(){
         _count--;
+        _isDead = true;
+    }
+
+    public void beginNewLife(){
+        _isDead = false;
     }
     @Override
     public int getId() {
