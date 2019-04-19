@@ -20,6 +20,7 @@ public class RespawnSystem implements ISystem {
     private EntityManager _em;
     private long shieldStartTime;
     private GameTimeComponent gtc;
+    private boolean isShielded;
 
     public RespawnSystem(int id) {
         _id = id;
@@ -27,6 +28,7 @@ public class RespawnSystem implements ISystem {
         _cm = ComponentManager.getInstance();
         _em = EntityManager.getInstance();
         gtc = ((GameTimeComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameTimeComponent"));
+        shieldStartTime = 0;
     }
 
 
@@ -44,17 +46,20 @@ public class RespawnSystem implements ISystem {
     @Override
     public void update() {
         LifeCounterComponent lifeComp = (LifeCounterComponent) _cm.getComponent(_id, "LifeCounterComponent");
-        if(gtc.getTimeInMillis() >= shieldStartTime+5000){
+        if(isShielded && gtc.getTimeInMillis() >= shieldStartTime+1500){
             ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(SpecialEntityIds.SHIELD_ENTITY);
-        }
-        if(lifeComp.getIsDead()) {
-            float x = Gdx.graphics.getWidth() / 2f;
-            float y = Gdx.graphics.getHeight() / 4f;
-            LocationComponent comp = (LocationComponent) _cm.getComponent(_id, "LocationComponent");
-            comp.setX(x);
-            comp.setY(y);
-            createShield();
-            lifeComp.beginNewLife();
+            isShielded = false;
+        }else {
+            if (lifeComp.getIsDead()) {
+                float x = Gdx.graphics.getWidth() / 2f;
+                float y = Gdx.graphics.getHeight() / 4f;
+                LocationComponent comp = (LocationComponent) _cm.getComponent(_id, "LocationComponent");
+                comp.setX(x);
+                comp.setY(y);
+                createShield();
+                lifeComp.beginNewLife();
+                isShielded = true;
+            }
         }
     }
     private void createShield(){
