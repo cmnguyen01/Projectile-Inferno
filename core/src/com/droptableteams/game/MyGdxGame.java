@@ -12,10 +12,13 @@ import com.droptableteams.game.builders.LifeDisplayBuilder;
 import com.droptableteams.game.builders.PlayerEntityBuilder;
 import com.droptableteams.game.builders.VisibleHitboxEntityBuilder;
 import com.droptableteams.game.entities.PlayerEntity;
+import com.droptableteams.game.util.ScriptReader;
 import com.droptableteams.game.util.data.EnemyData;
 import com.droptableteams.game.util.Spawnable;
 import com.droptableteams.game.util.TimeVector3;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
+import com.droptableteams.game.util.types.BulletType;
+import com.droptableteams.game.util.types.EnemyType;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -36,6 +39,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		loadAssets();
 		_ecsEngine = ECSEngine.getInstance(SystemUpdateOrder.get());
 		initializeEntities();
+		parseTypeData();
 	}
 
 	@Override
@@ -61,7 +65,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		_am.load("sprites/playerBulletD.png", Texture.class);
         _am.load("sprites/enemyBulletA.png", Texture.class);
 		_am.load("sprites/enemyBulletB.png", Texture.class);
+		_am.load("sprites/shield.png", Texture.class);
 		_am.load("sprites/1up.png", Texture.class);
+
         while(!_am.update());
     }
 
@@ -76,6 +82,26 @@ public class MyGdxGame extends ApplicationAdapter {
 		VisibleHitboxEntityBuilder vheBuilder = VisibleHitboxEntityBuilder.getInstance(_am);
 		_ecsEngine.addEntity(vheBuilder);
 
+	}
+
+	private void parseTypeData() {
+		String[] typePaths = {
+				"enemyA.json",
+				"enemyB.json",
+				"EnemyBulletA.json",
+				"EnemyBulletB.json",
+				"PlayerBullet.json",
+		};
+		Class<?>[] classTypes = {
+				EnemyType.class,
+				EnemyType.class,
+				BulletType.class,
+				BulletType.class,
+				BulletType.class,
+		};
+		for(int i=0; i < typePaths.length; i++) {
+			ScriptReader.readTypeData(typePaths[i], classTypes[i]);
+		}
 	}
 
     /**

@@ -18,6 +18,7 @@ import com.droptableteams.game.util.types.BulletTypeFactory;
 import com.droptableteams.game.util.data.BulletData;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.systems.*;
+import com.droptableteams.game.util.types.SubtypeManager;
 
 import java.util.ArrayList;
 
@@ -66,9 +67,7 @@ public class BulletEntityBuilder extends AbstractEntityBuilder {
             throw new NullPointerException("Must call setBuildData() first.");
         }
         ArrayList<IComponent> cl = new ArrayList<IComponent>();
-        //BulletType bt = BulletTypeFactory.make(_bd.bulletType);
-        Json json = new Json();
-        BulletType bt = json.fromJson(BulletType.class, Gdx.files.internal("scripts/enemies/"+_bd.bulletType + ".json"));
+        BulletType bt = (BulletType) SubtypeManager.getInstance().getSubtype(_bd.bulletType);
         Sprite sp = new Sprite(_am.get(bt.texture, Texture.class));
         sp.setSize(bt.width,bt.height);
         sp.setCenter(_bd.x,_bd.y);

@@ -54,7 +54,7 @@ public class EntityManager {
      * @return
      */
     public Integer[] getEntityIds(String type) {
-        return (Integer[])_entityTypePools.get(type).keySet().toArray(new Integer[_entityTypePools.size()]);
+        return _entityTypePools.get(type).keySet().toArray(new Integer[_entityTypePools.size()]);
     }
 
     /**

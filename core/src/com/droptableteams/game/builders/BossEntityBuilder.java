@@ -4,18 +4,16 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
 import com.droptableteams.game.LibECS.interfaces.IEntity;
+import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.components.*;
 import com.droptableteams.game.entities.BossEntity;
+import com.droptableteams.game.systems.*;
 import com.droptableteams.game.util.data.BossData;
 import com.droptableteams.game.util.types.BossType;
 import com.droptableteams.game.util.types.BossTypeFactory;
-import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.components.*;
-import com.droptableteams.game.util.constants.SystemUpdateOrder;
-import com.droptableteams.game.systems.*;
 
 import java.util.ArrayList;
 
@@ -93,7 +91,3 @@ public class BossEntityBuilder extends AbstractEntityBuilder {
 
 
 }
-
-
-
-

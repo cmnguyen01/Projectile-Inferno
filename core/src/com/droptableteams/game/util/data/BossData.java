@@ -1,6 +1,7 @@
 package com.droptableteams.game.util.data;
 
 import com.droptableteams.game.util.TimeVector3;
+
 import java.util.ArrayList;
 
 public class BossData {
@@ -16,13 +17,10 @@ public class BossData {
         y = 0;
     }
 
-    public BossData(String BossType, ArrayList<TimeVector3> destinationList, float x, float y) {
-
-        this.bossType = BossType;
+    public BossData(String bossType, ArrayList<TimeVector3> destinationList, float x, float y) {
+        this.bossType = bossType;
         this.destinationList = destinationList;
         this.x = x;
         this.y = y;
     }
-
-
 }

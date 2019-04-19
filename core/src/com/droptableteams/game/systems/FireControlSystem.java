@@ -14,6 +14,7 @@ import com.droptableteams.game.util.types.BulletTypeFactory;
 import com.droptableteams.game.util.data.BulletData;
 import com.droptableteams.game.builders.BulletEntityBuilder;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
+import com.droptableteams.game.util.types.SubtypeManager;
 
 public class FireControlSystem implements ISystem {
     private int _id;
@@ -61,9 +62,7 @@ public class FireControlSystem implements ISystem {
     private void spawnBullets(FirePatternComponent fpc, AssetManagerComponent amc, float x, float y) {
         BulletEntityBuilder builder = BulletEntityBuilder.getInstance(amc.getAssetManager());
         ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
-        //BulletType bt = BulletTypeFactory.make(fpc.getBulletType());
-        Json json = new Json();
-        BulletType bt = json.fromJson(BulletType.class, Gdx.files.internal("scripts/enemies/" + fpc.getBulletType()+".json"));
+        BulletType bt = (BulletType)SubtypeManager.getInstance().getSubtype(fpc.getBulletType());
         int numBullets = fpc.getNumberOfBullets();
         float baseDirection = fpc.getBaseDirection();
         float angle = fpc.getDividingAngle();
