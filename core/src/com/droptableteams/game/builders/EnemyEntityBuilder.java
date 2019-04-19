@@ -1,9 +1,11 @@
 package com.droptableteams.game.builders;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Json;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
@@ -60,7 +62,9 @@ public class EnemyEntityBuilder extends AbstractEntityBuilder {
             throw new NullPointerException("Must call `setBuildData()` first.");
         }
         ArrayList<IComponent> cl = new ArrayList<IComponent>();
-        EnemyType et = EnemyTypeFactory.make(_ed.enemyType);
+        //EnemyType et = EnemyTypeFactory.make(_ed.enemyType);
+        Json json = new Json();
+        EnemyType et = json.fromJson(EnemyType.class, Gdx.files.internal("scripts/enemies/" + _ed.enemyType + ".json"));
         Sprite sp = new Sprite(_am.get(et.texture, Texture.class));
         sp.setSize(et.width,et.height);
         sp.setCenter(_ed.x,_ed.y);

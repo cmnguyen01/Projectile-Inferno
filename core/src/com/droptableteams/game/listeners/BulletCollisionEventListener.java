@@ -1,5 +1,7 @@
 package com.droptableteams.game.listeners;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Json;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.interfaces.IEventListener;
 import com.droptableteams.game.components.HitpointComponent;
@@ -44,7 +46,9 @@ public class BulletCollisionEventListener implements IEventListener {
         ComponentManager cm = ComponentManager.getInstance();
         HitpointComponent hpc = (HitpointComponent)cm.getComponent(_id, "HitpointComponent");
         if(args.containsKey("bulletType")) {
-            BulletType bt = BulletTypeFactory.make((String)args.get("bulletType"));
+            //BulletType bt = BulletTypeFactory.make((String)args.get("bulletType"));
+            Json json = new Json();
+            BulletType bt = json.fromJson(BulletType.class, Gdx.files.internal("scripts/enemies/"+ args.get("bulletType") + ".json"));
             hpc.subtractHp(bt.damage);
         }
     }

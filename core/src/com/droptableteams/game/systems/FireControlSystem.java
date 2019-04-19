@@ -1,6 +1,7 @@
 package com.droptableteams.game.systems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Json;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
@@ -60,7 +61,9 @@ public class FireControlSystem implements ISystem {
     private void spawnBullets(FirePatternComponent fpc, AssetManagerComponent amc, float x, float y) {
         BulletEntityBuilder builder = BulletEntityBuilder.getInstance(amc.getAssetManager());
         ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
-        BulletType bt = BulletTypeFactory.make(fpc.getBulletType());
+        //BulletType bt = BulletTypeFactory.make(fpc.getBulletType());
+        Json json = new Json();
+        BulletType bt = json.fromJson(BulletType.class, Gdx.files.internal("scripts/enemies/" + fpc.getBulletType()+".json"));
         int numBullets = fpc.getNumberOfBullets();
         float baseDirection = fpc.getBaseDirection();
         float angle = fpc.getDividingAngle();
