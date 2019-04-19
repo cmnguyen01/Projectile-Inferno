@@ -46,20 +46,14 @@ public class CollisionDamageSystem implements ISystem {
             if(null != thatDc) {
                 if(_id == SpecialEntityIds.PLAYER_ENTITY){
                     ((LifeCounterComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).decrementLife();
-                }
-                hc.subtractHp(thatDc.getDamage());
-                if(hc.getHp() <= 0) {
+                }else {
+                    hc.subtractHp(thatDc.getDamage());
+                    if (hc.getHp() <= 0) {
 
-                    int playerID = _em.getEntityIds("PlayerEntity")[0];
-                    engine.flagEntityForRemoval(_id);
-
-                    // If the player dies, also remove VisibleHitboxEntity (id: -3)
-
-                    if(_id == playerID){
-                        int visibleHitboxID = _em.getEntityIds("VisibleHitboxEntity")[0];
-                        engine.flagEntityForRemoval(visibleHitboxID);
+                        int playerID = _em.getEntityIds("PlayerEntity")[0];
+                        engine.flagEntityForRemoval(_id);
+                        break;
                     }
-                    break;
                 }
             }
         }

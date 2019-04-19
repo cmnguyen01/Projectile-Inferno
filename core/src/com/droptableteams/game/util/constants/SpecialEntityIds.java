@@ -5,6 +5,7 @@ public class SpecialEntityIds {
     public static final int GAME_ENTITY = -1;
     public static final int PLAYER_ENTITY = -2;
     public static final int VISIBLE_HITBOX_ENTITY = -3;
+    public static final int SHIELD_ENTITY = -4;
 
     @Deprecated
     public static int getGameEntityId() { return GAME_ENTITY; }

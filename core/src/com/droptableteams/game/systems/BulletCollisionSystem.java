@@ -13,7 +13,6 @@ import com.droptableteams.game.components.OwnerComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
-import java.security.acl.Owner;
 import java.util.Map;
 import java.util.Set;
 
@@ -55,10 +54,15 @@ public class BulletCollisionSystem implements ISystem {
                 return;
             }
             HitboxComponent thatHbc = (HitboxComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "HitboxComponent");
+            HitboxComponent shieldHbc = (HitboxComponent) _cm.getComponent(SpecialEntityIds.SHIELD_ENTITY, "HitboxComponent");
             CollisionsComponent cc = (CollisionsComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "CollisionsComponent");
-            if(Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
-                cc.addCollision(_id);
+            if(shieldHbc != null && Intersector.intersectRectangles(thisHbc.getHitbox(), shieldHbc.getHitbox(), intersection)){
                 ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(_id);
+            }else {
+                if (Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
+                    cc.addCollision(_id);
+                    ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(_id);
+                }
             }
         }
         else {
