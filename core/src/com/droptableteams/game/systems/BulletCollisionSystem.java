@@ -51,7 +51,6 @@ public class BulletCollisionSystem implements ISystem {
         Rectangle intersection = new Rectangle();
 
         if(oc.getOwnerId() != SpecialEntityIds.PLAYER_ENTITY) {
-            // If there is no player entity, return.
             if(_em.getEntities("PlayerEntity").size() == 0){
                 return;
             }
