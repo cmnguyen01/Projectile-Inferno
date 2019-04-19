@@ -8,6 +8,7 @@ public class EntityRenderOrder {
             "BulletEntity",
             "PlayerEntity",
             "VisibleHitboxEntity",
+            "ShieldEntity",
             "LifeDisplayEntity",
     };
 
