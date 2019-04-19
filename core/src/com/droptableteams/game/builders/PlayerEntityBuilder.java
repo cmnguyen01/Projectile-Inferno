@@ -57,8 +57,7 @@ public class PlayerEntityBuilder extends AbstractEntityBuilder {
         float width = 64;
         float height = 64;
         Sprite sp = new Sprite(_am.get("sprites/player.png", Texture.class));
-        sp.setSize(width,height);
-        sp.setCenter(x,y);
+        //sp.setCenter(x,y);
         cl.add(new SpriteComponent(_id, sp, true));
         cl.add(new LocationComponent(_id, x,y));
         cl.add(new SizeComponent(_id, width,height));
@@ -69,6 +68,7 @@ public class PlayerEntityBuilder extends AbstractEntityBuilder {
         cl.add(new CollisionsComponent(_id));
         cl.add(new HitboxComponent(_id, new Rectangle(x,y,12,12)));
         cl.add(new FirePatternComponent(_id, Directions.UP, 1, (float)Math.PI/24f, 0, "PlayerBullet"));
+        cl.add(new LifeCounterComponent(_id, 5));
         return cl;
     }
 

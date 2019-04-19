@@ -1,5 +1,7 @@
 package com.droptableteams.game.util.constants;
 
+import com.droptableteams.game.entities.LifeDisplayEntity;
+
 /**
  * Contains a static array of system type strings,
  * in the order in which the systems should be updated.
@@ -21,7 +23,10 @@ public class SystemUpdateOrder {
             "RotateSpriteToDirectionSystem",
             "UpdateSpriteSystem",
             "DespawnOutOfBoundsSystem",
+            "LifeUpdateSystem",
+            "RespawnSystem",
             "RenderSystem",
+
     };
 
     public static String[] get() { return _systemUpdateOrder; }

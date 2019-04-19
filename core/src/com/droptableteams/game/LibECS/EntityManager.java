@@ -41,6 +41,9 @@ public class EntityManager {
      * @return  a list of all entities of the specified type.
      */
     public HashMap<Integer, IEntity> getEntities(String type) {
+        if(_entityTypePools.get(type) == null){
+            return new HashMap<Integer, IEntity>();
+        }
         return _entityTypePools.get(type);
     }
 

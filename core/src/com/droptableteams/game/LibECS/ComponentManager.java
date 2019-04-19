@@ -39,7 +39,14 @@ public class ComponentManager {
      * @return  a list of the matching components.
      */
     public HashMap<String, IComponent> getComponents(int id) { return _componentIdPools.get(id); }
-    public HashMap<Integer, IComponent> getComponents(String type) { return _componentTypePools.get(type); }
+    public HashMap<Integer, IComponent> getComponents(String type) {
+        HashMap<Integer, IComponent> result = _componentTypePools.get(type);
+        if(result == null){
+            return new HashMap<Integer, IComponent>();
+        }else {
+            return result;
+        }
+    }
 
     /**
      * Get a component of specified id and type.
