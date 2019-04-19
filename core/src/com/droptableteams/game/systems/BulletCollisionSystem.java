@@ -49,9 +49,9 @@ public class BulletCollisionSystem implements ISystem {
         HitboxComponent thisHbc = (HitboxComponent)_cm.getComponent(_id, "HitboxComponent");
         Rectangle intersection = new Rectangle();
 
-        if(oc.getOwnerId() != SpecialEntityIds.PLAYER_ENTITY) {
+        if(oc.getOwnerId() != SpecialEntityIds.PLAYER_ENTITY) { // bullet is an enemey bullet
             if(_em.getEntities("PlayerEntity").size() == 0){
-                return;
+                return; // If there is no player entity, return.
             }
             HitboxComponent thatHbc = (HitboxComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "HitboxComponent");
             HitboxComponent shieldHbc = (HitboxComponent) _cm.getComponent(SpecialEntityIds.SHIELD_ENTITY, "HitboxComponent");
@@ -65,7 +65,7 @@ public class BulletCollisionSystem implements ISystem {
                 }
             }
         }
-        else {
+        else { // bullet is a player bullet
             Set<Map.Entry<Integer, IEntity>> entries = _em.getEntities("EnemyEntity").entrySet();
             for(Map.Entry<Integer, IEntity> e : entries) {
                 int enemyId = e.getKey();
