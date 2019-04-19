@@ -9,6 +9,7 @@ public class EntityRenderOrder {
             "PlayerEntity",
             "VisibleHitboxEntity",
             "LifeDisplayEntity",
+            "PowerUpEntity",
     };
 
     public static String[] get() {

@@ -26,6 +26,7 @@ public class SystemUpdateOrder {
             "LifeUpdateSystem",
             "RespawnSystem",
             "RenderSystem",
+            "PowerUpCollisionSystem",
 
     };
 
