@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.EntityManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
+import com.droptableteams.game.components.LifeCounterComponent;
 import com.droptableteams.game.components.LocationComponent;
 
 public class RespawnSystem implements ISystem {
@@ -23,18 +24,24 @@ public class RespawnSystem implements ISystem {
 
     @Override
     public int getId() {
-        return 0;
+        return _id;
     }
 
     @Override
     public String getType() {
-        return null;
+        return "RespawnSystem";
     }
 
     @Override
     public void update() {
-        float x = Gdx.graphics.getWidth()/2f;
-        float y = Gdx.graphics.getHeight()/4f;
-        //LocationComponent comp =  _cm.getComponent(_id, "LocationComponent");
+        LifeCounterComponent lifeComp = (LifeCounterComponent) _cm.getComponent(_id, "LifeCounterComponent");
+        if(lifeComp.getIsDead()) {
+            float x = Gdx.graphics.getWidth() / 2f;
+            float y = Gdx.graphics.getHeight() / 4f;
+            LocationComponent comp = (LocationComponent) _cm.getComponent(_id, "LocationComponent");
+            comp.setX(x);
+            comp.setY(y);
+            lifeComp.beginNewLife();
+        }
     }
 }
