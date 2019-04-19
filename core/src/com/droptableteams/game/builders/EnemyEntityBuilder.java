@@ -18,6 +18,7 @@ import com.droptableteams.game.util.types.EnemyTypeFactory;
 import com.droptableteams.game.util.data.EnemyData;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.systems.*;
+import com.droptableteams.game.util.types.SubtypeManager;
 
 import java.util.ArrayList;
 
@@ -62,9 +63,8 @@ public class EnemyEntityBuilder extends AbstractEntityBuilder {
             throw new NullPointerException("Must call `setBuildData()` first.");
         }
         ArrayList<IComponent> cl = new ArrayList<IComponent>();
-        //EnemyType et = EnemyTypeFactory.make(_ed.enemyType);
         Json json = new Json();
-        EnemyType et = json.fromJson(EnemyType.class, Gdx.files.internal("scripts/enemies/" + _ed.enemyType + ".json"));
+        EnemyType et = (EnemyType)SubtypeManager.getInstance().getSubtype(_ed.enemyType);
         Sprite sp = new Sprite(_am.get(et.texture, Texture.class));
         sp.setSize(et.width,et.height);
         sp.setCenter(_ed.x,_ed.y);

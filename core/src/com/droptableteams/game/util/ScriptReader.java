@@ -3,6 +3,8 @@ package com.droptableteams.game.util;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.Gdx;
 import com.droptableteams.game.util.data.EnemyData;
+import com.droptableteams.game.util.types.IEntitySubtype;
+import com.droptableteams.game.util.types.SubtypeManager;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -12,12 +14,25 @@ import static java.lang.System.err;
 
 public class ScriptReader {
 
+    public static void readTypeData(String filename, Class<?> classType) {
+        Json json = new Json();
+        String path = "scripts/types/" + filename;
+
+        try {
+            IEntitySubtype subtype = (IEntitySubtype) json.fromJson(classType, Gdx.files.internal(path));
+            SubtypeManager.getInstance().addSubtype(subtype);
+        }
+        catch(Exception e) {
+            err.format("Exception occurred trying to read '%s'.", path);
+            e.printStackTrace();
+        }
+    }
+
     public static ArrayList<Wave> readLevel(String filename) {
         Json json = new Json();
         String filePath = "scripts/levels/" + filename;
 
-        try
-        {
+        try {
             ArrayList<Wave> level = json.fromJson(ArrayList.class, Wave.class, Gdx.files.internal(filePath));
             for (Wave x : level)
             {
