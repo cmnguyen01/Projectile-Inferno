@@ -83,6 +83,7 @@ public class PlayerEntityBuilder extends AbstractEntityBuilder {
         sl.add(new SpeedModifierSystem(_id));
         sl.add(new CollisionDamageSystem(_id));
         sl.add(new SetHitboxLocationSystem(_id));
+        sl.add(new RespawnSystem(_id));
         return sl;
     }
 }

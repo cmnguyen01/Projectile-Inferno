@@ -11,9 +11,6 @@ import com.droptableteams.game.components.LifeCounterComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
-import java.util.Arrays;
-import java.util.Collections;
-
 public class CollisionDamageSystem implements ISystem {
     private int _id;
     private String _type;
@@ -48,7 +45,7 @@ public class CollisionDamageSystem implements ISystem {
             DamageComponent thatDc = (DamageComponent)_cm.getComponent(thatId, "DamageComponent");
             if(null != thatDc) {
                 if(_id == SpecialEntityIds.PLAYER_ENTITY){
-                    ((LifeCounterComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).DecrementLife();
+                    ((LifeCounterComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).decrementLife();
                 }
                 hc.subtractHp(thatDc.getDamage());
                 if(hc.getHp() <= 0) {
