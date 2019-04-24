@@ -6,4 +6,13 @@
   timeOffset: 9000,
   xOffset: 0,
   yOffset: 0
-}]
+},
+  {
+    class: com.droptableteams.game.util.Wave,
+    waveLocation: MidBoss-level.json,
+    timeOffset: 18000,
+    xOffset: 0,
+    yOffset: 0
+  }
+
+]
