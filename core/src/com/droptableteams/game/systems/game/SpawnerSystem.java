@@ -7,9 +7,11 @@ import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.components.game.GameTimeComponent;
 import com.droptableteams.game.components.game.SpawnListComponent;
 import com.droptableteams.game.builders.EnemyEntityBuilder;
+import com.droptableteams.game.builders.BossEntityBuilder;
 import com.droptableteams.game.util.Wave;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.util.data.EnemyData;
+import com.droptableteams.game.util.data.BossData;
 import com.droptableteams.game.util.Spawnable;
 
 import java.util.ArrayList;
@@ -42,12 +44,19 @@ public class SpawnerSystem implements ISystem {
         AssetManagerComponent amc = (AssetManagerComponent) _cm.getComponent(_id, "AssetManagerComponent");
         ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
         EnemyEntityBuilder builder = EnemyEntityBuilder.getInstance(amc.getAssetManager());
+        BossEntityBuilder builder2 = BossEntityBuilder.getInstance(amc.getAssetManager());
         ArrayList<Spawnable> flaggedForRemoval = new ArrayList<Spawnable>();
         ArrayList<Spawnable> currentWave;
         currentWave = slc.getSpawnList();
         for (Spawnable spawnable : currentWave) {
             if (gtc.getTimeInMillis() >= spawnable.spawnTime) {
-                if (spawnable.entityType.equals("EnemyEntity")) {
+                if (spawnable.entityType.equals("BossEntity")) {
+                    flaggedForRemoval.add(spawnable);
+                    builder2.setBuildData((BossData) spawnable.data);
+                    engine.addEntity(builder2);
+                }
+                else
+                {
                     flaggedForRemoval.add(spawnable);
                     builder.setBuildData((EnemyData) spawnable.data);
                     engine.addEntity(builder);

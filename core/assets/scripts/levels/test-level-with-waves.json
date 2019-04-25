@@ -1,18 +1,26 @@
-[{class:com.droptableteams.game.util.Wave,waveLocation:sample-level.json,
+[
+  {class:com.droptableteams.game.util.Wave,waveLocation:sample-level.json,
   timeOffset: 0,
   xOffset: 0,
   yOffset: 0
-},{class:com.droptableteams.game.util.Wave,waveLocation:sample-level.json,
-  timeOffset: 9000,
-  xOffset: 0,
-  yOffset: 0
 },
-  {
-    class: com.droptableteams.game.util.Wave,
-    waveLocation: MidBoss-level.json,
-    timeOffset: 18000,
+  {class:com.droptableteams.game.util.Wave,waveLocation:sample-level.json,
+    timeOffset: 9000,
     xOffset: 0,
     yOffset: 0
+  },
+  {class: com.droptableteams.game.util.Wave,
+    waveLocation: MidBoss-level.json,
+    timeOffset: 10000,
+    xOffset: 0,
+    yOffset: 0
+  },
+  {
+    class: com.droptableteams.game.util.Wave,
+    waveLocation: FinalBoss-level.json,
+    timeOffset: 13000,
+    xOffset: 360,
+    yOffset: 720
   }
 
 ]

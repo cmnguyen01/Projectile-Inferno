@@ -14,6 +14,7 @@ import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
 import java.security.acl.Owner;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -63,15 +64,18 @@ public class BulletCollisionSystem implements ISystem {
             }
         }
         else {
-            Set<Map.Entry<Integer, IEntity>> entries = _em.getEntities("EnemyEntity").entrySet();
-            for(Map.Entry<Integer, IEntity> e : entries) {
-                int enemyId = e.getKey();
+            HashMap<Integer, IEntity> entityMap = _em.getEntities("EnemyEntity");
+            if(null != entityMap){
+                Set<Map.Entry<Integer, IEntity>> entries = entityMap.entrySet();
+                for(Map.Entry<Integer, IEntity> e : entries) {
+                    int enemyId = e.getKey();
 
-                HitboxComponent thatHbc = (HitboxComponent)_cm.getComponent(enemyId, "HitboxComponent");
-                CollisionsComponent cc = (CollisionsComponent)_cm.getComponent(enemyId, "CollisionsComponent");
-                if(Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
-                    cc.addCollision(_id);
-                    ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(_id);
+                    HitboxComponent thatHbc = (HitboxComponent)_cm.getComponent(enemyId, "HitboxComponent");
+                    CollisionsComponent cc = (CollisionsComponent)_cm.getComponent(enemyId, "CollisionsComponent");
+                    if(Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
+                        cc.addCollision(_id);
+                        ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(_id);
+                    }
                 }
             }
         }

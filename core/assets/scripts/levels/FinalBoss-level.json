@@ -5,11 +5,11 @@
     "entityType": "BossEntity",
     "data": {
       "class": "com.droptableteams.game.util.data.BossData",
-      "bossType": "midBoss",
+      "bossType": "finalBoss",
       "destinationList": [
         {
           "_position": {
-            "x": 480,
+            "x": 160,
             "y": 360
           },
           "_time": 17000
@@ -22,7 +22,7 @@
           "_time": 0
         }
       ],
-      "x": 0,
+      "x": 640,
       "y": 480
     }
   }
