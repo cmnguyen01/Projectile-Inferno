@@ -91,7 +91,7 @@ public class PowerUpEntityBuilder extends AbstractEntityBuilder {
         sl.add(new UpdateSpriteSystem(_id));
         sl.add(new DirectionalMovementSystem(_id));
         sl.add(new SetHitboxLocationSystem(_id));
-        //sl.add(new PowerUpCollisionSystem(_id));
+        sl.add(new PowerUpCollisionSystem(_id));
         return sl;
     }
 }
