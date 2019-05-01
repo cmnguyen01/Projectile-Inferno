@@ -2,10 +2,10 @@
   entityType:BossEntity,
   subtype:midBoss,
   texture:sprites/bossA.png,
-  width:52,
-  height:52,
+  width:92,
+  height:92,
   speed:128,
-  hp:150,
+  hp:7500,
   despawnOutOfBounds:true,
   loopDestinations:false,
   firePattern:{

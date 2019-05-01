@@ -13,8 +13,14 @@ public class PowerUpComponent implements IComponent {
         _id = id;
         _type = "PowerUpComponent";
         _powerUpType = powerUpType;
-        _powerUpType = "scripts/powerUp/" + powerUpType +".json";
-        powerUp(powerUpType);
+        if( powerUpType.equals("")){
+            _powerUpType = null;
+            _hasPowerUp = false;
+        }else {
+            _powerUpType = "scripts/powerUp/" + powerUpType + ".json";
+            _hasPowerUp = true;
+        }
+        //powerUp(powerUpType);
     }
 
     private void powerUp(String powerUp){

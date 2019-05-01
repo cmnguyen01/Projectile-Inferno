@@ -2,10 +2,10 @@
   entityType:BossEntity,
   subtype:finalBoss,
   texture:sprites/bossB.png,
-  width:52,
-  height:52,
+  width:152,
+  height:152,
   speed:128,
-  hp:200,
+  hp:10000,
   despawnOutOfBounds:true,
   loopDestinations:false,
   firePattern:{
@@ -16,5 +16,5 @@
     _deltaTheta:3.1415927,
     _fireRate:0.4,
     _bulletType:EnemyBulletB,
-  },
+  }
 }

@@ -23,7 +23,7 @@
 			],
 			"x": 0,
 			"y": 480,
-			"dropType": "OneUp"
+			"dropType": ""
 		}
 	},
 	{
@@ -50,7 +50,7 @@
 			],
 			"x": 640,
 			"y": 480,
-			"dropType": "OneUp"
+			"dropType": ""
 		}
 	},
 	{
