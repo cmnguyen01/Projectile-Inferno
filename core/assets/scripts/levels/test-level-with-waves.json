@@ -1,9 +1,9 @@
 [
   {class:com.droptableteams.game.util.Wave,waveLocation:sample-level.json,
-  timeOffset: 0,
-  xOffset: 0,
-  yOffset: 0
-},
+    timeOffset: 0,
+    xOffset: 0,
+    yOffset: 0
+  },
   {class:com.droptableteams.game.util.Wave,waveLocation:sample-level.json,
     timeOffset: 9000,
     xOffset: 0,
@@ -24,3 +24,4 @@
   }
 
 ]
+

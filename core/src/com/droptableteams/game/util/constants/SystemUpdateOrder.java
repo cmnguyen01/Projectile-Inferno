@@ -27,6 +27,7 @@ public class SystemUpdateOrder {
             "RespawnSystem",
             "EndGameSystem",
             "RenderSystem",
+            "PowerUpCollisionSystem",
 
     };
 

@@ -2,9 +2,8 @@
 	{
 		"class": "com.droptableteams.game.util.Spawnable",
 		"spawnTime": 0,
-		"entityType": "EnemyEntity",
+		"entityType": "PowerUpEntity",
 		"data": {
-			"enemyType": "EnemyA",
 			"destinationList": [
 				{
 					"_position": {
@@ -22,8 +21,7 @@
 				}
 			],
 			"x": 0,
-			"y": 480,
-			"dropType": "OneUp"
+			"y": 480
 		}
 	},
 	{
@@ -49,8 +47,7 @@
 				}
 			],
 			"x": 640,
-			"y": 480,
-			"dropType": "OneUp"
+			"y": 480
 		}
 	},
 	{
@@ -76,8 +73,7 @@
 				}
 			],
 			"x": 0,
-			"y": 120,
-			"dropType": "OneUp"
+			"y": 120
 		}
 	},
 	{
@@ -103,8 +99,7 @@
 				}
 			],
 			"x": 640,
-			"y": 120,
-			"dropType": "OneUp"
+			"y": 120
 		}
 	},
 	{
@@ -130,8 +125,7 @@
 				}
 			],
 			"x": 0,
-			"y": 480,
-			"dropType": "OneUp"
+			"y": 480
 		}
 	},
 	{
@@ -157,8 +151,7 @@
 				}
 			],
 			"x": 640,
-			"y": 480,
-			"dropType": "OneUp"
+			"y": 480
 		}
 	}
 ]

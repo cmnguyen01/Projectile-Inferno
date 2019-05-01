@@ -11,7 +11,8 @@ public class EntityRenderOrder {
             "VisibleHitboxEntity",
             "ShieldEntity",
             "LifeDisplayEntity",
-            "StaticSpriteEntity"
+            "StaticSpriteEntity",
+            "PowerUpEntity"
     };
 
     public static String[] get() {
