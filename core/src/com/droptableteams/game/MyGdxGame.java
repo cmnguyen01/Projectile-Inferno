@@ -66,7 +66,7 @@ public class MyGdxGame extends ApplicationAdapter {
         _am.load("sprites/enemyBulletA.png", Texture.class);
 		_am.load("sprites/enemyBulletB.png", Texture.class);
 		_am.load("sprites/shield.png", Texture.class);
-		_am.load("sprites/1up.png", Texture.class);
+		_am.load("sprites/OneUp.png", Texture.class);
 
         while(!_am.update());
     }

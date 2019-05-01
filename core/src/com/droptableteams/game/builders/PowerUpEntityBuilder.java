@@ -66,8 +66,6 @@ public class PowerUpEntityBuilder extends AbstractEntityBuilder {
             throw new NullPointerException("Must call setBuildData() first.");
         }
 
-        //TODO: Add power ups to script. Load powerups from script
-        //TODO: Load sprite, and set size, center, etc
 
         //Below is some pseudo code to give a general idea for implementation
         ArrayList<IComponent> cl = new ArrayList<IComponent>();
