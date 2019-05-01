@@ -16,19 +16,19 @@ import com.droptableteams.game.systems.*;
 
 import java.util.ArrayList;
 
-public class TextDisplayBuilder extends AbstractEntityBuilder {
-    private static TextDisplayBuilder _self;
+public class StaticSpriteEntityBuilder extends AbstractEntityBuilder {
+    private static StaticSpriteEntityBuilder _self;
     private AssetManager _am;
     private String sprite_data;
 
-    private TextDisplayBuilder(AssetManager am) {
+    private StaticSpriteEntityBuilder(AssetManager am) {
         _am = am;
         _id = null;
     }
 
-    public static TextDisplayBuilder getInstance(AssetManager am) {
+    public static StaticSpriteEntityBuilder getInstance(AssetManager am) {
         if(null == _self) {
-            _self = new TextDisplayBuilder(am);
+            _self = new StaticSpriteEntityBuilder(am);
         }
         return _self;
     }
