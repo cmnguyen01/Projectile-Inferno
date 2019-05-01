@@ -1,5 +1,7 @@
 package com.droptableteams.game.systems;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
@@ -16,12 +18,14 @@ public class CollisionDamageSystem implements ISystem {
     private String _type;
     private ComponentManager _cm;
     private EntityManager _em;
+    private Sound _sound;
 
     public CollisionDamageSystem(int id) {
         _id = id;
         _type = "CollisionDamageSystem";
         _cm = ComponentManager.getInstance();
         _em = EntityManager.getInstance();
+        _sound = Gdx.audio.newSound(Gdx.files.internal("audio/damage_sound_effect.mp3"));
     }
 
     @Override
@@ -45,6 +49,12 @@ public class CollisionDamageSystem implements ISystem {
             DamageComponent thatDc = (DamageComponent)_cm.getComponent(thatId, "DamageComponent");
             if(null != thatDc) {
                 hc.subtractHp(thatDc.getDamage());
+
+                // playing the taking damage sound effect
+                if(_id == SpecialEntityIds.PLAYER_ENTITY) {
+                    _sound.play(1.0f);
+                }
+
                 if (hc.getHp() <= 0) {
                     if (_id == SpecialEntityIds.PLAYER_ENTITY) {
                         ((LifeCounterComponent) _cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).decrementLife();
