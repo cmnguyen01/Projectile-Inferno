@@ -8,10 +8,12 @@ import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.components.game.GameTimeComponent;
 import com.droptableteams.game.components.game.SpawnListComponent;
 import com.droptableteams.game.builders.EnemyEntityBuilder;
+import com.droptableteams.game.builders.BossEntityBuilder;
 import com.droptableteams.game.util.Wave;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.util.data.BossData;
 import com.droptableteams.game.util.data.EnemyData;
+import com.droptableteams.game.util.data.BossData;
 import com.droptableteams.game.util.Spawnable;
 
 import java.util.ArrayList;
@@ -50,14 +52,16 @@ public class SpawnerSystem implements ISystem {
         currentWave = slc.getSpawnList();
         for (Spawnable spawnable : currentWave) {
             if (gtc.getTimeInMillis() >= spawnable.spawnTime) {
-                if (spawnable.entityType.equals("EnemyEntity")) {
+                if (spawnable.entityType.equals("BossEntity")) {
+                    flaggedForRemoval.add(spawnable);
+                    bossBuilder.setBuildData((BossData) spawnable.data);
+                    engine.addEntity(bossBuilder);
+                }
+                else if(spawnable.entityType.equals("EnemyEntity"))
+                {
                     flaggedForRemoval.add(spawnable);
                     enemyBuilder.setBuildData((EnemyData) spawnable.data);
                     engine.addEntity(enemyBuilder);
-                }
-                else if(spawnable.entityType.equals("BossEntity")) {
-                    flaggedForRemoval.add(spawnable);
-                    bossBuilder.setBuildData((BossData) spawnable.data);
                 }
             }
         }

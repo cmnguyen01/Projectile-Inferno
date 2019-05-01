@@ -64,7 +64,7 @@ public class PlayerEntityBuilder extends AbstractEntityBuilder {
         cl.add(new VelocityComponent(_id, 360));
         cl.add(new MoveDirectionComponent(_id, null));
         cl.add(new FireControlComponent(_id, 0.125f,false));
-        cl.add(new HitpointComponent(_id, 200));
+        cl.add(new HitpointComponent(_id, 1));
         cl.add(new CollisionsComponent(_id));
         cl.add(new HitboxComponent(_id, new Rectangle(x,y,12,12)));
         cl.add(new FirePatternComponent(_id, Directions.UP,0.125f, 1, (float)Math.PI/24f, 0, "PlayerBullet"));
@@ -83,6 +83,7 @@ public class PlayerEntityBuilder extends AbstractEntityBuilder {
         sl.add(new SpeedModifierSystem(_id));
         sl.add(new CollisionDamageSystem(_id));
         sl.add(new SetHitboxLocationSystem(_id));
+        sl.add(new RespawnSystem(_id));
         return sl;
     }
 }

@@ -16,10 +16,14 @@ public class LifeCounterComponent implements IComponent {
     public  int getLifeCount(){
         return _count;
     }
-    public void IncrementLife(){
+    public void incrementLife(){
         _count++;
     }
-    public void DecrementLife(){
+
+    public boolean getIsDead(){
+        return _isDead;
+    }
+    public void decrementLife(){
         _count--;
         _isDead = true;
     }

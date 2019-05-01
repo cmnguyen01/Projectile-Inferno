@@ -1,6 +1,7 @@
 package com.droptableteams.game.systems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Json;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
@@ -21,11 +22,13 @@ public class FireControlSystem implements ISystem {
     private int _id;
     private String _type;
     private ComponentManager _cm;
+    private Sound _sound;
 
     public FireControlSystem(int id) {
         _id = id;
         _type = "FireControlSystem";
         _cm = ComponentManager.getInstance();
+        _sound = Gdx.audio.newSound(Gdx.files.internal("audio/laser_sound.mp3"));
     }
 
     @Override
@@ -69,6 +72,11 @@ public class FireControlSystem implements ISystem {
             long time = System.nanoTime();
             long deltaTime = time - fcc.getLastFired();
             if((float)(deltaTime/Math.pow(10,9)) > fpc.rateOfFire) {
+
+                // playing the laser sound effect
+                if(_id == SpecialEntityIds.PLAYER_ENTITY) {
+                    _sound.play(1.0f);
+                }
                 spawnBullets(fpc, amc, lc.getX(), lc.getY());
                 fcc.setLastFired(time);
             }

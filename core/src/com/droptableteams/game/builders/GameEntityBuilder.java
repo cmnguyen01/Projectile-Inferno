@@ -1,6 +1,8 @@
 package com.droptableteams.game.builders;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.droptableteams.game.LibECS.interfaces.AbstractEntityBuilder;
 import com.droptableteams.game.LibECS.interfaces.IComponent;
@@ -20,11 +22,14 @@ public class GameEntityBuilder extends AbstractEntityBuilder {
     private static GameEntityBuilder _self;
     private AssetManager _am;
     private SpriteBatch _batch;
+    private Sound _sound;
 
     private GameEntityBuilder(AssetManager am, SpriteBatch batch) {
         _am = am;
         _batch = batch;
         _id = null;
+        _sound = Gdx.audio.newSound(Gdx.files.internal("audio/background_music.mp3"));
+        _sound.play(0.35f);
     }
 
     public static GameEntityBuilder getInstance(AssetManager am, SpriteBatch batch) {
@@ -68,7 +73,7 @@ public class GameEntityBuilder extends AbstractEntityBuilder {
         sl.add(new HandleInputSystem(_id));
         sl.add(new SpawnerSystem(_id));
         sl.add(new LifeUpdateSystem(_id));
-        sl.add(new RespawnSystem(_id));
+        sl.add(new EndGameSystem(_id));
         return sl;
     }
 

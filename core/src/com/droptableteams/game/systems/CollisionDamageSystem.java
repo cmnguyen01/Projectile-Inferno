@@ -1,5 +1,7 @@
 package com.droptableteams.game.systems;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
@@ -11,20 +13,19 @@ import com.droptableteams.game.components.LifeCounterComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 
-import java.util.Arrays;
-import java.util.Collections;
-
 public class CollisionDamageSystem implements ISystem {
     private int _id;
     private String _type;
     private ComponentManager _cm;
     private EntityManager _em;
+    private Sound _sound;
 
     public CollisionDamageSystem(int id) {
         _id = id;
         _type = "CollisionDamageSystem";
         _cm = ComponentManager.getInstance();
         _em = EntityManager.getInstance();
+        _sound = Gdx.audio.newSound(Gdx.files.internal("audio/damage_sound_effect.mp3"));
     }
 
     @Override
@@ -47,20 +48,19 @@ public class CollisionDamageSystem implements ISystem {
 
             DamageComponent thatDc = (DamageComponent)_cm.getComponent(thatId, "DamageComponent");
             if(null != thatDc) {
-                if(_id == SpecialEntityIds.PLAYER_ENTITY){
-                    ((LifeCounterComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).DecrementLife();
-                }
                 hc.subtractHp(thatDc.getDamage());
-                if(hc.getHp() <= 0) {
 
-                    int playerID = _em.getEntityIds("PlayerEntity")[0];
-                    engine.flagEntityForRemoval(_id);
+                // playing the taking damage sound effect
+                if(_id == SpecialEntityIds.PLAYER_ENTITY) {
+                    _sound.play(1.0f);
+                }
 
-                    // If the player dies, also remove VisibleHitboxEntity (id: -3)
-
-                    if(_id == playerID){
-                        int visibleHitboxID = _em.getEntityIds("VisibleHitboxEntity")[0];
-                        engine.flagEntityForRemoval(visibleHitboxID);
+                if (hc.getHp() <= 0) {
+                    if (_id == SpecialEntityIds.PLAYER_ENTITY) {
+                        ((LifeCounterComponent) _cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).decrementLife();
+                    } else {
+                        //int playerID = _em.getEntityIds("PlayerEntity")[0];
+                        engine.flagEntityForRemoval(_id);
                     }
                     break;
                 }
