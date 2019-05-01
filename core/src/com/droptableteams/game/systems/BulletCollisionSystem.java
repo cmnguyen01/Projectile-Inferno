@@ -77,6 +77,18 @@ public class BulletCollisionSystem implements ISystem {
                     ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(_id);
                 }
             }
+
+            Set<Map.Entry<Integer, IEntity>> entries2 = _em.getEntities("BossEntity").entrySet();
+            for (Map.Entry<Integer, IEntity> e : entries2) {
+                int enemyId = e.getKey();
+
+                HitboxComponent thatHbc = (HitboxComponent) _cm.getComponent(enemyId, "HitboxComponent");
+                CollisionsComponent cc = (CollisionsComponent) _cm.getComponent(enemyId, "CollisionsComponent");
+                if (Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
+                    cc.addCollision(_id);
+                    ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(_id);
+                }
+            }
         }
     }
 }

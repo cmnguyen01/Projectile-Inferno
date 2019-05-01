@@ -5,7 +5,7 @@
   width:52,
   height:52,
   speed:128,
-  hp:100,
+  hp:150,
   despawnOutOfBounds:true,
   loopDestinations:false,
   firePattern:{
