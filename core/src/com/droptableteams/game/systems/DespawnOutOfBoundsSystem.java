@@ -50,11 +50,9 @@ public class DespawnOutOfBoundsSystem implements ISystem {
             }
         }
         else {
-            if((leftBound > x || rightBound < x) || (bottomBound > y || topBound < y)) {
+            if((leftBound > x ||  x > rightBound) || (bottomBound > y || y > topBound)) {
                 ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(_id);
             }
         }
-
-
     }
 }

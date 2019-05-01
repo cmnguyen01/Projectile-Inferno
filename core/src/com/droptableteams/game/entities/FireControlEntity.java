@@ -2,11 +2,11 @@ package com.droptableteams.game.entities;
 
 import com.droptableteams.game.LibECS.interfaces.IEntity;
 
-public class FireControllerEntity implements IEntity {
+public class FireControlEntity implements IEntity {
     int _id;
     String _type;
 
-    public FireControllerEntity(int id) {
+    public FireControlEntity(int id) {
         _id = id;
         _type = "FireControllerEntity";
     }

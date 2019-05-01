@@ -1,15 +1,15 @@
 package com.droptableteams.game.util.constants;
 
-import com.droptableteams.game.entities.LifeDisplayEntity;
-
 /**
  * Contains a static array of system type strings,
  * in the order in which the systems should be updated.
  */
 public class SystemUpdateOrder {
     private static String[] _systemUpdateOrder = {
+            "DurationSystem",
             "HandleInputSystem",
             "SpawnerSystem",
+            "TargetPlayerSystem",
             "FireControlSystem",
             "SpeedModifierSystem",
             "DirectionalMovementSystem",
@@ -19,16 +19,17 @@ public class SystemUpdateOrder {
             "SetHitboxLocationSystem",
             "StopAtBoundarySystem",
             "BulletCollisionSystem",
+            "PowerUpCollisionSystem",
             "CollisionDamageSystem",
             "RotateSpriteToDirectionSystem",
             "UpdateSpriteSystem",
-            "DespawnOutOfBoundsSystem",
             "LifeUpdateSystem",
             "RespawnSystem",
+            "DespawnWithDurationSystem",
+            "DespawnOutOfBoundsSystem",
+            "DestroyOnOwnerDeathSystem",
             "EndGameSystem",
             "RenderSystem",
-            "PowerUpCollisionSystem",
-
     };
 
     public static String[] get() { return _systemUpdateOrder; }

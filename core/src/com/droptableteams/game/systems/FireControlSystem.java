@@ -9,6 +9,7 @@ import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.*;
 import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.components.game.GameCheatsComponent;
+import com.droptableteams.game.util.constants.Enums;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
 import com.droptableteams.game.util.types.BulletType;
 import com.droptableteams.game.util.types.BulletTypeFactory;
@@ -47,21 +48,35 @@ public class FireControlSystem implements ISystem {
         FirePatternComponent fpc = (FirePatternComponent)_cm.getComponent(_id, "FirePatternComponent");
         AssetManagerComponent amc = (AssetManagerComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent");
         GameCheatsComponent gcc = (GameCheatsComponent) _cm.getComponent(SpecialEntityIds.GAME_ENTITY, "GameCheatsComponent");
+        LocationComponent plc = (LocationComponent)ComponentManager.getInstance().getComponent(SpecialEntityIds.PLAYER_ENTITY, "LocationComponent");
 
         // apply fire pattern rotation
-        float newDirection = (fpc.getDeltaTheta()*Gdx.graphics.getDeltaTime()*gcc.getSpeedMultiplier())+fpc.getBaseDirection();
+        float newDirection = fpc.getBaseDirection();
+
+        switch(fcc.fireDirectionType) {
+            case ANGLE:
+                newDirection = (fpc.getDeltaTheta()*Gdx.graphics.getDeltaTime()*gcc.getSpeedMultiplier())+fpc.getBaseDirection();
+                break;
+            case OUTWARD:
+                float xLen = plc.getX()- lc.getX();
+                float yLen = plc.getY() - lc.getY();
+                newDirection = atan(xLen, yLen);
+                break;
+            case ATPLAYER:
+                // handled by TargetPlayerSystem
+        }
+
         fpc.setBaseDirection(newDirection);
 
         if(fcc.isFiring()) {
             long time = System.nanoTime();
             long deltaTime = time - fcc.getLastFired();
-            if((float)(deltaTime/Math.pow(10,9)) > fcc.getRateOfFire()) {
+            if((float)(deltaTime/Math.pow(10,9)) > fpc.rateOfFire) {
 
                 // playing the laser sound effect
                 if(_id == SpecialEntityIds.PLAYER_ENTITY) {
                     _sound.play(1.0f);
                 }
-
                 spawnBullets(fpc, amc, lc.getX(), lc.getY());
                 fcc.setLastFired(time);
             }
@@ -87,5 +102,9 @@ public class FireControlSystem implements ISystem {
             engine.addEntity(builder);
             offset += angle;
         }
+    }
+
+    private float atan(float x, float y) {
+        return -1f*(float)(Math.atan2(x, y) - Math.PI/2);
     }
 }

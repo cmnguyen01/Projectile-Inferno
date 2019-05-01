@@ -39,6 +39,14 @@ public class ECSEngine {
     }
 
     /**
+     * Allows the client to check which entities are queued to be removed this cycle.
+     * @return ArrayList of the ids of entities to be removed
+     */
+    public ArrayList<Integer> getFlaggedForRemoval() {
+        return _flaggedForRemoval;
+    }
+
+    /**
      * Removes all entities that have been flagged for removal,
      * as well as their associated components and systems.
      */
