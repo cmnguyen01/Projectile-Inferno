@@ -6,12 +6,24 @@ import com.droptableteams.game.util.data.PowerUpData;
 public class PowerUpComponent implements IComponent {
     private int _id;
     private String _type;
-    private boolean _hasPowerUp;
+    public String _powerUpType;
+    public boolean _hasPowerUp;
 
-    public PowerUpComponent(int id, boolean power){
+    public PowerUpComponent(int id, String powerUpType){
         _id = id;
         _type = "PowerUpComponent";
-        _hasPowerUp = power;
+        _powerUpType = powerUpType;
+        _powerUpType = "scripts/powerUp/" + powerUpType +".json";
+        powerUp(powerUpType);
+    }
+
+    private void powerUp(String powerUp){
+        if(powerUp != ""){
+            _hasPowerUp = true;
+        }
+        else{
+            _hasPowerUp = false;
+        }
     }
 
     @Override
@@ -23,4 +35,6 @@ public class PowerUpComponent implements IComponent {
     public String getType() {
         return _type;
     }
+
+
 }

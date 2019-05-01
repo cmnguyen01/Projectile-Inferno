@@ -1,17 +1,19 @@
 package com.droptableteams.game.systems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.Json;
 import com.droptableteams.game.LibECS.ComponentManager;
 import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
-import com.droptableteams.game.components.CollisionsComponent;
-import com.droptableteams.game.components.DamageComponent;
-import com.droptableteams.game.components.HitpointComponent;
-import com.droptableteams.game.components.LifeCounterComponent;
+import com.droptableteams.game.builders.PowerUpEntityBuilder;
+import com.droptableteams.game.components.*;
+import com.droptableteams.game.components.game.AssetManagerComponent;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.SystemUpdateOrder;
+import com.droptableteams.game.util.data.PowerUpData;
 
 public class CollisionDamageSystem implements ISystem {
     private int _id;
@@ -19,6 +21,7 @@ public class CollisionDamageSystem implements ISystem {
     private ComponentManager _cm;
     private EntityManager _em;
     private Sound _sound;
+    private AssetManager _am;
 
     public CollisionDamageSystem(int id) {
         _id = id;
@@ -26,6 +29,8 @@ public class CollisionDamageSystem implements ISystem {
         _cm = ComponentManager.getInstance();
         _em = EntityManager.getInstance();
         _sound = Gdx.audio.newSound(Gdx.files.internal("audio/damage_sound_effect.mp3"));
+        _am = ((AssetManagerComponent)_cm.getComponent(SpecialEntityIds.GAME_ENTITY, "AssetManagerComponent")).getAssetManager();
+
     }
 
     @Override
@@ -60,7 +65,24 @@ public class CollisionDamageSystem implements ISystem {
                         ((LifeCounterComponent) _cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "LifeCounterComponent")).decrementLife();
                     } else {
                         //int playerID = _em.getEntityIds("PlayerEntity")[0];
+                        // Check if _id is an enemy id and if the enemy has a powerupcomponent
+
+                        PowerUpComponent powerUp = (PowerUpComponent)_cm.getComponent(_id, "PowerUpComponent");
+                        if(powerUp != null && powerUp._hasPowerUp){
+                            Json json = new Json();
+
+                            PowerUpData pd = json.fromJson(PowerUpData.class, Gdx.files.internal(powerUp._powerUpType));
+                            LocationComponent lc = (LocationComponent)_cm.getComponent(_id, "LocationComponent");
+                            pd.x = lc.getX();
+                            pd.y = lc.getY();
+
+                            PowerUpEntityBuilder pueb = PowerUpEntityBuilder.getInstance(_am);
+                            pueb.setBuildData(pd);
+                            engine.addEntity(pueb);
+                            pueb.finishBuild();
+                        }
                         engine.flagEntityForRemoval(_id);
+
                     }
                     break;
                 }

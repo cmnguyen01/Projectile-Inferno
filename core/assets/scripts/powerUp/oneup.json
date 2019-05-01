@@ -1,1 +1,1 @@
-{speed:15,width:36,height:36,entityType:PowerUpEntity,subtype:OneUp,texture:sprites/1up.png}
+{speed:35,width:20,height:20,entityType:PowerUpEntity,subtype:OneUp,texture:sprites/OneUp.png}

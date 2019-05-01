@@ -68,6 +68,7 @@ public class EnemyEntityBuilder extends AbstractEntityBuilder {
         Sprite sp = new Sprite(_am.get(et.texture, Texture.class));
         sp.setSize(et.width,et.height);
         sp.setCenter(_ed.x,_ed.y);
+        cl.add(new PowerUpComponent(_id, _ed.dropType));
         cl.add(new SpriteComponent(_id, sp));
         cl.add(new LocationComponent(_id, _ed.x,_ed.y));
         cl.add(new SizeComponent(_id, et.width,et.height));

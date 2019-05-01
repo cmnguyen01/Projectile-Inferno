@@ -70,16 +70,16 @@ public class PowerUpEntityBuilder extends AbstractEntityBuilder {
         //Below is some pseudo code to give a general idea for implementation
         ArrayList<IComponent> cl = new ArrayList<IComponent>();
         Json json = new Json();
-        PowerUpType pt = json.fromJson(PowerUpType.class, Gdx.files.internal("scripts/powerUp/" + _pd.powerUpType+ ".json"));
-        Sprite sp = new Sprite(_am.get(pt.texture, Texture.class));
-        sp.setSize(pt.width, pt.height);
+        //PowerUpType pt = json.fromJson(PowerUpType.class, Gdx.files.internal("scripts/powerUp/" + _pd.powerUpType+ ".json"));
+        Sprite sp = new Sprite(_am.get(_pd.texture, Texture.class));
+        sp.setSize(_pd.width, _pd.height);
         sp.setCenter(_pd.x, _pd.y);
         cl.add(new SpriteComponent(_id, sp));
         cl.add(new LocationComponent(_id, _pd.x, _pd.y));
-        cl.add(new SizeComponent(_id, pt.width, pt.height));
-        cl.add(new VelocityComponent(_id, pt.speed));
+        cl.add(new SizeComponent(_id, _pd.width, _pd.height));
+        cl.add(new VelocityComponent(_id, _pd.speed));
         cl.add(new MoveDirectionComponent(_id, _pd.direction));
-        cl.add(new HitboxComponent(_id, new Rectangle(_pd.x, _pd.y, pt.width, pt.height)));
+        cl.add(new HitboxComponent(_id, new Rectangle(_pd.x, _pd.y, _pd.width, _pd.height)));
         return cl;
     }
 
@@ -91,7 +91,7 @@ public class PowerUpEntityBuilder extends AbstractEntityBuilder {
         sl.add(new UpdateSpriteSystem(_id));
         sl.add(new DirectionalMovementSystem(_id));
         sl.add(new SetHitboxLocationSystem(_id));
-        sl.add(new PowerUpCollisionSystem(_id));
+        //sl.add(new PowerUpCollisionSystem(_id));
         return sl;
     }
 }

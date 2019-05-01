@@ -1,18 +1,19 @@
 package com.droptableteams.game.util.data;
 
 public class PowerUpData {
-    public float direction;
+    public float direction =  4.71239f;
     public long delay;
     public float x;
     public float y;
     public String powerUpType;
+    public float height;
+    public float width;
+    public String texture;
+    public String subtype;
+    public String entityType;
+    public float speed;
 
     public PowerUpData() {
-        direction = 0;
-        delay = 0;
-        x = 0;
-        y = 0;
-        powerUpType = "none";
     }
 
     public PowerUpData(float direction, long delay, float x, float y, String powerUpType){
