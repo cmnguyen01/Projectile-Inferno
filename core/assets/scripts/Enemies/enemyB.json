@@ -1,1 +1,0 @@
-{entityType:EnemyEntity,subtype:EnemyB,texture:sprites/enemyB.png,width:52,height:52,speed:128,hp:100,despawnOutOfBounds:true,loopDestinations:false,firePattern:{_baseDirection:4.712389,_numberOfBullets:6,_dividingAngle:3.1415927,_splitForEven:false,_deltaTheta:3.1415927,_fireRate:0.4,_bulletType:EnemyBulletB}}

@@ -41,6 +41,9 @@ public class EntityManager {
      * @return  a list of all entities of the specified type.
      */
     public HashMap<Integer, IEntity> getEntities(String type) {
+        if(_entityTypePools.get(type) == null){
+            return new HashMap<Integer, IEntity>();
+        }
         return _entityTypePools.get(type);
     }
 
@@ -51,7 +54,7 @@ public class EntityManager {
      * @return
      */
     public Integer[] getEntityIds(String type) {
-        return (Integer[])_entityTypePools.get(type).keySet().toArray(new Integer[_entityTypePools.size()]);
+        return _entityTypePools.get(type).keySet().toArray(new Integer[_entityTypePools.size()]);
     }
 
     /**

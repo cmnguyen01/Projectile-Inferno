@@ -8,12 +8,11 @@ import com.droptableteams.game.LibECS.interfaces.IEntity;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.components.game.*;
 import com.droptableteams.game.entities.GameEntity;
-import com.droptableteams.game.systems.game.HandleInputSystem;
-import com.droptableteams.game.systems.game.SpawnerSystem;
+import com.droptableteams.game.systems.RespawnSystem;
+import com.droptableteams.game.systems.game.*;
 import com.droptableteams.game.util.ScriptReader;
 import com.droptableteams.game.util.constants.SpecialEntityIds;
 import com.droptableteams.game.util.constants.EntityRenderOrder;
-import com.droptableteams.game.systems.game.RenderSystem;
 
 import java.util.ArrayList;
 
@@ -68,6 +67,7 @@ public class GameEntityBuilder extends AbstractEntityBuilder {
         sl.add(new RenderSystem(_id));
         sl.add(new HandleInputSystem(_id));
         sl.add(new SpawnerSystem(_id));
+        sl.add(new LifeUpdateSystem(_id));
         return sl;
     }
 

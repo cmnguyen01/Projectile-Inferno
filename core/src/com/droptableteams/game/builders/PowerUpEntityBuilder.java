@@ -71,7 +71,8 @@ public class PowerUpEntityBuilder extends AbstractEntityBuilder {
         ArrayList<ISystem> sl = new ArrayList<ISystem>();
         sl.add(new UpdateSpriteSystem(_id));
         sl.add(new SetHitboxLocationSystem(_id));
-        sl.add(new PowerUpCollisionSystem(_id));
+        // Power up collision system belongs to player, and not power up
+        //sl.add(new PowerUpCollisionSystem(_id));
         return sl;
     }
 }
