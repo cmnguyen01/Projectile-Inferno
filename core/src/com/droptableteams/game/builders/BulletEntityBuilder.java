@@ -75,7 +75,7 @@ public class BulletEntityBuilder extends AbstractEntityBuilder {
         cl.add(new LocationComponent(_id, _bd.x,_bd.y));
         cl.add(new SizeComponent(_id, bt.width,bt.height));
         cl.add(new VelocityComponent(_id, bt.speed));
-        cl.add(new HasBeenInboundsComponent(_id, false));
+        cl.add(new HasBeenInboundsComponent(_id, true));
         cl.add(new MoveDirectionComponent(_id, _bd.direction));
         cl.add(new OwnerComponent(_id, _bd.ownerId));
         cl.add(new DamageComponent(_id, bt.damage));
