@@ -45,13 +45,8 @@ public class SpawnerSystem implements ISystem {
         GameTimeComponent gtc = (GameTimeComponent) _cm.getComponent(_id, "GameTimeComponent");
         AssetManagerComponent amc = (AssetManagerComponent) _cm.getComponent(_id, "AssetManagerComponent");
         ECSEngine engine = ECSEngine.getInstance(SystemUpdateOrder.get());
-<<<<<<< HEAD
-        EnemyEntityBuilder builder = EnemyEntityBuilder.getInstance(amc.getAssetManager());
-        BossEntityBuilder builder2 = BossEntityBuilder.getInstance(amc.getAssetManager());
-=======
         EnemyEntityBuilder enemyBuilder = EnemyEntityBuilder.getInstance(amc.getAssetManager());
         BossEntityBuilder bossBuilder = BossEntityBuilder.getInstance(amc.getAssetManager());
->>>>>>> a4d8822b835d5bdf348f7f7de84c09800408bcda
         ArrayList<Spawnable> flaggedForRemoval = new ArrayList<Spawnable>();
         ArrayList<Spawnable> currentWave;
         currentWave = slc.getSpawnList();
@@ -59,18 +54,14 @@ public class SpawnerSystem implements ISystem {
             if (gtc.getTimeInMillis() >= spawnable.spawnTime) {
                 if (spawnable.entityType.equals("BossEntity")) {
                     flaggedForRemoval.add(spawnable);
-                    builder2.setBuildData((BossData) spawnable.data);
-                    engine.addEntity(builder2);
+                    bossBuilder.setBuildData((BossData) spawnable.data);
+                    engine.addEntity(bossBuilder);
                 }
-                else
+                else if(spawnable.entityType.equals("EnemyEntity"))
                 {
                     flaggedForRemoval.add(spawnable);
                     enemyBuilder.setBuildData((EnemyData) spawnable.data);
                     engine.addEntity(enemyBuilder);
-                }
-                else if(spawnable.entityType.equals("BossEntity")) {
-                    flaggedForRemoval.add(spawnable);
-                    bossBuilder.setBuildData((BossData) spawnable.data);
                 }
             }
         }

@@ -1,17 +1,12 @@
 package com.droptableteams.game.util;
 
-import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.Gdx;
-import com.droptableteams.game.util.data.EnemyData;
-<<<<<<< HEAD
+import com.badlogic.gdx.utils.Json;
 import com.droptableteams.game.util.data.BossData;
-=======
+import com.droptableteams.game.util.data.EnemyData;
 import com.droptableteams.game.util.types.IEntitySubtype;
 import com.droptableteams.game.util.types.SubtypeManager;
->>>>>>> a4d8822b835d5bdf348f7f7de84c09800408bcda
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.util.ArrayList;
 
 import static java.lang.System.err;
