@@ -34,6 +34,7 @@ public class FirePatternComponent implements IComponent {
         _numberOfBullets = numberOfBullets;
         _dividingAngle = dividingAngle;
         _deltaTheta = deltaTheta;
+        this.rateOfFire = rateOfFire;
         _bulletType = bulletType;
         _type = "FirePatternComponent";
     }
