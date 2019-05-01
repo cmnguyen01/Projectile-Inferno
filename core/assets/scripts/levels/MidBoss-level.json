@@ -1,0 +1,29 @@
+[
+  {
+    "class": "com.droptableteams.game.util.Spawnable",
+    "spawnTime": 0,
+    "entityType": "BossEntity",
+    "data": {
+      "class": "com.droptableteams.game.util.data.BossData",
+      "bossType": "midBoss",
+      "destinationList": [
+        {
+          "_position": {
+            "x": 480,
+            "y": 360
+          },
+          "_time": 17000
+        },
+        {
+          "_position": {
+            "x": 320,
+            "y": 640
+          },
+          "_time": 0
+        }
+      ],
+      "x": 0,
+      "y": 480
+    }
+  }
+]

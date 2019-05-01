@@ -6,6 +6,7 @@ public class EntityRenderOrder {
             "BulletEntity",
             "PlayerEntity",
             "VisibleHitboxEntity",
+            "BossEntity"
     };
 
     public static String[] get() {
