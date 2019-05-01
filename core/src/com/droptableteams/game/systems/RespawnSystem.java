@@ -6,6 +6,7 @@ import com.droptableteams.game.LibECS.ECSEngine;
 import com.droptableteams.game.LibECS.EntityManager;
 import com.droptableteams.game.LibECS.interfaces.ISystem;
 import com.droptableteams.game.builders.ShieldEntityBuilder;
+import com.droptableteams.game.components.HitpointComponent;
 import com.droptableteams.game.components.LifeCounterComponent;
 import com.droptableteams.game.components.LocationComponent;
 import com.droptableteams.game.components.game.AssetManagerComponent;
@@ -46,6 +47,7 @@ public class RespawnSystem implements ISystem {
     @Override
     public void update() {
         LifeCounterComponent lifeComp = (LifeCounterComponent) _cm.getComponent(_id, "LifeCounterComponent");
+        HitpointComponent hc = (HitpointComponent) _cm.getComponent(_id, "HitpointComponent");
         if(isShielded && gtc.getTimeInMillis() >= shieldStartTime+1500){
             ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(SpecialEntityIds.SHIELD_ENTITY);
             isShielded = false;
@@ -59,6 +61,7 @@ public class RespawnSystem implements ISystem {
                 createShield();
                 lifeComp.beginNewLife();
                 isShielded = true;
+                hc.setHp(1);
             }
         }
     }
