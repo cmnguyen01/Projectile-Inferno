@@ -71,7 +71,7 @@ public class BossEntityBuilder extends AbstractEntityBuilder {
         cl.add(new CollisionsComponent(_id));
         cl.add(new HitboxComponent(_id, new Rectangle(_bd.x, _bd.y, bt.width, bt.height)));
         cl.add(new FireControlComponent(_id, bt.firePattern.getFireRate(), true));
-        cl.add(new FirePatternComponent(_id, bt.firePattern.getBaseDirection(), bt.firePattern.getNumberOfBullets(),
+        cl.add(new FirePatternComponent(_id, bt.firePattern.getBaseDirection(), bt.firePattern.getFireRate(), bt.firePattern.getNumberOfBullets(),
                 bt.firePattern.getDividingAngle(), bt.firePattern.getDeltaTheta(), bt.firePattern.getBulletType()));
         return cl;
     }

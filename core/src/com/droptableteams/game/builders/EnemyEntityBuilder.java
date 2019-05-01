@@ -63,7 +63,6 @@ public class EnemyEntityBuilder extends AbstractEntityBuilder {
             throw new NullPointerException("Must call `setBuildData()` first.");
         }
         ArrayList<IComponent> cl = new ArrayList<IComponent>();
-        Json json = new Json();
         EnemyType et = (EnemyType)SubtypeManager.getInstance().getSubtype(_ed.enemyType);
         Sprite sp = new Sprite(_am.get(et.texture, Texture.class));
         sp.setSize(et.width,et.height);
@@ -78,7 +77,7 @@ public class EnemyEntityBuilder extends AbstractEntityBuilder {
         cl.add(new CollisionsComponent(_id));
         cl.add(new HitboxComponent(_id, new Rectangle(_ed.x,_ed.y,et.width,et.height)));
         cl.add(new FireControlComponent(_id, et.firePattern.getFireRate(), true));
-        cl.add(new FirePatternComponent(_id, et.firePattern.getBaseDirection(),et.firePattern.getNumberOfBullets(),
+        cl.add(new FirePatternComponent(_id, et.firePattern.getBaseDirection(),et.firePattern.getFireRate(),et.firePattern.getNumberOfBullets(),
                 et.firePattern.getDividingAngle(), et.firePattern.getDeltaTheta(), et.firePattern.getBulletType()));
         return cl;
     }

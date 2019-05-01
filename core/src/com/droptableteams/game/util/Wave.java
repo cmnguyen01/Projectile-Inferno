@@ -29,6 +29,7 @@ public class Wave{
         xOffset = 0;
         yOffset = 0;
     }
+    
     public void GetEnemies(){
         try
         {

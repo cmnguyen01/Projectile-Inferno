@@ -9,22 +9,25 @@ public class FirePatternComponent implements IComponent {
     private int _id;
     private String _type;
     private float _baseDirection;
+    public float rateOfFire;
     private int _numberOfBullets;
     private float _dividingAngle;
     private float _deltaTheta;
     private String _bulletType;
 
-    public FirePatternComponent(int id, float baseDirection, String bulletType) {
+
+    public FirePatternComponent(int id, float baseDirection, float rateOfFire, String bulletType) {
         _id = id;
         _baseDirection = baseDirection;
         _numberOfBullets = 1;
         _dividingAngle = 0;
         _deltaTheta = 0;
+        this.rateOfFire = rateOfFire;
         _bulletType = bulletType;
         _type = "FirePatternComponent";
     }
 
-    public FirePatternComponent(int id, float baseDirection, int numberOfBullets,
+    public FirePatternComponent(int id, float baseDirection, float rateOfFire, int numberOfBullets,
                                 float dividingAngle, float deltaTheta, String bulletType) {
         _id = id;
         _baseDirection = baseDirection;

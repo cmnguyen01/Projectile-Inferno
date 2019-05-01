@@ -8,8 +8,10 @@ import com.droptableteams.game.entities.LifeDisplayEntity;
  */
 public class SystemUpdateOrder {
     private static String[] _systemUpdateOrder = {
+            "DurationSystem",
             "HandleInputSystem",
             "SpawnerSystem",
+            "TargetPlayerSystem",
             "FireControlSystem",
             "SpeedModifierSystem",
             "DirectionalMovementSystem",
@@ -22,11 +24,12 @@ public class SystemUpdateOrder {
             "CollisionDamageSystem",
             "RotateSpriteToDirectionSystem",
             "UpdateSpriteSystem",
-            "DespawnOutOfBoundsSystem",
             "LifeUpdateSystem",
             "RespawnSystem",
+            "DespawnWithDurationSystem",
+            "DespawnOutOfBoundsSystem",
+            "DestroyOnOwnerDeathSystem",
             "RenderSystem",
-
     };
 
     public static String[] get() { return _systemUpdateOrder; }
