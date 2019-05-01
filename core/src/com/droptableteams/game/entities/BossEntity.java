@@ -9,7 +9,7 @@ import com.droptableteams.game.LibECS.interfaces.IEntity;
 
         public BossEntity(int id){
             _id = id;
-            _type = "EnemyEntity";
+            _type = "BossEntity";
         }
 
         @Override

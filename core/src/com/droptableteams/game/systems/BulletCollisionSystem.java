@@ -45,20 +45,20 @@ public class BulletCollisionSystem implements ISystem {
 
     @Override
     public void update() {
-        OwnerComponent oc = (OwnerComponent)_cm.getComponent(_id, "OwnerComponent");
-        HitboxComponent thisHbc = (HitboxComponent)_cm.getComponent(_id, "HitboxComponent");
+        OwnerComponent oc = (OwnerComponent) _cm.getComponent(_id, "OwnerComponent");
+        HitboxComponent thisHbc = (HitboxComponent) _cm.getComponent(_id, "HitboxComponent");
         Rectangle intersection = new Rectangle();
 
-        if(oc.getOwnerId() != SpecialEntityIds.PLAYER_ENTITY) { // bullet is an enemey bullet
-            if(_em.getEntities("PlayerEntity").size() == 0){
+        if (oc.getOwnerId() != SpecialEntityIds.PLAYER_ENTITY) { // bullet is an enemey bullet
+            if (_em.getEntities("PlayerEntity").size() == 0) {
                 return; // If there is no player entity, return.
             }
-            HitboxComponent thatHbc = (HitboxComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "HitboxComponent");
+            HitboxComponent thatHbc = (HitboxComponent) _cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "HitboxComponent");
             HitboxComponent shieldHbc = (HitboxComponent) _cm.getComponent(SpecialEntityIds.SHIELD_ENTITY, "HitboxComponent");
-            CollisionsComponent cc = (CollisionsComponent)_cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "CollisionsComponent");
-            if(shieldHbc != null && Intersector.intersectRectangles(thisHbc.getHitbox(), shieldHbc.getHitbox(), intersection)){
+            CollisionsComponent cc = (CollisionsComponent) _cm.getComponent(SpecialEntityIds.PLAYER_ENTITY, "CollisionsComponent");
+            if (shieldHbc != null && Intersector.intersectRectangles(thisHbc.getHitbox(), shieldHbc.getHitbox(), intersection)) {
                 ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(_id);
-            }else {
+            } else {
                 if (Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
                     cc.addCollision(_id);
                     ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(_id);
@@ -67,12 +67,12 @@ public class BulletCollisionSystem implements ISystem {
         }
         else { // bullet is a player bullet
             Set<Map.Entry<Integer, IEntity>> entries = _em.getEntities("EnemyEntity").entrySet();
-            for(Map.Entry<Integer, IEntity> e : entries) {
+            for (Map.Entry<Integer, IEntity> e : entries) {
                 int enemyId = e.getKey();
 
-                HitboxComponent thatHbc = (HitboxComponent)_cm.getComponent(enemyId, "HitboxComponent");
-                CollisionsComponent cc = (CollisionsComponent)_cm.getComponent(enemyId, "CollisionsComponent");
-                if(Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
+                HitboxComponent thatHbc = (HitboxComponent) _cm.getComponent(enemyId, "HitboxComponent");
+                CollisionsComponent cc = (CollisionsComponent) _cm.getComponent(enemyId, "CollisionsComponent");
+                if (Intersector.intersectRectangles(thisHbc.getHitbox(), thatHbc.getHitbox(), intersection)) {
                     cc.addCollision(_id);
                     ECSEngine.getInstance(SystemUpdateOrder.get()).flagEntityForRemoval(_id);
                 }
@@ -80,3 +80,4 @@ public class BulletCollisionSystem implements ISystem {
         }
     }
 }
+

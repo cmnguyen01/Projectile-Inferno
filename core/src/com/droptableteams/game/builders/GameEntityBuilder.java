@@ -68,6 +68,7 @@ public class GameEntityBuilder extends AbstractEntityBuilder {
         sl.add(new HandleInputSystem(_id));
         sl.add(new SpawnerSystem(_id));
         sl.add(new LifeUpdateSystem(_id));
+        sl.add(new EndGameSystem(_id));
         return sl;
     }
 

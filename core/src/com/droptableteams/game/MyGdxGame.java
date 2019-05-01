@@ -65,9 +65,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		_am.load("sprites/playerBulletD.png", Texture.class);
         _am.load("sprites/enemyBulletA.png", Texture.class);
 		_am.load("sprites/enemyBulletB.png", Texture.class);
+        _am.load("sprites/bossA.png", Texture.class);
+		_am.load("sprites/bossB.png", Texture.class);
 		_am.load("sprites/shield.png", Texture.class);
+		_am.load("sprites/victory.png", Texture.class);
+		_am.load("sprites/defeat.png", Texture.class);
 		_am.load("sprites/OneUp.png", Texture.class);
-
         while(!_am.update());
     }
 
@@ -113,7 +116,7 @@ public class MyGdxGame extends ApplicationAdapter {
     	float finalX = 3*Gdx.graphics.getWidth()/4;
     	float finalY = 3*Gdx.graphics.getHeight()/4;
     	ArrayList<TimeVector3> destinations = new ArrayList<TimeVector3>();
-    	destinations.add(new TimeVector3(finalX,finalY,0l));
+    	destinations.add(new TimeVector3(finalX,finalY,0L));
     	EnemyData ed = new EnemyData("EnemyA", destinations, initX,initY);
     	Spawnable spawnable = new Spawnable(0L, "EnemyEntity", ed);
 		ArrayList<Spawnable> spawnList = new ArrayList<Spawnable>();

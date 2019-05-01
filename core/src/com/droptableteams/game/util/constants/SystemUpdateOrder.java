@@ -25,6 +25,7 @@ public class SystemUpdateOrder {
             "DespawnOutOfBoundsSystem",
             "LifeUpdateSystem",
             "RespawnSystem",
+            "EndGameSystem",
             "RenderSystem",
             "PowerUpCollisionSystem",
 

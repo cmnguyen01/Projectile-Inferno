@@ -4,13 +4,15 @@ import com.droptableteams.game.entities.LifeDisplayEntity;
 
 public class EntityRenderOrder {
     private static final String[] ENTITY_RENDER_ORDER = {
+            "BossEntity",
             "EnemyEntity",
             "BulletEntity",
             "PlayerEntity",
             "VisibleHitboxEntity",
             "ShieldEntity",
             "LifeDisplayEntity",
-            "PowerUpEntity",
+            "StaticSpriteEntity",
+            "PowerUpEntity"
     };
 
     public static String[] get() {
